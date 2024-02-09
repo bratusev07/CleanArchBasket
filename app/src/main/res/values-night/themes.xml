@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.BasketFeature" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+        <item name="hintTextColor">@color/dark_grey</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="NumberPickerStyle">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="Theme.BasketFeature" parent="Base.Theme.BasketFeature" />
+</resources>

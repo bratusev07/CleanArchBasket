@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="25dp"
+        android:text="Фол"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/finishType_backBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/appCompatButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finishType_btn1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="Drives"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finishType_btn2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="Transition"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finishType_btn3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="Pull up"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finishType_btn4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="PnR Handler"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finishType_btn5"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="Cuts"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finishType_btn6"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="Hand Off"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:id="@+id/linearLayout3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/appCompatButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finishType_btn7"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="Isolation"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finishType_btn8"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="@string/catch_shot"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finishType_btn9"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="Post up"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finishType_btn10"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="PnR Roller"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finishType_btn11"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="Off Screen"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:visibility="invisible"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/button_style_stroke_white"
+                android:text="Hand Off"
+                android:textAllCaps="false"
+                android:textSize="26sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/finishType_backBtn"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_style_stroke"
+        android:text="Назад"
+        android:textColor="@color/orange"
+        android:textAllCaps="false"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

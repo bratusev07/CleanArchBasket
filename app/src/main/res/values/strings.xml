@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BasketFeature</string>
+    <string name="register_underling"><u>зарегистрироваться</u></string>
+    <string name="have_account_underling"><u>уже есть аккаунт</u></string>
+    <string name="pass_description">Пароль должен содержать минимум 8 символов латинскими буквами, а также хотя бы одну цифру</string>
+    <string name="catch_shot"><![CDATA[Catch&Shot]]></string>
+    <string name="confirmation_description">Вам на почту был отправлена ссылка для подтверждения. Пройдите по ссылке, чтобы активировать ваш аккаунт.</string>
+</resources>

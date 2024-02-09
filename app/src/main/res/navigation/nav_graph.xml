@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/signInFragment">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="ru.bratusev.basketfeature.presentation.signIn.view.SignInFragment"
+        android:label="SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_teamsFragment"
+            app:destination="@id/teamsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="ru.bratusev.basketfeature.presentation.signUp.view.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/action_signUpFragment_to_teamsFragment"
+            app:destination="@id/teamsFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamsFragment"
+        android:name="ru.bratusev.basketfeature.presentation.teams.view.TeamsFragment"
+        android:label="TeamsFragment"
+        tools:layout="@layout/fragment_teams">
+        <action
+            android:id="@+id/action_teamsFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+        <action
+            android:id="@+id/action_teamsFragment_to_teamFragment"
+            app:destination="@id/teamFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/gamesFragment"
+        android:name="ru.bratusev.basketfeature.presentation.games.view.GamesFragment"
+        android:label="GamesFragment"
+        tools:layout="@layout/fragment_games">
+        <action
+            android:id="@+id/action_gamesFragment_to_teamsFragment"
+            app:destination="@id/teamsFragment" />
+        <action
+            android:id="@+id/action_gamesFragment_to_selectTeamsFragment"
+            app:destination="@id/selectTeamsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectTeamsFragment"
+        android:name="ru.bratusev.basketfeature.presentation.games.view.SelectTeamsFragment"
+        android:label="SelectTeamsFragment"
+        tools:layout="@layout/fragment_select_teams">
+        <action
+            android:id="@+id/action_selectTeamsFragment_to_selectPlayersFragment"
+            app:destination="@id/selectPlayersFragment" />
+        <action
+            android:id="@+id/action_selectTeamsFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectPlayersFragment"
+        android:name="ru.bratusev.basketfeature.presentation.games.view.SelectPlayersFragment"
+        android:label="SelectPlayersFragment"
+        tools:layout="@layout/fragment_select_players">
+        <action
+            android:id="@+id/action_selectPlayersFragment_to_selectEnemyFragment"
+            app:destination="@id/selectEnemyFragment" />
+        <action
+            android:id="@+id/action_selectPlayersFragment_to_selectTeamsFragment"
+            app:destination="@id/selectTeamsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/timeFragment"
+        android:name="ru.bratusev.basketfeature.presentation.attack.view.TimeFragment"
+        android:label="TimeFragment"
+        tools:layout="@layout/fragment_time">
+        <action
+            android:id="@+id/action_timeFragment_to_attackStartFragment"
+            app:destination="@id/attackStartFragment" />
+        <action
+            android:id="@+id/action_timeFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/selectEnemyFragment"
+        android:name="ru.bratusev.basketfeature.presentation.games.view.SelectEnemyFragment"
+        android:label="SelectEnemyFragment"
+        tools:layout="@layout/fragment_select_enemy">
+        <action
+            android:id="@+id/action_selectEnemyFragment_to_timeFragment"
+            app:destination="@id/timeFragment" />
+        <action
+            android:id="@+id/action_selectEnemyFragment_to_selectPlayersFragment"
+            app:destination="@id/selectPlayersFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/attackStartFragment"
+        android:name="ru.bratusev.basketfeature.presentation.attack.view.AttackStartFragment"
+        android:label="AttackStartFragment"
+        tools:layout="@layout/fragment_start_attack">
+        <action
+            android:id="@+id/action_attackStartFragment_to_timeTypeFragment"
+            app:destination="@id/timeTypeFragment" />
+        <action
+            android:id="@+id/action_attackStartFragment_to_timeFragment"
+            app:destination="@id/timeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/timeTypeFragment"
+        android:name="ru.bratusev.basketfeature.presentation.attack.view.TimeTypeFragment"
+        android:label="TimeTypeFragment"
+        tools:layout="@layout/fragment_time_type">
+        <action
+            android:id="@+id/action_timeTypeFragment_to_swapPlayerFragment"
+            app:destination="@id/swapPlayerFragment" />
+        <action
+            android:id="@+id/action_timeTypeFragment_to_attackTypeFragment"
+            app:destination="@id/attackTypeFragment" />
+        <action
+            android:id="@+id/action_timeTypeFragment_to_attackStartFragment"
+            app:destination="@id/attackStartFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/swapPlayerFragment"
+        android:name="ru.bratusev.basketfeature.presentation.attack.view.SwapPlayerFragment"
+        android:label="SwapPlayerFragment"
+        tools:layout="@layout/fragment_swap_player">
+        <action
+            android:id="@+id/action_swapPlayerFragment_to_timeTypeFragment"
+            app:destination="@id/timeTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/attackTypeFragment"
+        android:name="ru.bratusev.basketfeature.presentation.attack.view.AttackTypeFragment"
+        android:label="AttackTypeFragment"
+        tools:layout="@layout/fragment_attack_type">
+        <action
+            android:id="@+id/action_attackTypeFragment_to_attackResultFragment"
+            app:destination="@id/attackResultFragment" />
+        <action
+            android:id="@+id/action_attackTypeFragment_to_timeTypeFragment"
+            app:destination="@id/timeTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/attackResultFragment"
+        android:name="ru.bratusev.basketfeature.presentation.attack.view.AttackResultFragment"
+        android:label="AttackResultFragment"
+        tools:layout="@layout/fragment_attack_result">
+        <action
+            android:id="@+id/action_attackResultFragment_to_attackFinishTypeFragment"
+            app:destination="@id/attackFinishTypeFragment" />
+        <action
+            android:id="@+id/action_attackResultFragment_to_attackLostFragment"
+            app:destination="@id/attackLostFragment" />
+        <action
+            android:id="@+id/action_attackResultFragment_to_attackFoulFragment"
+            app:destination="@id/attackFoulFragment" />
+        <action
+            android:id="@+id/action_attackResultFragment_to_attackTypeFragment"
+            app:destination="@id/attackTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/attackFinishTypeFragment"
+        android:name="ru.bratusev.basketfeature.presentation.attack.view.AttackFinishTypeFragment"
+        android:label="AttackFinishTypeFragment"
+        tools:layout="@layout/fragment_attack_finish_type">
+        <action
+            android:id="@+id/action_attackFinishTypeFragment_to_attackResultFragment"
+            app:destination="@id/attackResultFragment" />
+        <action
+            android:id="@+id/action_attackFinishTypeFragment_to_timeFragment"
+            app:destination="@id/timeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/attackFoulFragment"
+        android:name="ru.bratusev.basketfeature.presentation.attack.view.AttackFoulFragment"
+        android:label="AttackFoulFragment"
+        tools:layout="@layout/fragment_attack_foul">
+        <action
+            android:id="@+id/action_attackFoulFragment_to_attackResultFragment"
+            app:destination="@id/attackResultFragment" />
+        <action
+            android:id="@+id/action_attackFoulFragment_to_timeFragment"
+            app:destination="@id/timeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/attackLostFragment"
+        android:name="ru.bratusev.basketfeature.presentation.attack.view.AttackLostFragment"
+        android:label="AttackLostFragment"
+        tools:layout="@layout/fragment_attack_lost">
+        <action
+            android:id="@+id/action_attackLostFragment_to_attackResultFragment"
+            app:destination="@id/attackResultFragment" />
+        <action
+            android:id="@+id/action_attackLostFragment_to_timeFragment"
+            app:destination="@id/timeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/teamFragment"
+        android:name="ru.bratusev.basketfeature.presentation.teams.view.TeamFragment"
+        android:label="TeamFragment"
+        tools:layout="@layout/fragment_team">
+        <action
+            android:id="@+id/action_teamFragment_to_teamsFragment"
+            app:destination="@id/teamsFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+    </fragment>
+
+</navigation>

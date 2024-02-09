@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/rounded_corners"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Завершить игру?"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:textStyle="bold"
+        android:textSize="30sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/finishGameDialog_dismissBtn"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Отменить"
+        android:textAllCaps="false"
+        android:layout_margin="30dp"
+        android:background="@drawable/button_style_stroke"
+        android:textColor="@color/orange"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/finishGameDialog_okBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Завершить"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textSize="30sp" />
+
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="20dp" />
+</LinearLayout>

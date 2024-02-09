@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/teamName"
+        android:textSize="20sp"
+        android:text="Алексей Швед"
+        android:padding="30dp"
+        android:background="@drawable/border_stroke_square" />
+</FrameLayout>
