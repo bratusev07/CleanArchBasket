@@ -1,10 +1,6 @@
 package ru.bratusev.data.storage.sharedPrefs
 
-import android.content.Context
-import ru.bratusev.data.storage.UserStorage
-import ru.bratusev.data.storage.models.User
-
-private const val SHARED_PREFS_NAME = "shared_prefs_name"
+/*private const val SHARED_PREFS_NAME = "shared_prefs_name"
 private const val KEY_FIRST_NAME = "firstName"
 private const val KEY_LAST_NAME = "lastName"
 private const val KEY_DEFAULT_NAME = "Default lastName"
@@ -24,4 +20,4 @@ class SharedPrefUserStorage(context: Context) : UserStorage {
         sharedPreferences.edit().putString(KEY_LAST_NAME, user.lastName).apply()
         return true
     }
-}
+}*/

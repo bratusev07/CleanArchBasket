@@ -1,11 +1,10 @@
 package ru.bratusev.domain.repository
 
-import ru.bratusev.domain.models.SaveUserNameParam
-import ru.bratusev.domain.models.UserName
+import ru.bratusev.domain.models.UserData
 
 interface UserRepository {
 
-    fun saveName(saveParam: SaveUserNameParam): Boolean
+    fun authorizeUser(userData: UserData): Boolean
 
-    fun getName(): UserName
+    fun registerUser(userData: UserData): Boolean
 }

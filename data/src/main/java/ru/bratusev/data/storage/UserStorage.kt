@@ -1,10 +1,10 @@
 package ru.bratusev.data.storage
 
-import ru.bratusev.data.storage.models.User
+import ru.bratusev.data.storage.models.UserModel
 
 interface UserStorage {
 
-    fun get(): User
+    fun authorize(userModel: UserModel): Boolean
 
-    fun save(user: User): Boolean
+    fun register(userModel: UserModel): Boolean
 }

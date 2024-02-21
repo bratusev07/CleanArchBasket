@@ -1,16 +1,16 @@
 package ru.bratusev.basketfeature.di
 
 import org.koin.dsl.module
-import ru.bratusev.domain.usecase.GetUserNameUseCase
-import ru.bratusev.domain.usecase.SaveUserNameUseCase
+import ru.bratusev.domain.usecase.AuthorizeUseCase
+import ru.bratusev.domain.usecase.RegistrationUseCase
 
 val domainModule = module {
 
-    factory<GetUserNameUseCase> {
-        GetUserNameUseCase(userRepository = get())
+    factory<AuthorizeUseCase> {
+        AuthorizeUseCase(userRepository = get())
     }
 
-    factory<SaveUserNameUseCase> {
-        SaveUserNameUseCase(userRepository = get())
+    factory<RegistrationUseCase> {
+        RegistrationUseCase(userRepository = get())
     }
 }
