@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="25dp"
+        android:text="Новая команда"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:boxStrokeColor="@color/dark_grey"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/createTeamDialog_nameInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Название команды" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <SeekBar
+        android:id="@+id/createTeamDialog_playerCounter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:thumbTint="@color/orange"
+        android:max="10"/>
+
+    <LinearLayout
+        android:id="@+id/createTeamDialog_inputContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/createTeamDialog_okBtn"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_margin="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:background="@drawable/button_style_stroke"
+        android:text="Подтвердить"
+        android:textColor="@color/orange"
+        android:textAllCaps="false"
+        android:textSize="26sp" />
+
+</LinearLayout>

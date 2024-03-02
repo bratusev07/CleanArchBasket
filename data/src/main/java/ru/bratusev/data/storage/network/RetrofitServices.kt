@@ -11,4 +11,13 @@ interface RetrofitServices {
 
     @POST("registration")
     fun registration(@Body userModel: UserModel): Call<Void>
+
+    @GET("teams")
+    fun getTeams(): Call<Void>
+
+    @POST("remove")
+    fun removeTeam(@Query("id") id: Int): Call<Void>
+
+    @POST("update")
+    fun updateTeam(@Query("id") id: Int, @Body name: String): Call<Void>
 }

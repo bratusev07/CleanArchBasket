@@ -8,11 +8,16 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
-import ru.bratusev.basketfeature.presentation.teams.TeamsPresenter
+import ru.bratusev.basketfeature.presentation.teams.adapter.TeamsAdapter
+import ru.bratusev.basketfeature.presentation.teams.dialogs.CreateTeamDialog
 
 class TeamsFragment : Fragment() {
+
+    private val vm: TeamsViewModel by viewModel<TeamsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,7 +26,9 @@ class TeamsFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_teams, container, false).also {
             val teamsList = it.findViewById<RecyclerView>(R.id.teamsList)
-            it.findViewById<ImageView>(R.id.teams_plus).setOnClickListener {}
+            it.findViewById<ImageView>(R.id.teams_plus).setOnClickListener {
+                CreateTeamDialog(vm).show(childFragmentManager, "CreateTeam")
+            }
             it.findViewById<ImageView>(R.id.teams_setting).setOnClickListener {}
             it.findViewById<ImageView>(R.id.teams_game).setOnClickListener {
                 findNavController().navigate(R.id.action_teamsFragment_to_gamesFragment)
@@ -32,8 +39,12 @@ class TeamsFragment : Fragment() {
                     override fun handleOnBackPressed() {}
                 })
 
-            val presenter = TeamsPresenter()
-            presenter.initList(teamsList, this)
+            teamsList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            vm.getTeamsList()
+
+            vm.teamsLive.observe(viewLifecycleOwner){
+                teamsList.adapter = TeamsAdapter(vm.teamsLive.value, this, vm)
+            }
         }
     }
 }
