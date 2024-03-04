@@ -9,4 +9,6 @@ interface TeamsRepository {
     fun removeTeam(index: Int) : Boolean
 
     fun updateTeam(name: String, index: Int) : Boolean
+
+    fun createTeam(team: Team): Boolean
 }

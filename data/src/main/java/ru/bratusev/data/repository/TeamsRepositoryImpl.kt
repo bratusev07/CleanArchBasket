@@ -21,6 +21,10 @@ class TeamsRepositoryImpl(private val teamsStorage: TeamsStorage) : TeamsReposit
         return teamsStorage.updateTeam(name = name, index = index)
     }
 
+    override fun createTeam(team: Team): Boolean {
+        return teamsStorage.createTeam(TeamModel(team.name, parsePlayersToModel(team.players)))
+    }
+
 
     private fun parseModelToTeams(list: ArrayList<TeamModel>) : ArrayList<Team>{
         val result = ArrayList<Team>()
@@ -38,4 +42,11 @@ class TeamsRepositoryImpl(private val teamsStorage: TeamsStorage) : TeamsReposit
         return result
     }
 
+    private fun parsePlayersToModel(list: ArrayList<Player>) : ArrayList<PlayerModel>{
+        val result = ArrayList<PlayerModel>()
+        for (playerModel in list) {
+            result.add(PlayerModel(playerModel.name, playerModel.number))
+        }
+        return result
+    }
 }

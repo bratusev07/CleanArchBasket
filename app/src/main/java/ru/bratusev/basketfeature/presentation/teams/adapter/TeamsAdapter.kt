@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
@@ -40,7 +39,7 @@ class TeamsAdapter(
         return items?.size ?: 0
     }
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), OnClickListener {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val teamName: TextView = itemView.findViewById(R.id.teamName)
 
         @SuppressLint("ClickableViewAccessibility")
@@ -59,8 +58,7 @@ class TeamsAdapter(
                         Toast.makeText(fragment.requireContext(), "Remove", Toast.LENGTH_SHORT)
                             .show()
                         vm.removeTeam(position)
-                    }
-                    if (deltaX < -50) {
+                    } else if (deltaX < -50) {
                         Toast.makeText(fragment.requireContext(), "Update", Toast.LENGTH_SHORT)
                             .show()
                         vm.updateTeam(
@@ -70,7 +68,9 @@ class TeamsAdapter(
                                 )?.name ?: "Default name"
                             ), position
                         )
-                    }
+                    } else fragment.findNavController()
+                        .navigate(R.id.action_teamsFragment_to_teamFragment)
+
                     true
                 }
 
@@ -79,16 +79,11 @@ class TeamsAdapter(
         }
 
         init {
-            itemView.setOnClickListener(this)
             itemView.setOnTouchListener(touchListener)
         }
 
         fun bind(item: Team) {
             teamName.text = item.name
-        }
-
-        override fun onClick(v: View?) {
-            fragment.findNavController().navigate(R.id.action_teamsFragment_to_teamFragment)
         }
 
     }

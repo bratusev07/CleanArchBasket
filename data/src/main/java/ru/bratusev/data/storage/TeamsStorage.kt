@@ -10,4 +10,6 @@ interface TeamsStorage {
     fun removeTeam(index: Int) : Boolean
 
     fun updateTeam(name: String, index: Int) : Boolean
+
+    fun createTeam(teamModel: TeamModel): Boolean
 }

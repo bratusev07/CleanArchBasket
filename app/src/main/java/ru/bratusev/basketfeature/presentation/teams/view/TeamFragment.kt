@@ -9,10 +9,12 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
-import ru.bratusev.basketfeature.presentation.teams.TeamPresenter
 
 class TeamFragment : Fragment() {
+
+    private val vm: TeamViewModel by viewModel<TeamViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,9 +38,6 @@ class TeamFragment : Fragment() {
                         findNavController().navigate(R.id.action_teamFragment_to_teamsFragment)
                     }
                 })
-
-            val presenter = TeamPresenter()
-            presenter.initList(teamList)
         }
     }
 }
