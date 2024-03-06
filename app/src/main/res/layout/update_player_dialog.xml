@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        app:boxStrokeColor="@color/dark_grey">
+        app:boxStrokeColor="@color/orange">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/updatePlayerDialog_surnameInput"
@@ -39,7 +39,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        app:boxStrokeColor="@color/dark_grey">
+        app:boxStrokeColor="@color/orange">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/updatePlayerDialog_nameInput"
@@ -57,7 +57,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        app:boxStrokeColor="@color/dark_grey">
+        app:boxStrokeColor="@color/orange">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/updatePlayerDialog_lastnameInput"
@@ -75,7 +75,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        app:boxStrokeColor="@color/dark_grey">
+        app:boxStrokeColor="@color/orange">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/updatePlayerDialog_numberInput"

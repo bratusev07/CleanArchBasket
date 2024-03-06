@@ -1,6 +1,5 @@
 package ru.bratusev.basketfeature.presentation.teams.view
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,26 +16,31 @@ class TeamsViewModel(
     private val createTeamUseCase: CreateTeamUseCase
 ) : ViewModel() {
 
+    private val namePattern = Regex("^.*(?=.{3,18})(?=.*[а-яА-я]).*\$")
+
     private var teamsLiveMutable = MutableLiveData<ArrayList<Team>>()
     var teamsLive: LiveData<ArrayList<Team>> = teamsLiveMutable
 
-    fun getTeamsList(){
+    internal fun getTeamsList() {
         teamsLiveMutable.value = getTeamsListUseCase.execute()
     }
 
-    fun removeTeam(index: Int){
-        if(removeTeamUseCase.execute(index))
+    internal fun removeTeam(index: Int) {
+        if (removeTeamUseCase.execute(index))
             teamsLiveMutable.value?.removeAt(index)
     }
 
-    fun updateTeam(name: String, index: Int){
-        if(updateTeamUseCase.execute(name, index))
-            teamsLiveMutable.value?.get(index)?.name = name
+    internal fun updateTeam(name: String, index: Int) {
+        if (name.matches(namePattern))
+            if (updateTeamUseCase.execute(name, index))
+                teamsLiveMutable.value?.get(index)?.name = name
     }
 
-    fun createTeam(team: Team){
-        Log.d("MyLog", team.toString())
-        createTeamUseCase.execute(team)
+    internal fun createTeam(team: Team) {
+        if (validateData(team)) createTeamUseCase.execute(team)
     }
 
+    private fun validateData(team: Team): Boolean {
+        return team.name.matches(namePattern)
+    }
 }

@@ -17,11 +17,15 @@ class TeamViewModel(
 
 ) : ViewModel() {
 
+    private val namePattern = Regex("^.*(?=.{2,18})(?=.*[а-яА-я]).*\$")
+    private val surnamePattern = Regex("^.*(?=.{2,18})(?=.*[а-яА-я]).*\$")
+    private val lastNamePattern = Regex("^.*(?=.{0,18})(?=.*[а-яА-я]).*\$")
+
     private val playerListMutable = MutableLiveData<ArrayList<Player>>()
     internal val playerList: LiveData<ArrayList<Player>> = playerListMutable
 
     internal fun createPlayer(player: Player) {
-        createPlayerUseCase.execute(player)
+        if (validateData(player)) createPlayerUseCase.execute(player)
     }
 
     internal fun removePlayer(index: Int) {
@@ -29,10 +33,16 @@ class TeamViewModel(
     }
 
     internal fun updatePlayer(player: Player, index: Int) {
-        updatePlayerUseCase.execute(player, index)
+        if(validateData(player)) updatePlayerUseCase.execute(player, index)
     }
 
     internal fun getPlayersList() {
         playerListMutable.value = getPlayersListUseCase.execute()
+    }
+
+    private fun validateData(player: Player): Boolean {
+        return player.name.matches(namePattern) &&
+                player.lastName.matches(lastNamePattern) &&
+                player.surname.matches(surnamePattern)
     }
 }

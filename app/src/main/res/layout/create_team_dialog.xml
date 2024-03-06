@@ -19,7 +19,7 @@
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:boxStrokeColor="@color/dark_grey"
+        app:boxStrokeColor="@color/orange"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp">
 

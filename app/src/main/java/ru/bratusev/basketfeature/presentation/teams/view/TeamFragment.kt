@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.teams.adapter.TeamPlayerAdapter
+import ru.bratusev.basketfeature.presentation.teams.dialogs.CreatePlayerDialog
 
 class TeamFragment : Fragment() {
 
@@ -25,7 +26,9 @@ class TeamFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_team, container, false).also {
             val teamList = it.findViewById<RecyclerView>(R.id.teamPlayerList)
-            it.findViewById<ImageView>(R.id.team_plus).setOnClickListener {}
+            it.findViewById<ImageView>(R.id.team_plus).setOnClickListener {
+                CreatePlayerDialog(vm).show(childFragmentManager, "CreatePlayerDialog")
+            }
             it.findViewById<ImageView>(R.id.team_setting).setOnClickListener {}
             it.findViewById<ImageView>(R.id.team_game).setOnClickListener {
                 findNavController().navigate(R.id.action_teamFragment_to_gamesFragment)

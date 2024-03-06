@@ -34,7 +34,7 @@ class SignInViewModel(
         hintDialogMailLiveMutable.value = mail.matches(emailPattern)
     }
 
-    fun validateData(userData: UserData) {
+    internal fun validateData(userData: UserData) {
         if (validateMail(userData.mail) && validatePassword(userData.password))
                 authorize(userData = userData)
     }
