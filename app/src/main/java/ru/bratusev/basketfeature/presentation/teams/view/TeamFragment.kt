@@ -8,9 +8,11 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.teams.adapter.TeamPlayerAdapter
 
 class TeamFragment : Fragment() {
 
@@ -38,6 +40,13 @@ class TeamFragment : Fragment() {
                         findNavController().navigate(R.id.action_teamFragment_to_teamsFragment)
                     }
                 })
+
+            teamList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            vm.getPlayersList()
+
+            vm.playerList.observe(viewLifecycleOwner){
+                teamList.adapter = TeamPlayerAdapter(vm.playerList.value!!, this, vm)
+            }
         }
     }
 }

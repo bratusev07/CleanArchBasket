@@ -7,14 +7,18 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.navigation.fragment.findNavController
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.teams.dialogs.UpdatePlayerDialog
 import ru.bratusev.basketfeature.presentation.teams.view.TeamFragment
+import ru.bratusev.basketfeature.presentation.teams.view.TeamViewModel
+import ru.bratusev.domain.models.Player
 
 class TeamPlayerAdapter(
-    private val items: List<String>,
-    val fragment: TeamFragment,
+    private val items: ArrayList<Player>,
+    private val fragment: TeamFragment,
+    private val vm: TeamViewModel
 ) :
     RecyclerView.Adapter<TeamPlayerAdapter.ViewHolder>() {
 
@@ -36,6 +40,7 @@ class TeamPlayerAdapter(
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val playerName: TextView = itemView.findViewById(R.id.playerName)
+        private val playerNumber: TextView = itemView.findViewById(R.id.playerNumber)
 
         @SuppressLint("ClickableViewAccessibility")
         private val touchListener = View.OnTouchListener { view, motionEvent ->
@@ -50,12 +55,16 @@ class TeamPlayerAdapter(
                     val endX = motionEvent.x
                     val deltaX = endX - startX
                     if (deltaX > 50) {
-
+                        UpdatePlayerDialog(
+                            vm,
+                            items[position],
+                            position
+                        ).show(fragment.parentFragmentManager, "UpdatePlayerDialog")
+                        Toast.makeText(fragment.requireContext(), "Updated", Toast.LENGTH_SHORT).show()
                     } else if (deltaX < -50) {
-
-                    } else fragment.findNavController()
-                        .navigate(R.id.action_teamsFragment_to_teamFragment)
-
+                        vm.removePlayer(position)
+                        Toast.makeText(fragment.requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
+                    }
                     true
                 }
 
@@ -67,8 +76,9 @@ class TeamPlayerAdapter(
             itemView.setOnTouchListener(touchListener)
         }
 
-        fun bind(item: String) {
-            playerName.text = item
+        fun bind(item: Player) {
+            playerName.text = item.name
+            playerNumber.text = item.number.toString()
         }
     }
 }

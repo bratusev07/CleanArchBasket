@@ -10,7 +10,7 @@ class TeamRepositoryImpl(private val teamStorage: TeamStorage) : TeamRepository 
     private fun parseModelToPlayers(list: ArrayList<PlayerModel>): ArrayList<Player> {
         val result = ArrayList<Player>()
         for (playerModel in list) {
-            result.add(Player(playerModel.name, playerModel.number))
+            result.add(Player(playerModel.name, playerModel.number, playerModel.lastName, playerModel.surname))
         }
         return result
     }

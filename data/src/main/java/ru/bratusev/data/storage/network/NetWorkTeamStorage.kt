@@ -9,7 +9,13 @@ import ru.bratusev.data.storage.models.TeamModel
 class NetWorkTeamStorage(context: Context) : TeamStorage {
     override fun getPlayers(): ArrayList<PlayerModel> {
         Common.retrofitService.getPlayers()
-        return arrayListOf(PlayerModel(), PlayerModel(), PlayerModel(), PlayerModel())
+        return arrayListOf(
+            PlayerModel("Иван", 12, "Федотов"),
+            PlayerModel("Николай", 42, "Фролов"),
+            PlayerModel("Игорь", 21, "Петров"),
+            PlayerModel("Илья", 43, "Плюшкин"),
+            PlayerModel("Олег", 13, "Смирнов"),
+        )
     }
 
     override fun removePlayer(index: Int): Boolean {

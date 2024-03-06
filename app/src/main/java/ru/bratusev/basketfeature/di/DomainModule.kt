@@ -2,10 +2,14 @@ package ru.bratusev.basketfeature.di
 
 import org.koin.dsl.module
 import ru.bratusev.domain.usecase.AuthorizeUseCase
+import ru.bratusev.domain.usecase.CreatePlayerUseCase
 import ru.bratusev.domain.usecase.CreateTeamUseCase
+import ru.bratusev.domain.usecase.GetPlayersListUseCase
 import ru.bratusev.domain.usecase.GetTeamsListUseCase
 import ru.bratusev.domain.usecase.RegistrationUseCase
+import ru.bratusev.domain.usecase.RemovePlayerUseCase
 import ru.bratusev.domain.usecase.RemoveTeamUseCase
+import ru.bratusev.domain.usecase.UpdatePlayerUseCase
 import ru.bratusev.domain.usecase.UpdateTeamUseCase
 
 val domainModule = module {
@@ -32,5 +36,21 @@ val domainModule = module {
 
     factory<CreateTeamUseCase> {
         CreateTeamUseCase(teamsRepository = get())
+    }
+
+    factory<CreatePlayerUseCase> {
+        CreatePlayerUseCase(teamRepository = get())
+    }
+
+    factory<RemovePlayerUseCase> {
+        RemovePlayerUseCase(teamRepository = get())
+    }
+
+    factory<UpdatePlayerUseCase> {
+        UpdatePlayerUseCase(teamRepository = get())
+    }
+
+    factory<GetPlayersListUseCase> {
+        GetPlayersListUseCase(teamRepository = get())
     }
 }
