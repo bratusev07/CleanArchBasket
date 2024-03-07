@@ -2,6 +2,8 @@ package ru.bratusev.basketfeature.di
 
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
+import ru.bratusev.basketfeature.presentation.games.view.SelectEnemyViewModel
+import ru.bratusev.basketfeature.presentation.games.view.SelectPlayersViewModel
 import ru.bratusev.basketfeature.presentation.signIn.view.SignInViewModel
 import ru.bratusev.basketfeature.presentation.signUp.view.SignUpViewModel
 import ru.bratusev.basketfeature.presentation.teams.view.TeamViewModel
@@ -37,5 +39,13 @@ val appModule = module {
             updatePlayerUseCase = get(),
             createPlayerUseCase = get()
         )
+    }
+
+    viewModel<SelectPlayersViewModel>{
+        SelectPlayersViewModel()
+    }
+
+    viewModel<SelectEnemyViewModel>{
+        SelectEnemyViewModel()
     }
 }

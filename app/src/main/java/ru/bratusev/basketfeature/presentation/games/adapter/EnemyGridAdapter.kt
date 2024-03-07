@@ -1,0 +1,53 @@
+package ru.bratusev.basketfeature.presentation.games.adapter
+
+import android.content.Context
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.BaseAdapter
+import android.widget.TextView
+import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.games.view.SelectEnemyViewModel
+import ru.bratusev.domain.models.Player
+
+class EnemyGridAdapter(
+    private val context: Context,
+    private val vm: SelectEnemyViewModel,
+    private val players: ArrayList<Player>,
+    private val isToGame: Boolean
+) : BaseAdapter() {
+
+    override fun getCount(): Int {
+        return players.size
+    }
+
+    override fun getItem(position: Int): Player {
+        return players[position]
+    }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View? {
+        var convertView = convertView
+        if (convertView == null) {
+            val inflater = LayoutInflater.from(context)
+            convertView = inflater.inflate(R.layout.grid_item, parent, false)
+        }
+
+        convertView?.findViewById<TextView>(R.id.textView)?.text =
+            players[position].number.toString()
+        convertView?.setOnClickListener {
+            val player = players[position]
+            Log.d("MyPlayersLog", player.toString())
+            if (isToGame) {
+                if (vm.playersInGame.value?.size!! < 5) vm.addToGame(player)
+            } else vm.removeFromGame(player)
+        }
+
+        return convertView
+    }
+
+}
