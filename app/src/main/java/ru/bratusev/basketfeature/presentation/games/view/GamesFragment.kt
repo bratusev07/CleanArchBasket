@@ -8,12 +8,15 @@ import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
-import ru.bratusev.basketfeature.presentation.games.GamesPresenter
+import ru.bratusev.basketfeature.presentation.games.adapter.GamesAdapter
 
 class GamesFragment : Fragment() {
 
+    private val vm: GameViewModel by viewModel<GameViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,8 +38,13 @@ class GamesFragment : Fragment() {
                     override fun handleOnBackPressed() {}
                 })
 
-            val presenter = GamesPresenter()
-            presenter.initList(gameList)
+            gameList.layoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            vm.getGames()
+
+            vm.gameList.observe(viewLifecycleOwner) {
+                gameList.adapter = GamesAdapter(vm.gameList.value!!, this)
+            }
         }
     }
 }
