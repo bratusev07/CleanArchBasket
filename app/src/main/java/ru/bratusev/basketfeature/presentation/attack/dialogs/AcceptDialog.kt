@@ -2,6 +2,7 @@ package ru.bratusev.basketfeature.presentation.attack.dialogs
 
 import android.app.AlertDialog
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -17,13 +18,13 @@ class AcceptDialog(
     private val dialogView: View =
         LayoutInflater.from(context).inflate(R.layout.accept_dialog, null)
 
-    fun show() {
+    fun show(bundle: Bundle) {
         val builder = AlertDialog.Builder(context)
         builder.setView(dialogView)
         val alertDialog = builder.create()
         alertDialog.show()
         alertDialog.findViewById<TextView>(R.id.acceptDialog_okBtn).setOnClickListener {
-            fragment.findNavController().navigate(id)
+            fragment.findNavController().navigate(id, bundle)
             alertDialog.dismiss()
         }
     }

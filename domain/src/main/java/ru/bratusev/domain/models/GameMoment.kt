@@ -2,18 +2,24 @@ package ru.bratusev.domain.models
 
 import java.io.Serializable
 
-class GameMoment : Serializable{
+class GameMoment : Serializable {
     internal lateinit var timeZone: TimeZone
     internal lateinit var team: String
     internal lateinit var attackStartType: AttackStartType
     internal lateinit var timeType: TimeType
     internal lateinit var player: String
     internal var second: Int = 0
+    internal var zoneNumber: Int = 0
+    internal var isHit: Boolean = false
     internal lateinit var attackType: AttackType
     internal lateinit var resultType: ResultType
     internal var foul: Foul = Foul.NONE
     internal var shot: Shot = Shot.NONE
     internal var loss: Loss = Loss.NONE
+
+    override fun toString(): String {
+        return "$timeZone $team $attackStartType $timeType $player $second $zoneNumber $isHit $attackType $resultType"
+    }
 
     fun setTimeZone(timeZone: TimeZone): GameMoment {
         this.timeZone = timeZone
@@ -32,6 +38,16 @@ class GameMoment : Serializable{
 
     fun setTimeType(timeType: TimeType): GameMoment {
         this.timeType = timeType
+        return this
+    }
+
+    fun setZoneNumber(zoneNumber: Int): GameMoment {
+        this.zoneNumber = zoneNumber
+        return this
+    }
+
+    fun setIsHit(isHit: Boolean): GameMoment {
+        this.isHit = isHit
         return this
     }
 
@@ -70,9 +86,6 @@ class GameMoment : Serializable{
         return this
     }
 
-    override fun toString(): String {
-        return "$timeType $timeZone $player $loss"
-    }
 }
 
 enum class TimeZone {

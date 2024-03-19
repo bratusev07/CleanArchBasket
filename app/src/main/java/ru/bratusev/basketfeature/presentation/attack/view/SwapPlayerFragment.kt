@@ -8,6 +8,7 @@ import android.widget.GridView
 import androidx.fragment.app.Fragment
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.attack.adapter.PlayersGridAdapter
+import ru.bratusev.domain.models.Player
 
 class SwapPlayerFragment : Fragment() {
 
@@ -19,7 +20,19 @@ class SwapPlayerFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_swap_player, container, false).also {
             it.findViewById<GridView>(R.id.swap_gridView).adapter = PlayersGridAdapter(
                 requireContext(),
-                arrayListOf(12, 21, 33, 42, 51, 16, 25, 26, 27, 28, 20)
+                arrayListOf(
+                    Player(number = 12),
+                    Player(number = 21),
+                    Player(number = 34),
+                    Player(number = 45),
+                    Player(number = 62),
+                    Player(number = 34),
+                    Player(number = 61),
+                    Player(number = 66),
+                    Player(number = 67),
+                    Player(number = 17),
+                    Player(number = 47),
+                )
             )
         }
     }

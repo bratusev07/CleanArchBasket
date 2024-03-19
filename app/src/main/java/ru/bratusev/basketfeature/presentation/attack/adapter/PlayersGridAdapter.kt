@@ -7,15 +7,16 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import ru.bratusev.basketfeature.R
+import ru.bratusev.domain.models.Player
 
-class PlayersGridAdapter(private val context: Context, private val numbers: List<Int>) :
+class PlayersGridAdapter(private val context: Context, private val players: ArrayList<Player>) :
     BaseAdapter() {
     override fun getCount(): Int {
-        return numbers.size
+        return players.size
     }
 
-    override fun getItem(position: Int): Any {
-        return numbers[position]
+    override fun getItem(position: Int): Player {
+        return players[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -29,7 +30,7 @@ class PlayersGridAdapter(private val context: Context, private val numbers: List
             convertView = inflater.inflate(R.layout.grid_item, parent, false)
         }
 
-        convertView?.findViewById<TextView>(R.id.textView)?.text = numbers[position].toString()
+        convertView?.findViewById<TextView>(R.id.textView)?.text = players[position].number.toString()
 
         return convertView
     }
