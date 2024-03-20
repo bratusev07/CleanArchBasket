@@ -14,6 +14,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.games.adapter.PlayersGridAdapter
 import ru.bratusev.domain.models.Player
+import java.io.Serializable
 
 class SelectPlayersFragment : Fragment() {
 
@@ -28,7 +29,11 @@ class SelectPlayersFragment : Fragment() {
             val playersGrid = it.findViewById<GridView>(R.id.selectPlayer_gridView)
             val playersInGameGrid = it.findViewById<GridView>(R.id.selectedPlayer_gridView)
             it.findViewById<AppCompatButton>(R.id.selectPlayers_nextBtn).setOnClickListener {
-                findNavController().navigate(R.id.action_selectPlayersFragment_to_selectEnemyFragment)
+                val bundle = Bundle()
+                bundle.putSerializable("GameDate", (arguments?.getSerializable("GameDate")))
+                bundle.putSerializable("GameMyTeam", (arguments?.getSerializable("GameMyTeam")))
+                bundle.putSerializable("GameEnemyTeam", (arguments?.getSerializable("GameEnemyTeam")))
+                findNavController().navigate(R.id.action_selectPlayersFragment_to_selectEnemyFragment, bundle)
             }
             it.findViewById<ImageView>(R.id.selectPlayers_back).setOnClickListener {
                 findNavController().navigate(R.id.action_selectPlayersFragment_to_selectTeamsFragment)

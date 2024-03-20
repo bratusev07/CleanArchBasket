@@ -31,7 +31,11 @@ class SelectEnemyFragment : Fragment() {
                 findNavController().navigate(R.id.action_selectEnemyFragment_to_selectPlayersFragment)
             }
             it.findViewById<AppCompatButton>(R.id.selectEnemy_startGameBtn).setOnClickListener {
-                findNavController().navigate(R.id.action_selectEnemyFragment_to_timeFragment)
+                val bundle = Bundle()
+                bundle.putSerializable("GameDate", (arguments?.getSerializable("GameDate")))
+                bundle.putSerializable("GameMyTeam", (arguments?.getSerializable("GameMyTeam")))
+                bundle.putSerializable("GameEnemyTeam", (arguments?.getSerializable("GameEnemyTeam")))
+                findNavController().navigate(R.id.action_selectEnemyFragment_to_timeFragment, bundle)
             }
             requireActivity().onBackPressedDispatcher.addCallback(
                 viewLifecycleOwner,

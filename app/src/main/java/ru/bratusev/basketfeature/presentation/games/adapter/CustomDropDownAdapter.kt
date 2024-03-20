@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import ru.bratusev.basketfeature.R
+import ru.bratusev.domain.models.Team
 
-class CustomDropDownAdapter(context: Context, private var listItemsTxt: List<String>) :
+class CustomDropDownAdapter(context: Context, private var listItemsTxt: ArrayList<Team>) :
     BaseAdapter() {
 
 
@@ -26,7 +27,7 @@ class CustomDropDownAdapter(context: Context, private var listItemsTxt: List<Str
             vh = view.tag as ItemRowHolder
         }
 
-        vh.label.text = listItemsTxt[position]
+        vh.label.text = listItemsTxt[position].name
         return view
     }
 
