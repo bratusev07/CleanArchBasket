@@ -1,3 +1,5 @@
 package ru.bratusev.data.storage.models
 
-class UserModel(val mail: String, val password: String)
+import com.google.gson.annotations.SerializedName
+
+class UserModel(@SerializedName("email")val mail: String, val password: String)

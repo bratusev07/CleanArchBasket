@@ -14,7 +14,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.games.adapter.PlayersGridAdapter
 import ru.bratusev.domain.models.Player
-import java.io.Serializable
 
 class SelectPlayersFragment : Fragment() {
 

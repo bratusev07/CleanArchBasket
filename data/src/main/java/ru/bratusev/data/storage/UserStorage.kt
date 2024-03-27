@@ -1,10 +1,12 @@
 package ru.bratusev.data.storage
 
+import ru.bratusev.data.storage.models.AuthorizeDto
+import ru.bratusev.data.storage.models.RegistrationDto
 import ru.bratusev.data.storage.models.UserModel
 
 interface UserStorage {
 
-    fun authorize(userModel: UserModel): Boolean
+    suspend fun authorize(userModel: UserModel): AuthorizeDto
 
-    fun register(userModel: UserModel): Boolean
+    fun register(userModel: UserModel): RegistrationDto
 }

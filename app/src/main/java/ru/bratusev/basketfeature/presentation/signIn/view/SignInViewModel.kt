@@ -1,8 +1,14 @@
 package ru.bratusev.basketfeature.presentation.signIn.view
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import ru.bratusev.domain.Resource
+import ru.bratusev.domain.models.AuthorizeResponse
 import ru.bratusev.domain.models.UserData
 import ru.bratusev.domain.usecase.AuthorizeUseCase
 
@@ -25,9 +31,22 @@ class SignInViewModel(
     private val emailPattern = Regex("^[A-Z0-9._%+-]+@[A-Z0-9-]+\\.[A-Z]{2,4}$", RegexOption.IGNORE_CASE)
     private val passPattern = Regex("^.*(?=.{8,24})(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!#\$%&? \"]).*\$")
 
-    private fun authorize(userData: UserData) {
-        if (authorizeUseCase.execute(userData))
-            resultLiveMutable.value = !(resultLiveMutable.value ?: false)
+    private fun authorize(userData: UserData){
+        userData.password = "qweqwe123"
+        authorizeUseCase.invoke(userData).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    Log.d("MyNewLog", "Resource.Success ${(result.data as AuthorizeResponse).uuid}")
+                    resultLiveMutable.value = true
+                }
+                is Resource.Error -> {
+                    Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
+                }
+                is Resource.Loading -> {
+                    Log.d("MyNewLog", "Resource.Loading")
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     internal fun recoverPassword(mail: String){

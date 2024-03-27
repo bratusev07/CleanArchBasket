@@ -1,8 +1,14 @@
 package ru.bratusev.basketfeature.presentation.signUp.view
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import ru.bratusev.domain.Resource
+import ru.bratusev.domain.models.RegistrationResponse
 import ru.bratusev.domain.models.UserData
 import ru.bratusev.domain.usecase.RegistrationUseCase
 
@@ -27,8 +33,20 @@ class SignUpViewModel(
 
 
     private fun registration(userData: UserData) {
-        if (registrationUseCase.execute(userData))
-            resultLiveMutable.value = !(resultLiveMutable.value?: false)
+        registrationUseCase.invoke(userData).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    Log.d("MyNewLog", "Resource.Success ${(result.data as RegistrationResponse).uuid}")
+                    resultLiveMutable.value = true
+                }
+                is Resource.Error -> {
+                    Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
+                }
+                is Resource.Loading -> {
+                    Log.d("MyNewLog", "Resource.Loading")
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     internal fun validateData(userData: UserData) {

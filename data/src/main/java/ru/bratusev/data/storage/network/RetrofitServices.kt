@@ -1,18 +1,24 @@
 package ru.bratusev.data.storage.network
 
 import retrofit2.Call
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.POST
+import retrofit2.http.Query
+import ru.bratusev.data.storage.models.AuthorizeDto
 import ru.bratusev.data.storage.models.PlayerModel
+import ru.bratusev.data.storage.models.RegistrationDto
 import ru.bratusev.data.storage.models.TeamModel
 import ru.bratusev.data.storage.models.UserModel
 
 interface RetrofitServices {
 
-    @POST("authorize")
-    fun authorize(@Body userModel: UserModel): Call<Void>
+    @POST("auth/v1/token?grant_type=password")
+    suspend fun authorize(@Header("apikey") apikey: String, @Body userModel: UserModel): AuthorizeDto
 
-    @POST("registration")
-    fun registration(@Body userModel: UserModel): Call<Void>
+    @POST("auth/v1/signup")
+    fun registration(@Header("apikey") apikey: String, @Body userModel: UserModel): RegistrationDto
 
     @GET("teams")
     fun getTeams(): Call<Void>
