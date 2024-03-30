@@ -1,9 +1,7 @@
 package ru.bratusev.data.repository
 
-import android.util.Log
 import ru.bratusev.data.storage.TeamsStorage
 import ru.bratusev.data.storage.models.PlayerModel
-import ru.bratusev.data.storage.models.TeamListDto
 import ru.bratusev.data.storage.models.TeamListDtoItem
 import ru.bratusev.data.storage.models.TeamModel
 import ru.bratusev.data.storage.models.toResponse
@@ -31,7 +29,7 @@ class TeamsRepositoryImpl(private val teamsStorage: TeamsStorage) : TeamsReposit
     }
 
 
-    private fun parseModelToTeams(list: TeamListDto) : ArrayList<TeamListResponse>{
+    private fun parseModelToTeams(list: ArrayList<TeamListDtoItem>) : ArrayList<TeamListResponse>{
         val result = ArrayList<TeamListResponse>()
         for (teamModel in list) {
             result.add(teamModel.toResponse())

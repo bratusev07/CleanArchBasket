@@ -1,6 +1,7 @@
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
+    kotlin("plugin.serialization") version "1.9.22"
 }
 
 android {
@@ -37,6 +38,11 @@ dependencies {
     implementation(project(":domain"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
+
+    //Supabase
+    implementation("io.github.jan-tennert.supabase:postgrest-kt:0.7.6")
+    implementation("io.ktor:ktor-client-cio:2.3.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
     //Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")

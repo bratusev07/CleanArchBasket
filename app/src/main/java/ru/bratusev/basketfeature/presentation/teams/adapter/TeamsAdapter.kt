@@ -13,7 +13,6 @@ import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.teams.dialogs.UpdateTeamDialog
 import ru.bratusev.basketfeature.presentation.teams.view.TeamsFragment
 import ru.bratusev.basketfeature.presentation.teams.view.TeamsViewModel
-import ru.bratusev.domain.models.Team
 import ru.bratusev.domain.models.TeamListResponse
 
 class TeamsAdapter(

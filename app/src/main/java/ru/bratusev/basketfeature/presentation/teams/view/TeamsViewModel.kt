@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.bratusev.domain.Resource
-import ru.bratusev.domain.models.AuthorizeResponse
 import ru.bratusev.domain.models.Team
 import ru.bratusev.domain.models.TeamListResponse
 import ru.bratusev.domain.usecase.CreateTeamUseCase

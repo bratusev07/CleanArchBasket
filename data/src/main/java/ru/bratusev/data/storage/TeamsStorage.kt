@@ -1,12 +1,12 @@
 package ru.bratusev.data.storage
 
-import ru.bratusev.data.storage.models.TeamListDto
+import ru.bratusev.data.storage.models.TeamListDtoItem
 import ru.bratusev.data.storage.models.TeamModel
 
 
 interface TeamsStorage {
 
-    suspend fun getTeams() : TeamListDto
+    suspend fun getTeams() : ArrayList<TeamListDtoItem>
 
     fun removeTeam(index: Int) : Boolean
 

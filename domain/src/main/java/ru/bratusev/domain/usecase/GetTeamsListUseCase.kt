@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import ru.bratusev.domain.Resource
-import ru.bratusev.domain.models.AuthorizeResponse
 import ru.bratusev.domain.models.TeamListResponse
 import ru.bratusev.domain.repository.TeamsRepository
 import java.io.IOException
