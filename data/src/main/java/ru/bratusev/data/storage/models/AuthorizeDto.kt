@@ -1,6 +1,7 @@
 package ru.bratusev.data.storage.models
 
 import com.google.gson.annotations.SerializedName
+import ru.bratusev.data.storage.network.Common
 import ru.bratusev.domain.models.AuthorizeResponse
 
 data class AuthorizeDto(
@@ -18,5 +19,7 @@ data class AuthorizeDto(
 )
 
 fun AuthorizeDto.toResponse(): AuthorizeResponse{
+    Common.userId = user.id
+    Common.token = accessToken
     return AuthorizeResponse(accessToken, user.id)
 }

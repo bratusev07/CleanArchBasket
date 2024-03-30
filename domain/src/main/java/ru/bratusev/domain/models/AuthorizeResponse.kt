@@ -1,3 +1,5 @@
 package ru.bratusev.domain.models
 
-data class AuthorizeResponse(val token: String, val uuid: String)
+import java.io.Serializable
+
+data class AuthorizeResponse(val token: String, val uuid: String) : Serializable

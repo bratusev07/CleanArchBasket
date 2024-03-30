@@ -1,15 +1,20 @@
 package ru.bratusev.data.repository
 
+import android.util.Log
 import ru.bratusev.data.storage.TeamsStorage
 import ru.bratusev.data.storage.models.PlayerModel
+import ru.bratusev.data.storage.models.TeamListDto
+import ru.bratusev.data.storage.models.TeamListDtoItem
 import ru.bratusev.data.storage.models.TeamModel
+import ru.bratusev.data.storage.models.toResponse
 import ru.bratusev.domain.models.Player
 import ru.bratusev.domain.models.Team
+import ru.bratusev.domain.models.TeamListResponse
 import ru.bratusev.domain.repository.TeamsRepository
 
 class TeamsRepositoryImpl(private val teamsStorage: TeamsStorage) : TeamsRepository {
 
-    override fun getTeams(): ArrayList<Team> {
+    override suspend fun getTeams(): ArrayList<TeamListResponse> {
         return parseModelToTeams(teamsStorage.getTeams())
     }
 
@@ -26,10 +31,10 @@ class TeamsRepositoryImpl(private val teamsStorage: TeamsStorage) : TeamsReposit
     }
 
 
-    private fun parseModelToTeams(list: ArrayList<TeamModel>) : ArrayList<Team>{
-        val result = ArrayList<Team>()
+    private fun parseModelToTeams(list: TeamListDto) : ArrayList<TeamListResponse>{
+        val result = ArrayList<TeamListResponse>()
         for (teamModel in list) {
-            result.add(Team(teamModel.name, parseModelToPlayers(teamModel.players)))
+            result.add(teamModel.toResponse())
         }
         return result
     }

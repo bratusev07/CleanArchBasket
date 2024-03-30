@@ -14,9 +14,10 @@ import ru.bratusev.basketfeature.presentation.teams.dialogs.UpdateTeamDialog
 import ru.bratusev.basketfeature.presentation.teams.view.TeamsFragment
 import ru.bratusev.basketfeature.presentation.teams.view.TeamsViewModel
 import ru.bratusev.domain.models.Team
+import ru.bratusev.domain.models.TeamListResponse
 
 class TeamsAdapter(
-    private val items: ArrayList<Team>?,
+    private val items: ArrayList<TeamListResponse>?,
     val fragment: TeamsFragment,
     private val vm: TeamsViewModel
 ) :
@@ -82,7 +83,7 @@ class TeamsAdapter(
             itemView.setOnTouchListener(touchListener)
         }
 
-        fun bind(item: Team) {
+        fun bind(item: TeamListResponse) {
             teamName.text = item.name
         }
 

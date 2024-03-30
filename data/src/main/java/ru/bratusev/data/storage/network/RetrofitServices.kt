@@ -9,6 +9,7 @@ import retrofit2.http.Query
 import ru.bratusev.data.storage.models.AuthorizeDto
 import ru.bratusev.data.storage.models.PlayerModel
 import ru.bratusev.data.storage.models.RegistrationDto
+import ru.bratusev.data.storage.models.TeamListDto
 import ru.bratusev.data.storage.models.TeamModel
 import ru.bratusev.data.storage.models.UserModel
 
@@ -18,10 +19,10 @@ interface RetrofitServices {
     suspend fun authorize(@Header("apikey") apikey: String, @Body userModel: UserModel): AuthorizeDto
 
     @POST("auth/v1/signup")
-    fun registration(@Header("apikey") apikey: String, @Body userModel: UserModel): RegistrationDto
+    suspend fun registration(@Header("apikey") apikey: String, @Body userModel: UserModel): RegistrationDto
 
-    @GET("teams")
-    fun getTeams(): Call<Void>
+    @GET("rest/v1/teams")
+    suspend fun getTeams(@Header("apikey") apikey: String, @Header("Authorize") authorize: String, @Query("user_id") id: String): TeamListDto
 
     @POST("removeTeam")
     fun removeTeam(@Query("id") id: Int): Call<Void>

@@ -1,11 +1,25 @@
 package ru.bratusev.domain.usecase
 
-import ru.bratusev.domain.models.Team
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import retrofit2.HttpException
+import ru.bratusev.domain.Resource
+import ru.bratusev.domain.models.AuthorizeResponse
+import ru.bratusev.domain.models.TeamListResponse
 import ru.bratusev.domain.repository.TeamsRepository
+import java.io.IOException
 
 class GetTeamsListUseCase(private val teamsRepository: TeamsRepository) {
 
-    fun execute(): ArrayList<Team> {
-        return arrayListOf(Team("Химки"), Team("ЦСКА"),Team("Спартак"))
+    operator fun invoke() : Flow<Resource<ArrayList<TeamListResponse>>> = flow{
+        try {
+            emit(Resource.Loading())
+            val data = teamsRepository.getTeams()
+            emit(Resource.Success(data))
+        } catch(e: HttpException) {
+            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occured"))
+        } catch(e: IOException) {
+            emit(Resource.Error("Couldn't reach server. Check your internet connection."))
+        }
     }
 }

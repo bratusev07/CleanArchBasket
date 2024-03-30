@@ -14,7 +14,7 @@ class UserRepositoryImpl(private val userStorage: UserStorage) : UserRepository 
         return userStorage.authorize(userModel = UserModel(mail = userData.mail, password = userData.password)).toResponse()
     }
 
-    override fun registerUser(userData: UserData): RegistrationResponse {
+    override suspend fun registerUser(userData: UserData): RegistrationResponse {
         return userStorage.register(userModel = UserModel(mail = userData.mail, password = userData.password)).toResponse()
     }
 }

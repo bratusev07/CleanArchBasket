@@ -2,13 +2,17 @@ package ru.bratusev.data.storage.network
 
 import android.content.Context
 import ru.bratusev.data.storage.TeamsStorage
+import ru.bratusev.data.storage.models.TeamListDto
+import ru.bratusev.data.storage.models.TeamListDtoItem
 import ru.bratusev.data.storage.models.TeamModel
+import ru.bratusev.data.storage.network.Common.key
+import ru.bratusev.data.storage.network.Common.token
+import ru.bratusev.data.storage.network.Common.userId
 
 class NetWorkTeamsStorage(context: Context) : TeamsStorage {
 
-    override fun getTeams(): ArrayList<TeamModel> {
-        Common.retrofitService.getTeams()
-        return arrayListOf(TeamModel("Химки"), TeamModel("ЦСКА"), TeamModel("Спартак"))
+    override suspend fun getTeams(): TeamListDto {
+        return Common.retrofitService.getTeams(key, "Bearer $token", "eq.${userId}")
     }
 
     override fun removeTeam(index: Int): Boolean {

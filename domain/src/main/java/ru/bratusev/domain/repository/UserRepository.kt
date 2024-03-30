@@ -8,5 +8,5 @@ interface UserRepository {
 
     suspend fun authorizeUser(userData: UserData): AuthorizeResponse
 
-    fun registerUser(userData: UserData): RegistrationResponse
+    suspend fun registerUser(userData: UserData): RegistrationResponse
 }

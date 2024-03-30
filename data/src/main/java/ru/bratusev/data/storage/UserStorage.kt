@@ -8,5 +8,5 @@ interface UserStorage {
 
     suspend fun authorize(userModel: UserModel): AuthorizeDto
 
-    fun register(userModel: UserModel): RegistrationDto
+    suspend fun register(userModel: UserModel): RegistrationDto
 }
