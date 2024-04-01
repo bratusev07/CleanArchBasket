@@ -29,7 +29,7 @@ class SelectPlayersFragment : Fragment() {
             val playersInGameGrid = it.findViewById<GridView>(R.id.selectedPlayer_gridView)
             it.findViewById<AppCompatButton>(R.id.selectPlayers_nextBtn).setOnClickListener {
                 val bundle = Bundle()
-                bundle.putSerializable("GameDate", (arguments?.getSerializable("GameDate")))
+                bundle.putString("GameDate", (arguments?.getString("GameDate")).toString())
                 bundle.putSerializable("GameMyTeam", (arguments?.getSerializable("GameMyTeam")))
                 bundle.putSerializable("GameEnemyTeam", (arguments?.getSerializable("GameEnemyTeam")))
                 findNavController().navigate(R.id.action_selectPlayersFragment_to_selectEnemyFragment, bundle)

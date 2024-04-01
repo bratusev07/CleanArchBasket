@@ -13,7 +13,13 @@ import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.games.adapter.EnemyGridAdapter
+import ru.bratusev.domain.models.GameModel
 import ru.bratusev.domain.models.Player
+import ru.bratusev.domain.models.Team
+import ru.bratusev.domain.models.TeamListResponse
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class SelectEnemyFragment : Fragment() {
 
@@ -32,9 +38,13 @@ class SelectEnemyFragment : Fragment() {
             }
             it.findViewById<AppCompatButton>(R.id.selectEnemy_startGameBtn).setOnClickListener {
                 val bundle = Bundle()
-                bundle.putSerializable("GameDate", (arguments?.getSerializable("GameDate")))
+                bundle.putString("GameDate", (arguments?.getString("GameDate")).toString())
                 bundle.putSerializable("GameMyTeam", (arguments?.getSerializable("GameMyTeam")))
                 bundle.putSerializable("GameEnemyTeam", (arguments?.getSerializable("GameEnemyTeam")))
+                vm.createGame(GameModel(
+                    ((arguments?.getString("GameDate")).toString()),
+                    (arguments?.getSerializable("GameMyTeam") as TeamListResponse).id,
+                    (arguments?.getSerializable("GameEnemyTeam") as TeamListResponse).id))
                 findNavController().navigate(R.id.action_selectEnemyFragment_to_timeFragment, bundle)
             }
             requireActivity().onBackPressedDispatcher.addCallback(

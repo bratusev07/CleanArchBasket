@@ -8,8 +8,9 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import ru.bratusev.basketfeature.R
 import ru.bratusev.domain.models.Team
+import ru.bratusev.domain.models.TeamListResponse
 
-class CustomDropDownAdapter(context: Context, private var listItemsTxt: ArrayList<Team>) :
+class CustomDropDownAdapter(context: Context, private var listItemsTxt: ArrayList<TeamListResponse>) :
     BaseAdapter() {
 
 

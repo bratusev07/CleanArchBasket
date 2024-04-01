@@ -2,13 +2,9 @@ package ru.bratusev.domain.models
 
 import java.io.Serializable
 
-class Team(var name: String = "Без названия", val players: ArrayList<Player> = ArrayList()) : Serializable{
+class Team(val teamId: String = "", var name: String = "Без названия") : Serializable{
     override fun toString(): String {
-        var playerString = "["
-        for (player in players) {
-            playerString += player.toString()
-        }
-        playerString += "]"
+        val playerString = "["
         return "Team $name $playerString"
     }
 }

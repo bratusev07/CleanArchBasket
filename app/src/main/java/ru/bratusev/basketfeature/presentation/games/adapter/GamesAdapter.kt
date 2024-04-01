@@ -10,8 +10,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import ru.bratusev.basketfeature.R
+import ru.bratusev.domain.models.GameModel
 
-class GamesAdapter(private val items: List<String>, private val fragment: Fragment) :
+class GamesAdapter(private val items: ArrayList<GameModel>, private val fragment: Fragment) :
     RecyclerView.Adapter<GamesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -63,8 +64,8 @@ class GamesAdapter(private val items: List<String>, private val fragment: Fragme
             itemView.setOnTouchListener(touchListener)
         }
 
-        fun bind(item: String) {
-            gameName.text = item
+        fun bind(item: GameModel) {
+            gameName.text = item.date
         }
     }
 }

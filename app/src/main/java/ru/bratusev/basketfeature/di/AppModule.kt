@@ -49,11 +49,13 @@ val appModule = module {
     }
 
     viewModel<SelectEnemyViewModel>{
-        SelectEnemyViewModel()
+        SelectEnemyViewModel(
+            createGameUseCase = get()
+        )
     }
 
     viewModel<GameViewModel>{
-        GameViewModel()
+        GameViewModel(getGameListUseCase = get())
     }
 
     viewModel<SelectTeamsViewModel>{

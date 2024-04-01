@@ -1,14 +1,17 @@
 package ru.bratusev.data.storage.models
 
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import ru.bratusev.domain.models.TeamListResponse
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class TeamListDtoItem(
     val id: String,
     val name: String,
-    val user_id: String
+    @SerialName("user_id")
+    val userId: String
 )
 
 fun TeamListDtoItem.toResponse() : TeamListResponse {
-    return TeamListResponse(id, name, user_id)
+    return TeamListResponse(id, name, userId)
 }

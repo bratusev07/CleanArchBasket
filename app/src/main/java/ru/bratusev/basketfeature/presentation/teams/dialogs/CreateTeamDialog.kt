@@ -45,7 +45,7 @@ class CreateTeamDialog(private val vm: TeamsViewModel) : BottomSheetDialogFragme
             for ((index, text) in enteredTexts.withIndex()) {
                 players.add(Player(number = text.toInt()))
             }
-            vm.createTeam(Team(nameInput.text.toString(), players))
+            vm.createTeam(Team(name = nameInput.text.toString()))
             dismiss()
         }
         playerCounter.setOnSeekBarChangeListener(this)

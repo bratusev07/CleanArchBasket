@@ -1,5 +1,6 @@
 package ru.bratusev.basketfeature.presentation.games.view
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,12 +16,14 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.games.adapter.CustomDropDownAdapter
 import java.io.Serializable
+import java.text.SimpleDateFormat
 import java.util.Calendar
 
 
 class SelectTeamsFragment : Fragment() {
 
     private val vm: SelectTeamsViewModel by viewModel<SelectTeamsViewModel>()
+    @SuppressLint("SimpleDateFormat")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,7 +36,7 @@ class SelectTeamsFragment : Fragment() {
             it.findViewById<DatePicker>(R.id.selectTeam_DataPicker).maxDate = calendar.timeInMillis
             it.findViewById<AppCompatButton>(R.id.selectTeams_nextBtn).setOnClickListener {
                 val bundle = Bundle()
-                bundle.putSerializable("GameDate", calendar.time)
+                bundle.putString("GameDate", SimpleDateFormat("MM-dd-yyyy").format(calendar.time))
                 bundle.putSerializable("GameMyTeam", myTeam.selectedItem as Serializable?)
                 bundle.putSerializable("GameEnemyTeam", enemyTeam.selectedItem as Serializable?)
                 findNavController().navigate(R.id.action_selectTeamsFragment_to_selectPlayersFragment, bundle)
