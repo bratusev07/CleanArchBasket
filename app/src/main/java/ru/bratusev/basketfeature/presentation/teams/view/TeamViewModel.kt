@@ -30,19 +30,62 @@ class TeamViewModel(
     private val playerListMutable = MutableLiveData<ArrayList<Player>>()
     internal val playerList: LiveData<ArrayList<Player>> = playerListMutable
 
+    private var teamId = ""
+
     internal fun createPlayer(player: Player) {
-        if (validateData(player)) createPlayerUseCase.invoke(player)
+        player.teamId = teamId
+        if (validateData(player)) createPlayerUseCase.invoke(player).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    Log.d("MyNewLog", "Resource.Success")
+                    getPlayersList(teamId)
+                }
+                is Resource.Error -> {
+                    Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
+                }
+                is Resource.Loading -> {
+                    Log.d("MyNewLog", "Resource.Loading")
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
-    internal fun removePlayer(index: Int) {
-        removePlayerUseCase.invoke(index.toString())
+    internal fun removePlayer(id: String) {
+        removePlayerUseCase.invoke(id).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    Log.d("MyNewLog", "Resource.Success")
+                    getPlayersList(teamId)
+                }
+                is Resource.Error -> {
+                    Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
+                }
+                is Resource.Loading -> {
+                    Log.d("MyNewLog", "Resource.Loading")
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
-    internal fun updatePlayer(player: Player, index: Int) {
-        if(validateData(player)) updatePlayerUseCase.invoke(player, index.toString())
+    internal fun updatePlayer(player: Player) {
+        if(validateData(player)) updatePlayerUseCase.invoke(player).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    Log.d("MyNewLog", "Resource.Success")
+                    getPlayersList(teamId)
+                }
+                is Resource.Error -> {
+                    Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
+                }
+                is Resource.Loading -> {
+                    Log.d("MyNewLog", "Resource.Loading")
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     internal fun getPlayersList(teamId: String) {
+        this.teamId = teamId
         getPlayersListUseCase.invoke(teamId).onEach { result ->
             when (result) {
                 is Resource.Success -> {

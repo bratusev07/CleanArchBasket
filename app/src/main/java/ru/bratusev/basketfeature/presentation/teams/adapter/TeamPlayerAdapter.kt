@@ -49,7 +49,6 @@ class TeamPlayerAdapter(
                     view.tag = motionEvent.x
                     true
                 }
-
                 MotionEvent.ACTION_UP -> {
                     val startX = view.tag as Float
                     val endX = motionEvent.x
@@ -57,17 +56,13 @@ class TeamPlayerAdapter(
                     if (deltaX > 50) {
                         UpdatePlayerDialog(
                             vm,
-                            items[position],
-                            position
+                            items[position]
                         ).show(fragment.parentFragmentManager, "UpdatePlayerDialog")
-                        Toast.makeText(fragment.requireContext(), "Updated", Toast.LENGTH_SHORT).show()
                     } else if (deltaX < -50) {
-                        vm.removePlayer(position)
-                        Toast.makeText(fragment.requireContext(), "Deleted", Toast.LENGTH_SHORT).show()
+                        vm.removePlayer(items[position].id)
                     }
                     true
                 }
-
                 else -> false
             }
         }

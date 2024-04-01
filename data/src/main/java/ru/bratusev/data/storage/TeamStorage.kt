@@ -7,9 +7,9 @@ interface TeamStorage {
 
     suspend fun getPlayers(teamId: String) : ArrayList<PlayerModel>
 
-    suspend fun removePlayer(id: String) : Boolean
+    suspend fun removePlayer(id: String)
 
-    suspend fun updatePlayer(player: PlayerModel, id: String) : Boolean
+    suspend fun updatePlayer(player: PlayerModel)
 
-    suspend fun createPlayer(player: PlayerModel) : Boolean
+    suspend fun createPlayer(player: PlayerModel)
 }

@@ -11,10 +11,10 @@ import java.io.IOException
 
 class UpdatePlayerUseCase(private val teamRepository: TeamRepository) {
 
-    operator fun invoke(player: Player, id: String): Flow<Resource<Boolean>> = flow {
+    operator fun invoke(player: Player): Flow<Resource<Boolean>> = flow {
         try {
             emit(Resource.Loading())
-            val data = teamRepository.updatePlayer(player, id)
+            val data = teamRepository.updatePlayer(player)
             emit(Resource.Success(data))
         } catch(e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occured"))

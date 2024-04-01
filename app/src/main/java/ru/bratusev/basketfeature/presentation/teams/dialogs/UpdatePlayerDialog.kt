@@ -15,7 +15,6 @@ import ru.bratusev.domain.models.Player
 class UpdatePlayerDialog(
     private val vm: TeamViewModel,
     private val player: Player,
-    private val index: Int
 ) : BottomSheetDialogFragment() {
 
     override fun onCreateView(
@@ -42,15 +41,11 @@ class UpdatePlayerDialog(
         numberInput.text = Editable.Factory.getInstance().newEditable(player.number.toString())
 
         view.findViewById<AppCompatButton>(R.id.updatePlayerDialog_okBtn).setOnClickListener {
-            vm.updatePlayer(
-                Player(
-                    name = nameInput.text.toString(),
-                    number = numberInput.text.toString().toInt(),
-                    surname = surnameInput.text.toString(),
-                    lastName = lastnameInput.text.toString()
-                ),
-                index
-            )
+            player.name = nameInput.text.toString()
+            player.number = numberInput.text.toString().toInt()
+            player.surname = surnameInput.text.toString()
+            player.lastName = lastnameInput.text.toString()
+            vm.updatePlayer(player)
             dismiss()
         }
     }

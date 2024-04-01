@@ -2,6 +2,7 @@ package ru.bratusev.data.storage.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import ru.bratusev.domain.models.Player
 
 @Serializable
 class PlayerModel(
@@ -15,5 +16,17 @@ class PlayerModel(
     val teamId: String = "",
     val id: String = "",
     @SerialName("user_id")
-    val userId: String = "",
+    var userId: String = "",
 )
+
+internal fun PlayerModel.toResponse(): Player {
+    return Player(
+        id = id,
+        userId = userId,
+        teamId = teamId,
+        name = name,
+        surname = firstName,
+        lastName = fatherName,
+        number = number
+    )
+}
