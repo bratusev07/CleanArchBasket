@@ -25,23 +25,23 @@ interface RetrofitServices {
     suspend fun getTeams(@Header("apikey") apikey: String, @Header("Authorize") authorize: String, @Query("user_id") id: String): TeamListDto
 
     @POST("removeTeam")
-    fun removeTeam(@Query("id") id: Int): Call<Void>
+    suspend fun removeTeam(@Query("id") id: String): Call<Void>
 
     @POST("updateTeam")
-    fun updateTeam(@Query("id") id: Int, @Body name: String): Call<Void>
+    suspend fun updateTeam(@Query("id") id: String, @Body name: String): Boolean
 
     @POST("createTeam")
-    fun createTeam(@Body teamModel: TeamModel): Call<Void>
+    suspend fun createTeam(@Body teamModel: TeamModel): Boolean
 
     @GET("players")
-    fun getPlayers(): Call<Void>
+    suspend fun getPlayers(): Boolean
 
     @POST("removePlayer")
-    fun removePlayer(@Query("id") id: Int): Call<Void>
+    suspend fun removePlayer(@Query("id") id: String): Boolean
 
     @POST("updateTeam")
-    fun updatePlayer(@Query("id") id: Int, @Body playerModel: PlayerModel): Call<Void>
+    suspend fun updatePlayer(@Query("id") id: String, @Body playerModel: PlayerModel): Call<Void>
 
     @POST("createPlayer")
-    fun createPlayer(@Body playerModel: PlayerModel): Call<Void>
+    suspend fun createPlayer(@Body playerModel: PlayerModel): Call<Void>
 }

@@ -1,8 +1,14 @@
 package ru.bratusev.basketfeature.presentation.teams.view
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import ru.bratusev.domain.Resource
+import ru.bratusev.domain.models.AuthorizeResponse
 import ru.bratusev.domain.models.Player
 import ru.bratusev.domain.usecase.CreatePlayerUseCase
 import ru.bratusev.domain.usecase.GetPlayersListUseCase
@@ -25,19 +31,32 @@ class TeamViewModel(
     internal val playerList: LiveData<ArrayList<Player>> = playerListMutable
 
     internal fun createPlayer(player: Player) {
-        if (validateData(player)) createPlayerUseCase.execute(player)
+        if (validateData(player)) createPlayerUseCase.invoke(player)
     }
 
     internal fun removePlayer(index: Int) {
-        removePlayerUseCase.execute(index)
+        removePlayerUseCase.invoke(index.toString())
     }
 
     internal fun updatePlayer(player: Player, index: Int) {
-        if(validateData(player)) updatePlayerUseCase.execute(player, index)
+        if(validateData(player)) updatePlayerUseCase.invoke(player, index.toString())
     }
 
-    internal fun getPlayersList() {
-        playerListMutable.value = getPlayersListUseCase.execute()
+    internal fun getPlayersList(teamId: String) {
+        getPlayersListUseCase.invoke(teamId).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    Log.d("MyNewLog", "Resource.Success")
+                    playerListMutable.value = result.data as ArrayList<Player>
+                }
+                is Resource.Error -> {
+                    Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
+                }
+                is Resource.Loading -> {
+                    Log.d("MyNewLog", "Resource.Loading")
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     private fun validateData(player: Player): Boolean {

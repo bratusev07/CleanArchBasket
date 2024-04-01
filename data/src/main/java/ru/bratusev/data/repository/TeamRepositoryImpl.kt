@@ -10,31 +10,31 @@ class TeamRepositoryImpl(private val teamStorage: TeamStorage) : TeamRepository 
     private fun parseModelToPlayers(list: ArrayList<PlayerModel>): ArrayList<Player> {
         val result = ArrayList<Player>()
         for (playerModel in list) {
-            result.add(Player(playerModel.name, playerModel.number, playerModel.lastName, playerModel.surname))
+            result.add(Player(playerModel.id, playerModel.userId, playerModel.name, playerModel.number, playerModel.fatherName, playerModel.firstName))
         }
         return result
     }
 
-    override fun getPlayers(): ArrayList<Player> {
-        return parseModelToPlayers(teamStorage.getPlayers())
+    override suspend fun getPlayers(teamId: String): ArrayList<Player> {
+        return parseModelToPlayers(teamStorage.getPlayers(teamId))
     }
 
-    override fun removePlayer(index: Int): Boolean {
-        return teamStorage.removePlayer(index)
+    override suspend fun removePlayer(id: String): Boolean {
+        return teamStorage.removePlayer(id)
     }
 
-    override fun updatePlayer(player: Player, index: Int): Boolean {
+    override suspend fun updatePlayer(player: Player, id: String): Boolean {
         return teamStorage.updatePlayer(
             PlayerModel(
                 player.name,
                 player.number,
                 player.lastName,
                 player.surname
-            ), index
+            ), id
         )
     }
 
-    override fun createPlayer(player: Player): Boolean {
+    override suspend fun createPlayer(player: Player): Boolean {
         return teamStorage.createPlayer(
             PlayerModel(
                 player.name,

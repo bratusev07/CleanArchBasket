@@ -12,7 +12,7 @@ class SelectTeamsViewModel(private val getTeamsListUseCase: GetTeamsListUseCase)
     internal val teams : LiveData<ArrayList<Team>> = teamsMutable
 
     internal fun getTeamsList(){
-        //teamsMutable.value = getTeamsListUseCase.execute()
+        //teamsMutable.value = getTeamsListUseCase.invoke()
     }
 
 }

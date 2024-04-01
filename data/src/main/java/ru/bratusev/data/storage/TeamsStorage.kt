@@ -8,9 +8,9 @@ interface TeamsStorage {
 
     suspend fun getTeams() : ArrayList<TeamListDtoItem>
 
-    fun removeTeam(index: Int) : Boolean
+    suspend fun removeTeam(id: String)
 
-    fun updateTeam(name: String, index: Int) : Boolean
+    suspend fun updateTeam(name: String, id: String)
 
-    fun createTeam(teamModel: TeamModel): Boolean
+    suspend fun createTeam(teamModel: TeamModel)
 }

@@ -45,7 +45,7 @@ class TeamFragment : Fragment() {
                 })
 
             teamList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            vm.getPlayersList()
+            vm.getPlayersList(teamId = arguments?.getString("teamId").toString())
 
             vm.playerList.observe(viewLifecycleOwner){
                 teamList.adapter = TeamPlayerAdapter(vm.playerList.value!!, this, vm)

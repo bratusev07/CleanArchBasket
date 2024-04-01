@@ -8,13 +8,14 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.textfield.TextInputEditText
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.teams.view.TeamsViewModel
+import ru.bratusev.domain.models.Team
 
 class UpdateTeamDialog(private val context: Context) {
     private val dialogView: View =
         LayoutInflater.from(context).inflate(R.layout.update_team_dialog, null)
 
-    fun show(name: String) : String {
-        var result = name
+    fun show(id: String, vm: TeamsViewModel) {
         val builder = AlertDialog.Builder(context)
         builder.setView(dialogView)
         val alertDialog = builder.create()
@@ -22,12 +23,10 @@ class UpdateTeamDialog(private val context: Context) {
         alertDialog.findViewById<AppCompatButton>(R.id.updateTeamDialog_okBtn).setOnClickListener {
             val teamName = alertDialog.findViewById<TextInputEditText>(R.id.updateTeamDialog_nameInput).text.toString()
             if(teamName.isNotEmpty()){
+                vm.updateTeam(teamName, id)
                 alertDialog.dismiss()
-                result = teamName
             }
             else Toast.makeText(context, "Введите название команды", Toast.LENGTH_SHORT).show()
         }
-
-        return result
     }
 }

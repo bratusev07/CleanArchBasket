@@ -1,6 +1,7 @@
 package ru.bratusev.basketfeature.presentation.teams.adapter
 
 import android.annotation.SuppressLint
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
@@ -55,25 +56,17 @@ class TeamsAdapter(
                     val endX = motionEvent.x
                     val deltaX = endX - startX
                     if (deltaX > 50) {
-                        Toast.makeText(fragment.requireContext(), "Remove", Toast.LENGTH_SHORT)
-                            .show()
-                        vm.removeTeam(position)
+                        vm.removeTeam(items?.get(position)?.id ?: "")
                     } else if (deltaX < -50) {
-                        Toast.makeText(fragment.requireContext(), "Update", Toast.LENGTH_SHORT)
-                            .show()
-                        vm.updateTeam(
-                            UpdateTeamDialog(fragment.requireContext()).show(
-                                items?.get(
-                                    position
-                                )?.name ?: "Default name"
-                            ), position
-                        )
-                    } else fragment.findNavController()
-                        .navigate(R.id.action_teamsFragment_to_teamFragment)
-
+                        UpdateTeamDialog(fragment.requireContext()).show(items?.get(position)?.id ?: "", vm)
+                    } else {
+                        val bundle = Bundle()
+                        bundle.putString("teamId", items?.get(position)?.id)
+                        fragment.findNavController()
+                            .navigate(R.id.action_teamsFragment_to_teamFragment, bundle)
+                    }
                     true
                 }
-
                 else -> false
             }
         }

@@ -7,9 +7,9 @@ interface TeamsRepository {
 
     suspend fun getTeams() : ArrayList<TeamListResponse>
 
-    fun removeTeam(index: Int) : Boolean
+    suspend fun removeTeam(id: String) : Boolean
 
-    fun updateTeam(name: String, index: Int) : Boolean
+    suspend fun updateTeam(name: String, id: String) : Boolean
 
-    fun createTeam(team: Team): Boolean
+    suspend fun createTeam(team: Team): Boolean
 }

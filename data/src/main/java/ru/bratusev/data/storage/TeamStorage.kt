@@ -5,11 +5,11 @@ import ru.bratusev.data.storage.models.PlayerModel
 
 interface TeamStorage {
 
-    fun getPlayers() : ArrayList<PlayerModel>
+    suspend fun getPlayers(teamId: String) : ArrayList<PlayerModel>
 
-    fun removePlayer(index: Int) : Boolean
+    suspend fun removePlayer(id: String) : Boolean
 
-    fun updatePlayer(player: PlayerModel, index: Int) : Boolean
+    suspend fun updatePlayer(player: PlayerModel, id: String) : Boolean
 
-    fun createPlayer(player: PlayerModel) : Boolean
+    suspend fun createPlayer(player: PlayerModel) : Boolean
 }

@@ -17,19 +17,25 @@ class NetWorkTeamsStorage(context: Context) : TeamsStorage {
         return response.decodeList<TeamListDtoItem>() as ArrayList<TeamListDtoItem>
     }
 
-    override fun removeTeam(index: Int): Boolean {
-        Common.retrofitService.removeTeam(index)
-        return true
+    override suspend fun removeTeam(id: String) {
+        getSupabaseService().postgrest["teams"].delete {
+            eq("id",id)
+        }
     }
 
-    override fun updateTeam(name: String, index: Int): Boolean {
-        Common.retrofitService.updateTeam(index, name)
-        return true
+    override suspend fun updateTeam(name: String, id: String) {
+        getSupabaseService().postgrest["teams"].update(
+            {
+                set("name", name)
+            }
+        ){
+            eq("id", id)
+        }
     }
 
-    override fun createTeam(teamModel: TeamModel): Boolean {
-        Common.retrofitService.createTeam(teamModel)
-        return true
+    override suspend fun createTeam(teamModel: TeamModel) {
+        teamModel.userId = userId
+        getSupabaseService().postgrest["teams"].insert(teamModel)
     }
 
 }

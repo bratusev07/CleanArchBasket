@@ -4,11 +4,8 @@ import ru.bratusev.domain.models.Player
 
 interface TeamRepository {
 
-    fun getPlayers() : ArrayList<Player>
-
-    fun removePlayer(index: Int) : Boolean
-
-    fun updatePlayer(player: Player, index: Int) : Boolean
-
-    fun createPlayer(player: Player) : Boolean
+    suspend fun getPlayers(teamId: String) : ArrayList<Player>
+    suspend fun removePlayer(id: String) : Boolean
+    suspend fun updatePlayer(player: Player, id: String) : Boolean
+    suspend fun createPlayer(player: Player) : Boolean
 }
