@@ -1,4 +1,4 @@
-package ru.bratusev.basketfeature.presentation.diagrams
+package ru.bratusev.basketfeature.presentation.games.diagrams
 
 import android.content.Context
 import android.graphics.Canvas

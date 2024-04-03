@@ -13,9 +13,9 @@ class ActionRepositoryImpl(private val actionStorage: ActionStorage) : ActionRep
         return true
     }
 
-    override suspend fun getActions(): ArrayList<ActionModel> {
+    override suspend fun getActions(id: String): ArrayList<ActionModel> {
         val result = ArrayList<ActionModel>()
-        for (action in actionStorage.getActions()) {
+        for (action in actionStorage.getActions(id)) {
             result.add(action.toResponse())
         }
         return result

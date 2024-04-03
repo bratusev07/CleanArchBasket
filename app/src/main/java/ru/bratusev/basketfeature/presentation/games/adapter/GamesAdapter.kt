@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.bratusev.basketfeature.R
 import ru.bratusev.domain.models.GameModel
@@ -52,6 +53,8 @@ class GamesAdapter(private val items: ArrayList<GameModel>, private val fragment
                     } else if (deltaX < -50) {
                         Toast.makeText(fragment.requireContext(), "Update", Toast.LENGTH_SHORT)
                             .show()
+                    } else {
+                        fragment.findNavController().navigate(R.id.action_gamesFragment_to_statsFragment)
                     }
                     true
                 }

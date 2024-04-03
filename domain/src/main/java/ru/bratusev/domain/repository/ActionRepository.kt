@@ -6,5 +6,5 @@ interface ActionRepository {
 
     suspend fun createAction(actionModel: ActionModel) : Boolean
 
-    suspend fun getActions() : ArrayList<ActionModel>
+    suspend fun getActions(id: String) : ArrayList<ActionModel>
 }

@@ -52,6 +52,9 @@
         <action
             android:id="@+id/action_gamesFragment_to_selectTeamsFragment"
             app:destination="@id/selectTeamsFragment" />
+        <action
+            android:id="@+id/action_gamesFragment_to_statsFragment"
+            app:destination="@id/statsFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectTeamsFragment"
@@ -214,6 +217,18 @@
         <action
             android:id="@+id/action_teamFragment_to_gamesFragment"
             app:destination="@id/gamesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/statsFragment"
+        android:name="ru.bratusev.basketfeature.presentation.games.view.StatsFragment"
+        android:label="StatsFragment"
+        tools:layout="@layout/fragment_actions">
+        <action
+            android:id="@+id/action_statsFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+        <action
+            android:id="@+id/action_statsFragment_to_timeFragment"
+            app:destination="@id/timeFragment" />
     </fragment>
 
 </navigation>

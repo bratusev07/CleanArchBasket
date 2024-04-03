@@ -6,5 +6,5 @@ interface ActionStorage {
 
     suspend fun createAction(action: ActionDto)
 
-    suspend fun getActions() : ArrayList<ActionDto>
+    suspend fun getActions(id: String) : ArrayList<ActionDto>
 }

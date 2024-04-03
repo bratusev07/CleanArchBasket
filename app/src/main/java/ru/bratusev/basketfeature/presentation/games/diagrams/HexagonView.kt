@@ -1,4 +1,4 @@
-package ru.bratusev.basketfeature.presentation.diagrams
+package ru.bratusev.basketfeature.presentation.games.diagrams
 
 import android.content.Context
 import android.graphics.Canvas
@@ -6,11 +6,12 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.view.View
+import ru.bratusev.basketfeature.presentation.games.view.StatsFragment
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 
-class HexagonView(context: Context, private val messagesArray: ArrayList<String>, private val pointList1: ArrayList<Point>, private val pointList2: ArrayList<Point>) : View(context) {
+class HexagonView(context: Context, private val messagesArray: ArrayList<String>, private val pointList1: ArrayList<StatsFragment.Point>, private val pointList2: ArrayList<StatsFragment.Point>) : View(context) {
 
     private val paintBack = Paint()
     private val paintText = Paint()
@@ -98,7 +99,7 @@ class HexagonView(context: Context, private val messagesArray: ArrayList<String>
         canvas.drawPath(path, paintBack)
     }
 
-    private fun drawZone(canvas: Canvas, pointList: ArrayList<Point>, isEnemy: Boolean = false) {
+    private fun drawZone(canvas: Canvas, pointList: ArrayList<StatsFragment.Point>, isEnemy: Boolean = false) {
         val dot = if(isEnemy) paintEnemyDot else paintTeamDot
         val zone = if(isEnemy) paintEnemyZone else paintTeamZone
 

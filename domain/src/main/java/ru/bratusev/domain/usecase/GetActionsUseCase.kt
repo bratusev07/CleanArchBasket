@@ -10,10 +10,10 @@ import java.io.IOException
 
 class GetActionsUseCase(private val actionRepository: ActionRepository) {
 
-    operator fun invoke() : Flow<Resource<ArrayList<ActionModel>>> = flow{
+    operator fun invoke(id: String) : Flow<Resource<ArrayList<ActionModel>>> = flow{
         try {
             emit(Resource.Loading())
-            val data = actionRepository.getActions()
+            val data = actionRepository.getActions(id)
             emit(Resource.Success(data))
         } catch(e: HttpException) {
             emit(Resource.Error(e.localizedMessage ?: "An unexpected error occured"))
