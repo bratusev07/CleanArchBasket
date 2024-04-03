@@ -14,19 +14,19 @@ import ru.bratusev.basketfeature.presentation.teams.view.TeamsViewModel
 
 val appModule = module {
 
-    viewModel<SignInViewModel>{
+    viewModel<SignInViewModel> {
         SignInViewModel(
             authorizeUseCase = get()
         )
     }
 
-    viewModel<SignUpViewModel>{
+    viewModel<SignUpViewModel> {
         SignUpViewModel(
             registrationUseCase = get()
         )
     }
 
-    viewModel<TeamsViewModel>{
+    viewModel<TeamsViewModel> {
         TeamsViewModel(
             getTeamsListUseCase = get(),
             removeTeamUseCase = get(),
@@ -35,7 +35,7 @@ val appModule = module {
         )
     }
 
-    viewModel<TeamViewModel>{
+    viewModel<TeamViewModel> {
         TeamViewModel(
             getPlayersListUseCase = get(),
             removePlayerUseCase = get(),
@@ -44,27 +44,30 @@ val appModule = module {
         )
     }
 
-    viewModel<SelectPlayersViewModel>{
+    viewModel<SelectPlayersViewModel> {
         SelectPlayersViewModel()
     }
 
-    viewModel<SelectEnemyViewModel>{
+    viewModel<SelectEnemyViewModel> {
         SelectEnemyViewModel(
             createGameUseCase = get()
         )
     }
 
-    viewModel<GameViewModel>{
-        GameViewModel(getGameListUseCase = get())
-    }
-
-    viewModel<SelectTeamsViewModel>{
-        SelectTeamsViewModel(
-                getTeamsListUseCase = get()
+    viewModel<GameViewModel> {
+        GameViewModel(
+            getGameListUseCase = get(),
+            getTeamByIdUseCase = get()
         )
     }
 
-    viewModel<TimeViewModel>{
+    viewModel<SelectTeamsViewModel> {
+        SelectTeamsViewModel(
+            getTeamsListUseCase = get()
+        )
+    }
+
+    viewModel<TimeViewModel> {
         TimeViewModel()
     }
 }

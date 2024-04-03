@@ -16,6 +16,10 @@ class TeamsRepositoryImpl(private val teamsStorage: TeamsStorage) : TeamsReposit
         return parseModelToTeams(teamsStorage.getTeams())
     }
 
+    override suspend fun getTeamById(id: String): TeamListResponse {
+        return teamsStorage.getTeamById(id).toResponse()
+    }
+
     override suspend fun removeTeam(id: String): Boolean {
         teamsStorage.removeTeam(id = id)
         return true

@@ -17,6 +17,12 @@ class NetWorkTeamsStorage(context: Context) : TeamsStorage {
         return response.decodeList<TeamListDtoItem>() as ArrayList<TeamListDtoItem>
     }
 
+    override suspend fun getTeamById(id: String): TeamListDtoItem {
+        return getSupabaseService().postgrest["teams"].select {
+            eq("id", id)
+        }.decodeAs<TeamListDtoItem>()
+    }
+
     override suspend fun removeTeam(id: String) {
         getSupabaseService().postgrest["teams"].delete {
             eq("id",id)

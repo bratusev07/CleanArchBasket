@@ -9,10 +9,13 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.bratusev.domain.Resource
 import ru.bratusev.domain.models.GameModel
-import ru.bratusev.domain.models.TeamListResponse
 import ru.bratusev.domain.usecase.GetGameListUseCase
+import ru.bratusev.domain.usecase.GetTeamByIdUseCase
 
-class GameViewModel(private val getGameListUseCase: GetGameListUseCase) : ViewModel() {
+class GameViewModel(
+    private val getGameListUseCase: GetGameListUseCase,
+    private val getTeamByIdUseCase: GetTeamByIdUseCase
+) : ViewModel() {
 
     private val gameListMutable = MutableLiveData<ArrayList<GameModel>>()
     internal val gameList: LiveData<ArrayList<GameModel>> = gameListMutable
@@ -24,9 +27,29 @@ class GameViewModel(private val getGameListUseCase: GetGameListUseCase) : ViewMo
                     Log.d("MyNewLog", "Resource.Success")
                     gameListMutable.value = result.data as ArrayList<GameModel>
                 }
+
                 is Resource.Error -> {
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
+
+                is Resource.Loading -> {
+                    Log.d("MyNewLog", "Resource.Loading")
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    internal fun getTeamById(id: String) {
+        getTeamByIdUseCase.invoke(id).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    Log.d("MyNewLog", "Resource.Success")
+                }
+
+                is Resource.Error -> {
+                    Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
+                }
+
                 is Resource.Loading -> {
                     Log.d("MyNewLog", "Resource.Loading")
                 }

@@ -65,7 +65,8 @@ class GamesAdapter(private val items: ArrayList<GameModel>, private val fragment
         }
 
         fun bind(item: GameModel) {
-            gameName.text = item.date
+            gameName.text = item.gameName
+            gameDate.text = item.date
         }
     }
 }

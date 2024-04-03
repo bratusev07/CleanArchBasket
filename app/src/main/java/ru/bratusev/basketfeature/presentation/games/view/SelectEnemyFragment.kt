@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
@@ -31,20 +32,28 @@ class SelectEnemyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_select_enemy, container, false).also {
+            val myTeam = (arguments?.getSerializable("GameMyTeam") as TeamListResponse)
+            val enemyTeam = (arguments?.getSerializable("GameEnemyTeam") as TeamListResponse)
+
             val playersGrid = it.findViewById<GridView>(R.id.selectEnemy_GridView)
             val playersInGameGrid = it.findViewById<GridView>(R.id.selectedEnemy_GridView)
+
+            it.findViewById<TextView>(R.id.selectEnemy_teamName).text = enemyTeam.name
             it.findViewById<ImageView>(R.id.selectEnemy_back).setOnClickListener {
                 findNavController().navigate(R.id.action_selectEnemyFragment_to_selectPlayersFragment)
             }
             it.findViewById<AppCompatButton>(R.id.selectEnemy_startGameBtn).setOnClickListener {
                 val bundle = Bundle()
                 bundle.putString("GameDate", (arguments?.getString("GameDate")).toString())
-                bundle.putSerializable("GameMyTeam", (arguments?.getSerializable("GameMyTeam")))
-                bundle.putSerializable("GameEnemyTeam", (arguments?.getSerializable("GameEnemyTeam")))
+                bundle.putSerializable("GameMyTeam", myTeam)
+                bundle.putSerializable("GameEnemyTeam", enemyTeam)
+
                 vm.createGame(GameModel(
                     ((arguments?.getString("GameDate")).toString()),
-                    (arguments?.getSerializable("GameMyTeam") as TeamListResponse).id,
-                    (arguments?.getSerializable("GameEnemyTeam") as TeamListResponse).id))
+                    myTeam.id,
+                    enemyTeam.id,
+                    "${myTeam.name} – ${enemyTeam.name}"
+                ))
                 findNavController().navigate(R.id.action_selectEnemyFragment_to_timeFragment, bundle)
             }
             requireActivity().onBackPressedDispatcher.addCallback(

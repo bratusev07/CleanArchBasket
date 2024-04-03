@@ -13,9 +13,11 @@ data class Game(
     @SerialName("team_b")
     val teamB: String,
     @SerialName("user_id")
-    var userId: String = ""
+    var userId: String = "",
+    @SerialName("game_name")
+    var gameName: String
 )
 
 internal fun Game.toResponse(): GameModel{
-    return GameModel(date, teamA, teamB)
+    return GameModel(date, teamA, teamB, gameName)
 }

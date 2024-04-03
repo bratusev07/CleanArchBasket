@@ -8,6 +8,8 @@ interface TeamsStorage {
 
     suspend fun getTeams() : ArrayList<TeamListDtoItem>
 
+    suspend fun getTeamById(id: String) : TeamListDtoItem
+
     suspend fun removeTeam(id: String)
 
     suspend fun updateTeam(name: String, id: String)
