@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import android.widget.Toast
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.games.view.SelectEnemyViewModel
 import ru.bratusev.domain.models.Player
@@ -42,9 +43,13 @@ class EnemyGridAdapter(
         convertView?.setOnClickListener {
             val player = players[position]
             Log.d("MyPlayersLog", player.toString())
-            if (isToGame) {
-                if (vm.playersInGame.value?.size!! < 5) vm.addToGame(player)
-            } else vm.removeFromGame(player)
+            try {
+                if (isToGame) {
+                    if (vm.playersInGame.value?.size!! < 5) vm.addToGame(player)
+                } else vm.removeFromGame(player)
+            }catch (e: Exception){
+                Toast.makeText(context, "Добавьте ещё игроков в команду: ${5 - (vm.players.value?.size ?: 0)}", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return convertView

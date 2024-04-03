@@ -31,6 +31,7 @@ class SelectPlayersFragment : Fragment() {
             val playersInGameGrid = it.findViewById<GridView>(R.id.selectedPlayer_gridView)
             val myTeam = (arguments?.getSerializable("GameMyTeam")) as TeamListResponse
             val enemyTeam = (arguments?.getSerializable("GameEnemyTeam")) as TeamListResponse
+            vm.setTeamId(myTeam.id)
             it.findViewById<TextView>(R.id.selectPlayers_teamName).text = myTeam.name
             it.findViewById<AppCompatButton>(R.id.selectPlayers_nextBtn).setOnClickListener {
                 val bundle = Bundle()
@@ -58,18 +59,7 @@ class SelectPlayersFragment : Fragment() {
                 playersInGameGrid.adapter = PlayersGridAdapter(requireContext(), vm, vm.playersInGame.value!!, false)
             }
 
-            vm.addPlayers(
-                arrayListOf(
-                    Player(number = 10),
-                    Player(number = 21),
-                    Player(number = 32),
-                    Player(number = 43),
-                    Player(number = 54),
-                    Player(number = 65),
-                    Player(number = 76),
-                    Player(number = 87)
-                )
-            )
+            vm.getPlayers()
 
         }
     }

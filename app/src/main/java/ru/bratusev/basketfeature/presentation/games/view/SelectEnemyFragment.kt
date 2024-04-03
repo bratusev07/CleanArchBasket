@@ -34,7 +34,7 @@ class SelectEnemyFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_select_enemy, container, false).also {
             val myTeam = (arguments?.getSerializable("GameMyTeam") as TeamListResponse)
             val enemyTeam = (arguments?.getSerializable("GameEnemyTeam") as TeamListResponse)
-
+            vm.setTeamId(enemyTeam.id)
             val playersGrid = it.findViewById<GridView>(R.id.selectEnemy_GridView)
             val playersInGameGrid = it.findViewById<GridView>(R.id.selectedEnemy_GridView)
 
@@ -83,20 +83,7 @@ class SelectEnemyFragment : Fragment() {
                     )
             }
 
-
-            vm.addPlayers(
-                arrayListOf(
-                    Player(number = 40),
-                    Player(number = 51),
-                    Player(number = 62),
-                    Player(number = 73),
-                    Player(number = 84),
-                    Player(number = 95),
-                    Player(number = 86),
-                    Player(number = 77)
-                )
-            )
-
+            vm.getPlayers()
         }
     }
 }

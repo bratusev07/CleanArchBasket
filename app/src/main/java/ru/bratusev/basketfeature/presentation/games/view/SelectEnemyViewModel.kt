@@ -11,9 +11,11 @@ import ru.bratusev.domain.Resource
 import ru.bratusev.domain.models.GameModel
 import ru.bratusev.domain.models.Player
 import ru.bratusev.domain.usecase.CreateGameUseCase
+import ru.bratusev.domain.usecase.GetPlayersListUseCase
 
 class SelectEnemyViewModel(
-    private val createGameUseCase: CreateGameUseCase
+    private val createGameUseCase: CreateGameUseCase,
+    private val getPlayersListUseCase: GetPlayersListUseCase
 ) : ViewModel() {
 
     private val playersInGameMutable = MutableLiveData<ArrayList<Player>>()
@@ -21,6 +23,12 @@ class SelectEnemyViewModel(
 
     private val playersMutable = MutableLiveData<ArrayList<Player>>()
     internal val players : LiveData<ArrayList<Player>> = playersMutable
+
+    private var teamId: String = ""
+
+    internal fun setTeamId(id: String){
+        teamId = id
+    }
 
     internal fun addToGame(player: Player){
         playersMutable.value!!.remove(player)
@@ -39,9 +47,23 @@ class SelectEnemyViewModel(
         changeValue()
     }
 
-    internal fun addPlayers(players: ArrayList<Player>){
-        playersMutable.value = players
-        playersInGameMutable.value = ArrayList()
+    internal fun getPlayers(){
+        getPlayersListUseCase.invoke(teamId).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    Log.d("MyNewLog", "Resource.Success")
+                    playersMutable.value = result.data as ArrayList<Player>
+                }
+
+                is Resource.Error -> {
+                    Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
+                }
+
+                is Resource.Loading -> {
+                    Log.d("MyNewLog", "Resource.Loading")
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
     fun createGame(gameModel: GameModel) {

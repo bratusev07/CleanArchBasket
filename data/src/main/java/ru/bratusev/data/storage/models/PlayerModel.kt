@@ -9,9 +9,9 @@ class PlayerModel(
     val name: String = "Без имени",
     val number: Int = 1,
     @SerialName("first_name")
-    val firstName: String = "",
+    val firstName: String? = "",
     @SerialName("father_name")
-    val fatherName: String = "",
+    val fatherName: String? = "",
     @SerialName("team_id")
     val teamId: String = "",
     val id: String = "",
@@ -25,8 +25,8 @@ internal fun PlayerModel.toResponse(): Player {
         userId = userId,
         teamId = teamId,
         name = name,
-        surname = firstName,
-        lastName = fatherName,
+        surname = firstName?: "Без имени",
+        lastName = fatherName?: "Без имени",
         number = number
     )
 }

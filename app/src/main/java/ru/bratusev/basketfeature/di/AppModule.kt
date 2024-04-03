@@ -45,12 +45,15 @@ val appModule = module {
     }
 
     viewModel<SelectPlayersViewModel> {
-        SelectPlayersViewModel()
+        SelectPlayersViewModel(
+            getPlayersListUseCase = get()
+        )
     }
 
     viewModel<SelectEnemyViewModel> {
         SelectEnemyViewModel(
-            createGameUseCase = get()
+            createGameUseCase = get(),
+            getPlayersListUseCase = get()
         )
     }
 

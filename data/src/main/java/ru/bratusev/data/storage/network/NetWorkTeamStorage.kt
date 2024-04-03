@@ -24,8 +24,8 @@ class NetWorkTeamStorage(context: Context) : TeamStorage {
         player.userId = userId
         getSupabaseService().postgrest["players"].update({
             set("name", player.name)
-            set("father_name", player.fatherName)
-            set("first_name", player.firstName)
+            set("father_name", player.fatherName!!)
+            set("first_name", player.firstName!!)
             set("number", player.number)
             set("user_id", player.userId)
             set("team_id", player.teamId)
