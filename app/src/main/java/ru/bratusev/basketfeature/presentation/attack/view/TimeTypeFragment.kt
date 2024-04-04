@@ -57,7 +57,6 @@ class TimeTypeFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
             it.findViewById<AppCompatButton>(R.id.timeType_OkBtn).setOnClickListener {
                 GameValues.gameMoment
                     .setTimeType(timeType)
-                    .setPlayer("Ванька")
                     .setSecond(second)
                 findNavController().navigate(R.id.action_timeTypeFragment_to_attackTypeFragment)
             }

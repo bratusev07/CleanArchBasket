@@ -23,22 +23,15 @@ class ShotResultDialog(private val isFoul: Boolean = false, private val gameMome
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         view.setBackgroundResource(R.drawable.rounded_top_corners)
-        val bundle = Bundle()
         val id = if (isFoul) R.id.action_attackFoulFragment_to_timeFragment
         else R.id.action_attackFinishTypeFragment_to_timeFragment
         view.findViewById<AppCompatButton>(R.id.shotResult_miss).setOnClickListener {
-            bundle.putSerializable(
-                "GameMoment",
-                gameMoment.setIsHit(false)
-            )
-            AcceptDialog(requireContext(), id, requireParentFragment()).show(bundle)
+            gameMoment.setIsHit(false)
+            AcceptDialog(requireContext(), id, requireParentFragment()).show()
         }
         view.findViewById<AppCompatButton>(R.id.shotResult_score).setOnClickListener {
-            bundle.putSerializable(
-                "GameMoment",
-                gameMoment.setIsHit(true)
-            )
-            AcceptDialog(requireContext(), id, requireParentFragment()).show(bundle)
+            gameMoment.setIsHit(true)
+            AcceptDialog(requireContext(), id, requireParentFragment()).show()
         }
     }
 }

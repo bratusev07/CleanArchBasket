@@ -46,7 +46,7 @@ class ScoredBallsDialog(private val ballCount: Int) : BottomSheetDialogFragment(
             }
 
         view.findViewById<AppCompatButton>(R.id.scoredBalls_okBtn).setOnClickListener {
-            findNavController().navigate(R.id.action_attackFoulFragment_to_timeFragment)
+            AcceptDialog(requireContext(), R.id.action_attackFoulFragment_to_timeFragment, requireParentFragment()).show()
             dismiss()
         }
     }

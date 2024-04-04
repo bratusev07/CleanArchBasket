@@ -1,6 +1,7 @@
 package ru.bratusev.basketfeature.presentation.attack.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,7 +31,6 @@ class TimeFragment : Fragment() {
             val grid = (it.findViewById<GridView>(R.id.custom_view))
             val adapter = TimesGridAdapter(requireContext(), arrayListOf(1, 2, 3, 4, 0))
             grid.adapter = adapter
-
             val myTeam = it.findViewById<AppCompatButton>(R.id.time_myTeam)
             myTeam.setOnClickListener {
                 isEnemy = false

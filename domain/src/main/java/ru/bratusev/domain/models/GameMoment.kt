@@ -7,10 +7,11 @@ class GameMoment : Serializable {
     internal lateinit var team: String
     internal lateinit var attackStartType: AttackStartType
     internal lateinit var timeType: TimeType
-    internal lateinit var player: String
+    internal lateinit var player: Player
     internal var second: Int = 0
     internal var zoneNumber: Int = 0
     internal var isHit: Boolean = false
+    private var passStory = ArrayList<Player>()
     internal lateinit var attackType: AttackType
     internal lateinit var resultType: ResultType
     internal var foul: Foul = Foul.NONE
@@ -18,12 +19,21 @@ class GameMoment : Serializable {
     internal var loss: Loss = Loss.NONE
 
     override fun toString(): String {
-        return "$timeZone $team $attackStartType $timeType $player $second $zoneNumber $isHit $attackType $resultType"
+        var storyList = ""
+        for (player1 in passStory) {
+            storyList += "${player1.number} "
+        }
+        return "$timeZone $team $attackStartType $timeType $storyList $player $second $zoneNumber $isHit $attackType $resultType"
     }
 
     fun setTimeZone(timeZone: TimeZone): GameMoment {
         this.timeZone = timeZone
         return this
+    }
+
+    fun addPassToStory(player: Player){
+        passStory.add(player)
+        setPlayer(player)
     }
 
     fun setTeam(team: String): GameMoment {
@@ -51,7 +61,7 @@ class GameMoment : Serializable {
         return this
     }
 
-    fun setPlayer(player: String): GameMoment {
+    private fun setPlayer(player: Player): GameMoment {
         this.player = player
         return this
     }
@@ -84,6 +94,10 @@ class GameMoment : Serializable {
     fun setLoss(loss: Loss): GameMoment {
         this.loss = loss
         return this
+    }
+
+    fun clearHistory() {
+        passStory.clear()
     }
 
 }
