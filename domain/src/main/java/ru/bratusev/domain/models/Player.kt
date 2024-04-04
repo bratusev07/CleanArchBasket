@@ -8,6 +8,7 @@ class Player(
     var number: Int = 1,
     var lastName: String = "",
     var surname: String = "",
+    var isInGame: Boolean = false
 ) {
     override fun toString(): String {
         return " Player: $name $number "

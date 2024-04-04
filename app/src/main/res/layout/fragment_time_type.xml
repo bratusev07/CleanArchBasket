@@ -32,16 +32,64 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <View
-        android:id="@+id/view2"
+    <ViewFlipper
+        android:id="@+id/timeTake_flipper"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:background="@color/pink"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/textView4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:text="14"
+                android:textSize="25sp"
+                android:background="@drawable/button_style_stroke_white"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/timeModel24_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:text="24"
+                android:textSize="25sp"
+                android:background="@drawable/button_style_stroke_grey"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/timeModel14_button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:text="14"
+                android:textSize="25sp"
+                android:background="@drawable/button_style_stroke_grey"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
+                android:text="24"
+                android:textSize="25sp"
+                android:background="@drawable/button_style_stroke_white"/>
+        </LinearLayout>
+
+    </ViewFlipper>
 
     <TextView
         android:id="@+id/textView7"
@@ -52,7 +100,7 @@
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view2" />
+        app:layout_constraintTop_toBottomOf="@+id/timeTake_flipper" />
 
     <GridView
         android:id="@+id/timeType_gridView"
@@ -75,6 +123,17 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timeType_gridView" />
+
+    <TextView
+        android:id="@+id/secondOfAttack_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:textSize="30sp"
+        android:text="1"
+        app:layout_constraintBottom_toTopOf="@+id/secondOfAttack_seekbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <SeekBar
         android:id="@+id/secondOfAttack_seekbar"

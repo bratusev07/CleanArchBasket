@@ -42,7 +42,6 @@ class PlayersGridAdapter(
             players[position].number.toString()
         convertView?.setOnClickListener {
             val player = players[position]
-            Log.d("MyPlayersLog", player.toString())
             try {
                 if (isToGame) {
                     if (vm.playersInGame.value?.size!! < 5) vm.addToGame(player)

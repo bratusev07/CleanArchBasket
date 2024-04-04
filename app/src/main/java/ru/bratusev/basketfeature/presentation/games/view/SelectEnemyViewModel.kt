@@ -33,6 +33,7 @@ class SelectEnemyViewModel(
     internal fun addToGame(player: Player){
         playersMutable.value!!.remove(player)
         playersInGameMutable.value!!.add(player)
+        player.isInGame = true
         changeValue()
     }
 
@@ -44,6 +45,7 @@ class SelectEnemyViewModel(
     internal fun removeFromGame(player: Player){
         playersInGameMutable.value!!.remove(player)
         playersMutable.value!!.add(player)
+        player.isInGame = false
         changeValue()
     }
 
