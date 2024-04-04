@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_timeFragment_to_gamesFragment"
             app:destination="@id/gamesFragment" />
+        <action
+            android:id="@+id/action_timeFragment_to_statsFragment"
+            app:destination="@id/statsFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectEnemyFragment"

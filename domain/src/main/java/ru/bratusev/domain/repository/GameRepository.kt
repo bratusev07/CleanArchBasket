@@ -6,5 +6,7 @@ interface GameRepository {
 
     suspend fun createGame(gameModel: GameModel) : Boolean
 
+    suspend fun removeGame(id: String) : Boolean
+
     suspend fun getGames() : ArrayList<GameModel>
 }

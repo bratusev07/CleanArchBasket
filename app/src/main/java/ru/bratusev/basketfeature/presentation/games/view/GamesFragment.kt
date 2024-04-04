@@ -43,7 +43,7 @@ class GamesFragment : Fragment() {
             vm.getGames()
 
             vm.gameList.observe(viewLifecycleOwner) {
-                gameList.adapter = GamesAdapter(vm.gameList.value!!, this)
+                gameList.adapter = GamesAdapter(vm.gameList.value!!, this, vm)
             }
         }
     }

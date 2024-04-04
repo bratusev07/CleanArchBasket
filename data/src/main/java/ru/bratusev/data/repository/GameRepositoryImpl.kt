@@ -9,7 +9,12 @@ import ru.bratusev.domain.repository.GameRepository
 class GameRepositoryImpl(private val gameStorage: GameStorage) : GameRepository {
 
     override suspend fun createGame(gameModel: GameModel): Boolean {
-        gameStorage.createGame(Game(date = gameModel.date, teamA = gameModel.myTeamId, teamB = gameModel.enemyTeamId, gameName = gameModel.gameName))
+        gameStorage.createGame(Game(id = gameModel.id, date = gameModel.date, teamA = gameModel.myTeamId, teamB = gameModel.enemyTeamId, gameName = gameModel.gameName))
+        return true
+    }
+
+    override suspend fun removeGame(id: String): Boolean {
+        gameStorage.removeGame(id)
         return true
     }
 

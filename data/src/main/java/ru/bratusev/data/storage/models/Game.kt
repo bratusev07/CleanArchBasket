@@ -19,5 +19,5 @@ data class Game(
 )
 
 internal fun Game.toResponse(): GameModel{
-    return GameModel(date, teamA, teamB, gameName)
+    return GameModel(id, date, teamA, teamB, gameName)
 }

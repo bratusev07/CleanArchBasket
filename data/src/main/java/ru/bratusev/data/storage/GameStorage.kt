@@ -7,5 +7,7 @@ interface GameStorage {
 
     suspend fun createGame(game: Game)
 
+    suspend fun removeGame(id: String)
+
     suspend fun getGames() : ArrayList<Game>
 }

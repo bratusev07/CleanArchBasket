@@ -60,7 +60,8 @@ val appModule = module {
     viewModel<GameViewModel> {
         GameViewModel(
             getGameListUseCase = get(),
-            getTeamByIdUseCase = get()
+            getTeamByIdUseCase = get(),
+            removeGameUseCase = get()
         )
     }
 

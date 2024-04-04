@@ -49,6 +49,10 @@ class TimeFragment : Fragment() {
             it.findViewById<AppCompatButton>(R.id.time_finish).setOnClickListener {
                 FinishGameDialog(requireContext(), requireParentFragment()).show()
             }
+
+            it.findViewById<AppCompatButton>(R.id.table_stats).setOnClickListener {
+                findNavController().navigate(R.id.action_timeFragment_to_statsFragment)
+            }
             requireActivity().onBackPressedDispatcher.addCallback(
                 viewLifecycleOwner,
                 object : OnBackPressedCallback(true) {

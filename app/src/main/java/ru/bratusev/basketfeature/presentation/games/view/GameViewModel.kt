@@ -11,10 +11,12 @@ import ru.bratusev.domain.Resource
 import ru.bratusev.domain.models.GameModel
 import ru.bratusev.domain.usecase.GetGameListUseCase
 import ru.bratusev.domain.usecase.GetTeamByIdUseCase
+import ru.bratusev.domain.usecase.RemoveGameUseCase
 
 class GameViewModel(
     private val getGameListUseCase: GetGameListUseCase,
-    private val getTeamByIdUseCase: GetTeamByIdUseCase
+    private val getTeamByIdUseCase: GetTeamByIdUseCase,
+    private val removeGameUseCase: RemoveGameUseCase
 ) : ViewModel() {
 
     private val gameListMutable = MutableLiveData<ArrayList<GameModel>>()
@@ -25,6 +27,20 @@ class GameViewModel(
             when (result) {
                 is Resource.Success -> {
                     gameListMutable.value = result.data as ArrayList<GameModel>
+                }
+                is Resource.Error -> {
+                    Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
+                }
+                is Resource.Loading -> {}
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    internal fun removeGame(id: String) {
+        removeGameUseCase.invoke(id).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    getGames()
                 }
                 is Resource.Error -> {
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")

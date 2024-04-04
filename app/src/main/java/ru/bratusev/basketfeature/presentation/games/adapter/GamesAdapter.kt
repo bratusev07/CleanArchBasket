@@ -11,9 +11,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.games.view.GameViewModel
 import ru.bratusev.domain.models.GameModel
 
-class GamesAdapter(private val items: ArrayList<GameModel>, private val fragment: Fragment) :
+class GamesAdapter(private val items: ArrayList<GameModel>, private val fragment: Fragment, private val vm: GameViewModel) :
     RecyclerView.Adapter<GamesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -48,11 +49,7 @@ class GamesAdapter(private val items: ArrayList<GameModel>, private val fragment
                     val endX = motionEvent.x
                     val deltaX = endX - startX
                     if (deltaX > 50) {
-                        Toast.makeText(fragment.requireContext(), "Remove", Toast.LENGTH_SHORT)
-                            .show()
-                    } else if (deltaX < -50) {
-                        Toast.makeText(fragment.requireContext(), "Update", Toast.LENGTH_SHORT)
-                            .show()
+                        vm.removeGame(items[position].id)
                     } else {
                         fragment.findNavController().navigate(R.id.action_gamesFragment_to_statsFragment)
                     }

@@ -14,6 +14,10 @@ class NetWorkGameStorage(context: Context) : GameStorage {
         getSupabaseService().postgrest["games"].insert(game)
     }
 
+    override suspend fun removeGame(id: String) {
+        getSupabaseService().postgrest["games"].delete { eq("id", id) }
+    }
+
     override suspend fun getGames(): ArrayList<Game> {
         return getSupabaseService().postgrest["games"].select().decodeList<Game>() as ArrayList<Game>
     }

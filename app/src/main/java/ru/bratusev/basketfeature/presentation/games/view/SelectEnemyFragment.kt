@@ -41,7 +41,7 @@ class SelectEnemyFragment : Fragment() {
             }
             it.findViewById<AppCompatButton>(R.id.selectEnemy_startGameBtn).setOnClickListener {
                 enemyPlayers = vm.players.value as ArrayList<Player>
-                vm.createGame(GameModel(date, myTeam.id, enemyTeam.id, "${myTeam.name} – ${enemyTeam.name}"))
+                vm.createGame(GameModel("",date, myTeam.id, enemyTeam.id, "${myTeam.name} – ${enemyTeam.name}"))
                 findNavController().navigate(R.id.action_selectEnemyFragment_to_timeFragment)
             }
             requireActivity().onBackPressedDispatcher.addCallback(
