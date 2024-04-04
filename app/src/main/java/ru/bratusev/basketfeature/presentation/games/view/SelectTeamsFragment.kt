@@ -14,8 +14,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.attack.GameValues
 import ru.bratusev.basketfeature.presentation.games.adapter.CustomDropDownAdapter
-import java.io.Serializable
+import ru.bratusev.domain.models.TeamListResponse
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -35,11 +36,10 @@ class SelectTeamsFragment : Fragment() {
             val calendar: Calendar = Calendar.getInstance()
             it.findViewById<DatePicker>(R.id.selectTeam_DataPicker).maxDate = calendar.timeInMillis
             it.findViewById<AppCompatButton>(R.id.selectTeams_nextBtn).setOnClickListener {
-                val bundle = Bundle()
-                bundle.putString("GameDate", SimpleDateFormat("MM-dd-yyyy").format(calendar.time))
-                bundle.putSerializable("GameMyTeam", myTeam.selectedItem as Serializable?)
-                bundle.putSerializable("GameEnemyTeam", enemyTeam.selectedItem as Serializable?)
-                findNavController().navigate(R.id.action_selectTeamsFragment_to_selectPlayersFragment, bundle)
+                GameValues.date = SimpleDateFormat("MM-dd-yyyy").format(calendar.time)
+                GameValues.myTeam = myTeam.selectedItem as TeamListResponse
+                GameValues.enemyTeam = enemyTeam.selectedItem as TeamListResponse
+                findNavController().navigate(R.id.action_selectTeamsFragment_to_selectPlayersFragment)
             }
             it.findViewById<ImageView>(R.id.selectTeams_back).setOnClickListener {
                 findNavController().navigate(R.id.action_selectTeamsFragment_to_gamesFragment)

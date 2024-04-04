@@ -1,7 +1,6 @@
 package ru.bratusev.basketfeature.presentation.games.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,10 +43,14 @@ class PlayersGridAdapter(
             val player = players[position]
             try {
                 if (isToGame) {
-                    if (vm.playersInGame.value?.size!! < 5) vm.addToGame(player)
+                    vm.addToGame(player)
                 } else vm.removeFromGame(player)
-            }catch (e: Exception){
-                Toast.makeText(context, "Добавьте ещё игроков в команду: ${5 - (vm.players.value?.size ?: 0)}", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(
+                    context,
+                    "Добавьте ещё игроков в команду: ${5 - (vm.players.value?.size ?: 0)}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 

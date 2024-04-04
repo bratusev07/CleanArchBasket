@@ -9,8 +9,8 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.attack.GameValues.gameMoment
 import ru.bratusev.basketfeature.presentation.attack.dialogs.ShotZoneDialog
-import ru.bratusev.domain.models.GameMoment
 
 class AttackFinishTypeFragment : Fragment() {
 
@@ -23,27 +23,27 @@ class AttackFinishTypeFragment : Fragment() {
             it.findViewById<AppCompatButton>(R.id.finishType_backBtn)
                 .setOnClickListener { findNavController().navigate(R.id.action_attackFinishTypeFragment_to_attackResultFragment) }
             it.findViewById<AppCompatButton>(R.id.finishType_btn1)
-                .setOnClickListener { ShotZoneDialog((arguments?.getSerializable("GameMoment") as GameMoment)).show(childFragmentManager, "ShotZone") }
+                .setOnClickListener { ShotZoneDialog(gameMoment).show(childFragmentManager, "ShotZone") }
             it.findViewById<AppCompatButton>(R.id.finishType_btn2)
-                .setOnClickListener { ShotZoneDialog((arguments?.getSerializable("GameMoment") as GameMoment)).show(childFragmentManager, "ShotZone") }
+                .setOnClickListener { ShotZoneDialog(gameMoment).show(childFragmentManager, "ShotZone") }
             it.findViewById<AppCompatButton>(R.id.finishType_btn3)
-                .setOnClickListener { ShotZoneDialog((arguments?.getSerializable("GameMoment") as GameMoment)).show(childFragmentManager, "ShotZone") }
+                .setOnClickListener { ShotZoneDialog(gameMoment).show(childFragmentManager, "ShotZone") }
             it.findViewById<AppCompatButton>(R.id.finishType_btn4)
-                .setOnClickListener { ShotZoneDialog((arguments?.getSerializable("GameMoment") as GameMoment)).show(childFragmentManager, "ShotZone") }
+                .setOnClickListener { ShotZoneDialog(gameMoment).show(childFragmentManager, "ShotZone") }
             it.findViewById<AppCompatButton>(R.id.finishType_btn5)
-                .setOnClickListener { ShotZoneDialog((arguments?.getSerializable("GameMoment") as GameMoment)).show(childFragmentManager, "ShotZone") }
+                .setOnClickListener { ShotZoneDialog(gameMoment).show(childFragmentManager, "ShotZone") }
             it.findViewById<AppCompatButton>(R.id.finishType_btn6)
-                .setOnClickListener { ShotZoneDialog((arguments?.getSerializable("GameMoment") as GameMoment)).show(childFragmentManager, "ShotZone") }
+                .setOnClickListener { ShotZoneDialog(gameMoment).show(childFragmentManager, "ShotZone") }
             it.findViewById<AppCompatButton>(R.id.finishType_btn7)
-                .setOnClickListener { ShotZoneDialog((arguments?.getSerializable("GameMoment") as GameMoment)).show(childFragmentManager, "ShotZone") }
+                .setOnClickListener { ShotZoneDialog(gameMoment).show(childFragmentManager, "ShotZone") }
             it.findViewById<AppCompatButton>(R.id.finishType_btn8)
-                .setOnClickListener { ShotZoneDialog((arguments?.getSerializable("GameMoment") as GameMoment)).show(childFragmentManager, "ShotZone") }
+                .setOnClickListener { ShotZoneDialog(gameMoment).show(childFragmentManager, "ShotZone") }
             it.findViewById<AppCompatButton>(R.id.finishType_btn9)
-                .setOnClickListener { ShotZoneDialog((arguments?.getSerializable("GameMoment") as GameMoment)).show(childFragmentManager, "ShotZone") }
+                .setOnClickListener { ShotZoneDialog(gameMoment).show(childFragmentManager, "ShotZone") }
             it.findViewById<AppCompatButton>(R.id.finishType_btn10)
-                .setOnClickListener { ShotZoneDialog((arguments?.getSerializable("GameMoment") as GameMoment)).show(childFragmentManager, "ShotZone") }
+                .setOnClickListener { ShotZoneDialog(gameMoment).show(childFragmentManager, "ShotZone") }
             it.findViewById<AppCompatButton>(R.id.finishType_btn11)
-                .setOnClickListener { ShotZoneDialog((arguments?.getSerializable("GameMoment") as GameMoment)).show(childFragmentManager, "ShotZone") }
+                .setOnClickListener { ShotZoneDialog(gameMoment).show(childFragmentManager, "ShotZone") }
             requireActivity().onBackPressedDispatcher.addCallback(
                 viewLifecycleOwner,
                 object : OnBackPressedCallback(true) {

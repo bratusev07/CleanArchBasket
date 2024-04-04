@@ -1,5 +1,7 @@
 package ru.bratusev.domain.models
 
+import java.io.Serializable
+
 class Player(
     val id: String = "",
     val userId: String = "",
@@ -9,7 +11,7 @@ class Player(
     var lastName: String = "",
     var surname: String = "",
     var isInGame: Boolean = false
-) {
+): Serializable {
     override fun toString(): String {
         return " Player: $name $number "
     }

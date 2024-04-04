@@ -13,14 +13,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.attack.GameValues.date
+import ru.bratusev.basketfeature.presentation.attack.GameValues.enemyPlayers
+import ru.bratusev.basketfeature.presentation.attack.GameValues.enemyTeam
+import ru.bratusev.basketfeature.presentation.attack.GameValues.myTeam
 import ru.bratusev.basketfeature.presentation.games.adapter.EnemyGridAdapter
 import ru.bratusev.domain.models.GameModel
 import ru.bratusev.domain.models.Player
-import ru.bratusev.domain.models.Team
-import ru.bratusev.domain.models.TeamListResponse
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.Date
 
 class SelectEnemyFragment : Fragment() {
 
@@ -32,8 +31,6 @@ class SelectEnemyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_select_enemy, container, false).also {
-            val myTeam = (arguments?.getSerializable("GameMyTeam") as TeamListResponse)
-            val enemyTeam = (arguments?.getSerializable("GameEnemyTeam") as TeamListResponse)
             vm.setTeamId(enemyTeam.id)
             val playersGrid = it.findViewById<GridView>(R.id.selectEnemy_GridView)
             val playersInGameGrid = it.findViewById<GridView>(R.id.selectedEnemy_GridView)
@@ -43,18 +40,9 @@ class SelectEnemyFragment : Fragment() {
                 findNavController().navigate(R.id.action_selectEnemyFragment_to_selectPlayersFragment)
             }
             it.findViewById<AppCompatButton>(R.id.selectEnemy_startGameBtn).setOnClickListener {
-                val bundle = Bundle()
-                bundle.putString("GameDate", (arguments?.getString("GameDate")).toString())
-                bundle.putSerializable("GameMyTeam", myTeam)
-                bundle.putSerializable("GameEnemyTeam", enemyTeam)
-
-                vm.createGame(GameModel(
-                    ((arguments?.getString("GameDate")).toString()),
-                    myTeam.id,
-                    enemyTeam.id,
-                    "${myTeam.name} – ${enemyTeam.name}"
-                ))
-                findNavController().navigate(R.id.action_selectEnemyFragment_to_timeFragment, bundle)
+                enemyPlayers = vm.players.value as ArrayList<Player>
+                vm.createGame(GameModel(date, myTeam.id, enemyTeam.id, "${myTeam.name} – ${enemyTeam.name}"))
+                findNavController().navigate(R.id.action_selectEnemyFragment_to_timeFragment)
             }
             requireActivity().onBackPressedDispatcher.addCallback(
                 viewLifecycleOwner,
@@ -65,24 +53,11 @@ class SelectEnemyFragment : Fragment() {
                 })
 
             vm.players.observe(viewLifecycleOwner) {
-                playersGrid.adapter = EnemyGridAdapter(
-                    requireContext(),
-                    vm,
-                    vm.players.value!!,
-                    true
-                )
+                val toGame = vm.players.value!!.filter { elem -> !elem.isInGame } as ArrayList<Player>
+                val fromGame = vm.players.value!!.filter { elem -> elem.isInGame } as ArrayList<Player>
+                playersGrid.adapter = EnemyGridAdapter(requireContext(), vm, toGame, true)
+                playersInGameGrid.adapter = EnemyGridAdapter(requireContext(), vm, fromGame, false)
             }
-
-            vm.playersInGame.observe(viewLifecycleOwner) {
-                playersInGameGrid.adapter =
-                    EnemyGridAdapter(
-                        requireContext(),
-                        vm,
-                        vm.playersInGame.value!!,
-                        false
-                    )
-            }
-
             vm.getPlayers()
         }
     }

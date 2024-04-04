@@ -42,10 +42,9 @@ class EnemyGridAdapter(
             players[position].number.toString()
         convertView?.setOnClickListener {
             val player = players[position]
-            Log.d("MyPlayersLog", player.toString())
             try {
                 if (isToGame) {
-                    if (vm.playersInGame.value?.size!! < 5) vm.addToGame(player)
+                    vm.addToGame(player)
                 } else vm.removeFromGame(player)
             }catch (e: Exception){
                 Toast.makeText(context, "Добавьте ещё игроков в команду: ${5 - (vm.players.value?.size ?: 0)}", Toast.LENGTH_SHORT).show()

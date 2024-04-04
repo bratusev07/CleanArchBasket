@@ -5,12 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import ru.bratusev.domain.Resource
-import ru.bratusev.domain.models.Team
 import ru.bratusev.domain.models.TeamListResponse
 import ru.bratusev.domain.usecase.GetTeamsListUseCase
 
@@ -23,15 +20,12 @@ class SelectTeamsViewModel(private val getTeamsListUseCase: GetTeamsListUseCase)
         getTeamsListUseCase.invoke().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    Log.d("MyNewLog", "Resource.Success")
                     teamsMutable.value = result.data as ArrayList<TeamListResponse>
                 }
                 is Resource.Error -> {
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-                is Resource.Loading -> {
-                    Log.d("MyNewLog", "Resource.Loading")
-                }
+                is Resource.Loading -> {}
             }
         }.launchIn(viewModelScope)
     }

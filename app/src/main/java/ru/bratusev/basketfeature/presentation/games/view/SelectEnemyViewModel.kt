@@ -18,9 +18,6 @@ class SelectEnemyViewModel(
     private val getPlayersListUseCase: GetPlayersListUseCase
 ) : ViewModel() {
 
-    private val playersInGameMutable = MutableLiveData<ArrayList<Player>>()
-    internal val playersInGame : LiveData<ArrayList<Player>> = playersInGameMutable
-
     private val playersMutable = MutableLiveData<ArrayList<Player>>()
     internal val players : LiveData<ArrayList<Player>> = playersMutable
 
@@ -31,21 +28,16 @@ class SelectEnemyViewModel(
     }
 
     internal fun addToGame(player: Player){
-        playersMutable.value!!.remove(player)
-        playersInGameMutable.value!!.add(player)
-        player.isInGame = true
+        playersMutable.value?.find { it.id == player.id }?.isInGame = true
         changeValue()
     }
 
     private fun changeValue() {
         playersMutable.value = playersMutable.value
-        playersInGameMutable.value = playersInGameMutable.value
     }
 
     internal fun removeFromGame(player: Player){
-        playersInGameMutable.value!!.remove(player)
-        playersMutable.value!!.add(player)
-        player.isInGame = false
+        playersMutable.value?.find { it.id == player.id }?.isInGame = false
         changeValue()
     }
 
@@ -53,17 +45,12 @@ class SelectEnemyViewModel(
         getPlayersListUseCase.invoke(teamId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    Log.d("MyNewLog", "Resource.Success")
                     playersMutable.value = result.data as ArrayList<Player>
                 }
-
                 is Resource.Error -> {
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-
-                is Resource.Loading -> {
-                    Log.d("MyNewLog", "Resource.Loading")
-                }
+                is Resource.Loading -> {}
             }
         }.launchIn(viewModelScope)
     }
@@ -71,15 +58,11 @@ class SelectEnemyViewModel(
     fun createGame(gameModel: GameModel) {
         createGameUseCase.invoke(gameModel).onEach { result ->
             when (result) {
-                is Resource.Success -> {
-                    Log.d("MyNewLog", "Resource.Success")
-                }
+                is Resource.Success -> {}
                 is Resource.Error -> {
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-                is Resource.Loading -> {
-                    Log.d("MyNewLog", "Resource.Loading")
-                }
+                is Resource.Loading -> {}
             }
         }.launchIn(viewModelScope)
     }

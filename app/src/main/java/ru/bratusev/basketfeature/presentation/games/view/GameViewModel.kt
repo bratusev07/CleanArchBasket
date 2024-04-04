@@ -24,17 +24,12 @@ class GameViewModel(
         getGameListUseCase.invoke().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    Log.d("MyNewLog", "Resource.Success")
                     gameListMutable.value = result.data as ArrayList<GameModel>
                 }
-
                 is Resource.Error -> {
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-
-                is Resource.Loading -> {
-                    Log.d("MyNewLog", "Resource.Loading")
-                }
+                is Resource.Loading -> {}
             }
         }.launchIn(viewModelScope)
     }
@@ -42,17 +37,11 @@ class GameViewModel(
     internal fun getTeamById(id: String) {
         getTeamByIdUseCase.invoke(id).onEach { result ->
             when (result) {
-                is Resource.Success -> {
-                    Log.d("MyNewLog", "Resource.Success")
-                }
-
+                is Resource.Success -> {}
                 is Resource.Error -> {
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-
-                is Resource.Loading -> {
-                    Log.d("MyNewLog", "Resource.Loading")
-                }
+                is Resource.Loading -> {}
             }
         }.launchIn(viewModelScope)
     }
