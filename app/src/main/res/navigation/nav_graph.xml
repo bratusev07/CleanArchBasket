@@ -125,23 +125,14 @@
         android:label="TimeTypeFragment"
         tools:layout="@layout/fragment_time_type">
         <action
-            android:id="@+id/action_timeTypeFragment_to_swapPlayerFragment"
-            app:destination="@id/swapPlayerFragment" />
-        <action
             android:id="@+id/action_timeTypeFragment_to_attackTypeFragment"
             app:destination="@id/attackTypeFragment" />
         <action
             android:id="@+id/action_timeTypeFragment_to_attackStartFragment"
             app:destination="@id/attackStartFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/swapPlayerFragment"
-        android:name="ru.bratusev.basketfeature.presentation.attack.view.SwapPlayerFragment"
-        android:label="SwapPlayerFragment"
-        tools:layout="@layout/fragment_swap_player">
         <action
-            android:id="@+id/action_swapPlayerFragment_to_timeTypeFragment"
-            app:destination="@id/timeTypeFragment" />
+            android:id="@+id/action_timeTypeFragment_to_playersSwapFragment"
+            app:destination="@id/playersSwapFragment" />
     </fragment>
     <fragment
         android:id="@+id/attackTypeFragment"
@@ -232,6 +223,15 @@
         <action
             android:id="@+id/action_statsFragment_to_timeFragment"
             app:destination="@id/timeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playersSwapFragment"
+        android:name="ru.bratusev.basketfeature.presentation.attack.view.PlayersSwapFragment"
+        android:label="PlayersSwapFragment"
+        tools:layout="@layout/fragment_swap_player">
+        <action
+            android:id="@+id/action_playersSwapFragment_to_timeTypeFragment"
+            app:destination="@id/timeTypeFragment" />
     </fragment>
 
 </navigation>

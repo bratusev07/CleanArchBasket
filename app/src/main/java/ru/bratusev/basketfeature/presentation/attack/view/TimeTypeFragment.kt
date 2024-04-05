@@ -3,6 +3,7 @@ package ru.bratusev.basketfeature.presentation.attack.view
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.SeekBar
@@ -51,6 +52,7 @@ class TimeTypeFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
             grid.adapter =
                 PlayersGridAdapter(
                     requireContext(),
+                    this,
                     players.filter { player -> player.isInGame } as ArrayList<Player>
                 )
             it.findViewById<AppCompatButton>(R.id.timeType_OkBtn).setOnClickListener {

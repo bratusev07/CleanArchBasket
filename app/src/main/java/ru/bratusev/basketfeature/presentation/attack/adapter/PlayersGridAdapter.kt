@@ -3,15 +3,19 @@ package ru.bratusev.basketfeature.presentation.attack.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.attack.GameValues
+import ru.bratusev.basketfeature.presentation.attack.view.PlayersSwapFragment
+import ru.bratusev.basketfeature.presentation.attack.view.TimeTypeFragment
 import ru.bratusev.domain.models.Player
 
-class PlayersGridAdapter(private val context: Context, private val players: ArrayList<Player>) :
-    BaseAdapter() {
+class PlayersGridAdapter(private val context: Context, private val fragment: TimeTypeFragment, private val players: ArrayList<Player>) :
+    BaseAdapter(), OnLongClickListener {
     override fun getCount(): Int {
         return players.size
     }
@@ -36,6 +40,12 @@ class PlayersGridAdapter(private val context: Context, private val players: Arra
         convertView?.setOnClickListener {
             GameValues.gameMoment.addPassToStory(players[position])
         }
+        convertView?.setOnLongClickListener(this)
         return convertView
+    }
+
+    override fun onLongClick(v: View?): Boolean {
+        fragment.findNavController().navigate(R.id.action_timeTypeFragment_to_playersSwapFragment)
+        return false
     }
 }
