@@ -7,6 +7,7 @@ import ru.bratusev.domain.usecase.CreateGameUseCase
 import ru.bratusev.domain.usecase.CreatePlayerUseCase
 import ru.bratusev.domain.usecase.CreateTeamUseCase
 import ru.bratusev.domain.usecase.GetActionsUseCase
+import ru.bratusev.domain.usecase.GetGameIdUseCase
 import ru.bratusev.domain.usecase.GetGameListUseCase
 import ru.bratusev.domain.usecase.GetPlayersListUseCase
 import ru.bratusev.domain.usecase.GetTeamByIdUseCase
@@ -82,5 +83,9 @@ val domainModule = module {
 
     factory<RemoveGameUseCase> {
         RemoveGameUseCase(gameRepository = get())
+    }
+
+    factory<GetGameIdUseCase> {
+        GetGameIdUseCase(gameRepository = get())
     }
 }

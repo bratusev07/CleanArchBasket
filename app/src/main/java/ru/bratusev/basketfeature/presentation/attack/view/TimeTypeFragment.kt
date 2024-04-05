@@ -17,14 +17,13 @@ import ru.bratusev.basketfeature.presentation.attack.GameValues
 import ru.bratusev.basketfeature.presentation.attack.GameValues.isEnemy
 import ru.bratusev.basketfeature.presentation.attack.adapter.PlayersGridAdapter
 import ru.bratusev.domain.models.Player
-import ru.bratusev.domain.models.TimeType
 
 class TimeTypeFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
 
     private var second: Int = 1
     private lateinit var secondsTextView: TextView
     private lateinit var timeFlipper: ViewFlipper
-    private var timeType = TimeType.TIME_14
+    private var timeType = 14
     private lateinit var seekBar: SeekBar
 
     override fun onCreateView(
@@ -38,12 +37,12 @@ class TimeTypeFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
             val players = if (!isEnemy) GameValues.myPlayers else GameValues.enemyPlayers
             it.findViewById<AppCompatButton>(R.id.timeModel14_button).setOnClickListener {
                 timeFlipper.showPrevious()
-                timeType = TimeType.TIME_14
+                timeType = 14
                 seekBar.max = 14
             }
             it.findViewById<AppCompatButton>(R.id.timeModel24_button).setOnClickListener {
                 timeFlipper.showNext()
-                timeType = TimeType.TIME_24
+                timeType = 24
                 seekBar.max = 24
             }
             seekBar = it.findViewById(R.id.secondOfAttack_seekbar)

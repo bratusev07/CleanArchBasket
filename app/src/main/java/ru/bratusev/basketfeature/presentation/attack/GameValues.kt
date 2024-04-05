@@ -11,6 +11,7 @@ object GameValues {
     internal lateinit var enemyTeam: TeamListResponse
     internal lateinit var myPlayers: ArrayList<Player>
     internal lateinit var enemyPlayers: ArrayList<Player>
-    internal var gameMoment = GameMoment()
+    internal var gameId: String = "NONE"
+    internal var gameMoment = GameMoment(gameId)
     internal var isEnemy: Boolean = false
 }

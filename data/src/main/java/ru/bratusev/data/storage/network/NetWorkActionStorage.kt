@@ -16,7 +16,7 @@ class NetWorkActionStorage(context: Context) : ActionStorage {
     }
 
     override suspend fun getActions(id: String): ArrayList<ActionDto> {
-        return getSupabaseService().postgrest["actions"].select(){eq("game_id", id)}.decodeList<ActionDto>() as ArrayList<ActionDto>
+        return getSupabaseService().postgrest["actions"].select{eq("game_id", id)}.decodeList<ActionDto>() as ArrayList<ActionDto>
     }
 
 }

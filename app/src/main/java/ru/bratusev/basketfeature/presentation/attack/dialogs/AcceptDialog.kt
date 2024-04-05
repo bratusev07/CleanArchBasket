@@ -1,8 +1,8 @@
 package ru.bratusev.basketfeature.presentation.attack.dialogs
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
-import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.attack.GameValues
+import java.text.SimpleDateFormat
+import java.time.ZonedDateTime
+import java.util.Date
 
 class AcceptDialog(
     private val context: Context,
@@ -20,6 +23,7 @@ class AcceptDialog(
     private val dialogView: View =
         LayoutInflater.from(context).inflate(R.layout.accept_dialog, null)
 
+    @SuppressLint("NewApi")
     fun show() {
         val builder = AlertDialog.Builder(context)
         builder.setView(dialogView)
@@ -28,9 +32,9 @@ class AcceptDialog(
         alertDialog.findViewById<TextView>(R.id.acceptDialog_okBtn).setOnClickListener {
             fragment.findNavController().navigate(id)
             try {
-                Log.d("MyFinalDataLog", GameValues.gameMoment.toString())
+                GameValues.gameMoment.addIndex()
+                GameValues.gameMoment.setCreateTime(ZonedDateTime.now().toInstant().toString())
             }catch (_: Exception){}
-            GameValues.gameMoment.clearHistory()
             alertDialog.dismiss()
         }
     }

@@ -53,7 +53,8 @@ val appModule = module {
     viewModel<SelectEnemyViewModel> {
         SelectEnemyViewModel(
             createGameUseCase = get(),
-            getPlayersListUseCase = get()
+            getPlayersListUseCase = get(),
+            getGameIdUseCase = get()
         )
     }
 
@@ -72,6 +73,8 @@ val appModule = module {
     }
 
     viewModel<TimeViewModel> {
-        TimeViewModel()
+        TimeViewModel(
+            createActionUseCase = get()
+        )
     }
 }

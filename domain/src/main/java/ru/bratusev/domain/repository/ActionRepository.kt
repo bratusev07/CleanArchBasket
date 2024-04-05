@@ -1,10 +1,10 @@
 package ru.bratusev.domain.repository
 
-import ru.bratusev.domain.models.ActionModel
+import ru.bratusev.domain.models.GameMoment
 
 interface ActionRepository {
 
-    suspend fun createAction(actionModel: ActionModel) : Boolean
+    suspend fun createAction(gameMoment: GameMoment) : Boolean
 
-    suspend fun getActions(id: String) : ArrayList<ActionModel>
+    suspend fun getActions(id: String) : ArrayList<GameMoment>
 }

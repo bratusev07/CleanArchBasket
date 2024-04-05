@@ -1,7 +1,6 @@
 package ru.bratusev.basketfeature.presentation.attack.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,19 +27,21 @@ class TimeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_time, container, false).also {
+            if(gameMoment.index != 0)vm.createActionEntry(gameMoment)
+            gameMoment.clearHistory()
             val grid = (it.findViewById<GridView>(R.id.custom_view))
             val adapter = TimesGridAdapter(requireContext(), arrayListOf(1, 2, 3, 4, 0))
             grid.adapter = adapter
             val myTeam = it.findViewById<AppCompatButton>(R.id.time_myTeam)
             myTeam.setOnClickListener {
                 isEnemy = false
-                gameMoment.setTeam(GameValues.myTeam.name).setTimeZone(adapter.getTimeZone())
+                gameMoment.setTeam(GameValues.myTeam.id).setTimeZone(adapter.getTimeZone())
                 findNavController().navigate(R.id.action_timeFragment_to_attackStartFragment)
             }
             val enemyTeam = it.findViewById<AppCompatButton>(R.id.time_enemyTeam)
             enemyTeam.setOnClickListener {
                 isEnemy = true
-                gameMoment.setTeam(GameValues.enemyTeam.name).setTimeZone(adapter.getTimeZone())
+                gameMoment.setTeam(GameValues.enemyTeam.id).setTimeZone(adapter.getTimeZone())
                 findNavController().navigate(R.id.action_timeFragment_to_attackStartFragment)
             }
             myTeam.text = GameValues.myTeam.name

@@ -8,7 +8,6 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.attack.GameValues
-import ru.bratusev.domain.models.GameMoment
 import ru.bratusev.domain.models.Player
 
 class PlayersGridAdapter(private val context: Context, private val players: ArrayList<Player>) :
@@ -32,6 +31,7 @@ class PlayersGridAdapter(private val context: Context, private val players: Arra
             convertView = inflater.inflate(R.layout.grid_item, parent, false)
         }
 
+        GameValues.gameMoment.setPlayersOnField(players)
         convertView?.findViewById<TextView>(R.id.textView)?.text = players[position].number.toString()
         convertView?.setOnClickListener {
             GameValues.gameMoment.addPassToStory(players[position])

@@ -9,7 +9,6 @@ import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.textfield.TextInputEditText
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.teams.view.TeamsViewModel
-import ru.bratusev.domain.models.Team
 
 class UpdateTeamDialog(private val context: Context) {
     private val dialogView: View =

@@ -7,15 +7,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import ru.bratusev.basketfeature.presentation.attack.GameValues
 import ru.bratusev.domain.Resource
 import ru.bratusev.domain.models.GameModel
 import ru.bratusev.domain.models.Player
 import ru.bratusev.domain.usecase.CreateGameUseCase
+import ru.bratusev.domain.usecase.GetGameIdUseCase
 import ru.bratusev.domain.usecase.GetPlayersListUseCase
 
 class SelectEnemyViewModel(
     private val createGameUseCase: CreateGameUseCase,
-    private val getPlayersListUseCase: GetPlayersListUseCase
+    private val getPlayersListUseCase: GetPlayersListUseCase,
+    private val getGameIdUseCase: GetGameIdUseCase
 ) : ViewModel() {
 
     private val playersMutable = MutableLiveData<ArrayList<Player>>()
@@ -58,7 +61,25 @@ class SelectEnemyViewModel(
     fun createGame(gameModel: GameModel) {
         createGameUseCase.invoke(gameModel).onEach { result ->
             when (result) {
-                is Resource.Success -> {}
+                is Resource.Success -> {
+                    getGameId(gameModel)
+                }
+                is Resource.Error -> {
+                    Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
+                }
+                is Resource.Loading -> {}
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    private fun getGameId(gameModel: GameModel) {
+        getGameIdUseCase.invoke(gameModel).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    GameValues.gameId = result.data.toString()
+                    GameValues.gameMoment.setGameId(GameValues.gameId)
+                    Log.d("MyGameId", GameValues.gameId)
+                }
                 is Resource.Error -> {
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }

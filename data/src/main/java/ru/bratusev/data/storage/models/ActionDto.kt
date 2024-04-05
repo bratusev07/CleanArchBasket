@@ -2,18 +2,18 @@ package ru.bratusev.data.storage.models
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ru.bratusev.domain.models.ActionModel
+import ru.bratusev.domain.models.GameMoment
 
 @Serializable
 data class ActionDto(
-    val id: String,
+    val id: String = "",
     @SerialName("game_id")
     val gameId: String,
     @SerialName("team_id")
     val teamId: String,
-    val index: String,
-    @SerialName("created_at")
-    val createdAt: String,
+    val index: Int,
+    //@SerialName("created_at")
+    //val createdAt: String,
     val quater: Int,
     val playersOnField: ArrayList<PlayerModel>,
     val typeOfPossession: String,
@@ -30,10 +30,10 @@ data class ActionDto(
     val techFoulTeam: String,
     val techFoulPlayer: String,
     val techFoulRes: String,
-    val foulResult: String,
+    val foulResult: Int,
     val lossType: String,
     )
 
-internal fun ActionDto.toResponse(): ActionModel {
-    return ActionModel(id = id)
+internal fun ActionDto.toResponse(): GameMoment {
+    return GameMoment(id = id)
 }

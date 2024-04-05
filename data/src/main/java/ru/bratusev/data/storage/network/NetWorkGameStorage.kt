@@ -19,7 +19,18 @@ class NetWorkGameStorage(context: Context) : GameStorage {
     }
 
     override suspend fun getGames(): ArrayList<Game> {
-        return getSupabaseService().postgrest["games"].select().decodeList<Game>() as ArrayList<Game>
+        return getSupabaseService().postgrest["games"].select()
+            .decodeList<Game>() as ArrayList<Game>
+    }
+
+    override suspend fun getGameId(game: Game): String {
+        val result = getSupabaseService().postgrest["games"].select {
+            eq("team_a", game.teamA)
+            eq("team_b", game.teamB)
+            eq("date", game.date)
+            eq("game_name", game.gameName)
+        }.decodeList<Game>()
+        return result[result.lastIndex].id
     }
 
 }

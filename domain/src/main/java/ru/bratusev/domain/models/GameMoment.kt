@@ -2,97 +2,118 @@ package ru.bratusev.domain.models
 
 import java.io.Serializable
 
-class GameMoment : Serializable {
-    internal lateinit var timeZone: TimeZone
-    internal lateinit var team: String
-    internal lateinit var attackStartType: AttackStartType
-    internal lateinit var timeType: TimeType
-    internal lateinit var player: Player
-    internal var second: Int = 0
-    internal var zoneNumber: Int = 0
-    internal var isHit: Boolean = false
-    private var passStory = ArrayList<Player>()
-    internal lateinit var attackType: AttackType
-    internal lateinit var resultType: ResultType
-    internal var foul: Foul = Foul.NONE
-    internal var shot: Shot = Shot.NONE
-    internal var loss: Loss = Loss.NONE
+class GameMoment(id: String) : Serializable {
+    var gameId: String = id
+    var teamId: String = "NONE"
+    var index: Int = 0
+    var createdAt: String = "NONE"
+    var quater: Int = 1
+    var playersOnField = ArrayList<Player>()
+    var typeOfPossession: String = AttackStartType.DEAD_BALL.toString()
+    var passStory = ArrayList<Player>()
+    var timeType: Int = 14
+    var time: Int = 0
+    var attackType: String = AttackType.EARLY_ATTACK.toString()
+    var resultType: String = ResultType.LOSS.toString()
+    var shot: String = Shot.NONE.toString()
+    var zone: Int = 0
+    var shotResult: String = ShotResult.MISS.toString()
+    var assist = "NONE"
+    var foulType: String = Foul.NONE.toString()
+    var techFoulTeam: String = "NONE"
+    var techFoulPlayer: String = "NONE"
+    var techFoulRes = "NONE"
+    var foulResult: Int = 0
+    var loss: String = Loss.NONE.toString()
 
-    override fun toString(): String {
-        var storyList = ""
-        for (player1 in passStory) {
-            storyList += "${player1.number} "
-        }
-        return "$timeZone $team $attackStartType $timeType $storyList $player $second $zoneNumber $isHit $attackType $resultType"
-    }
-
-    fun setTimeZone(timeZone: TimeZone): GameMoment {
-        this.timeZone = timeZone
+    fun setTimeZone(quater: Int): GameMoment {
+        this.quater = quater
         return this
     }
 
-    fun addPassToStory(player: Player){
-        passStory.add(player)
-        setPlayer(player)
+    fun setGameId(id: String): GameMoment {
+        this.gameId = id
+        return this
     }
 
-    fun setTeam(team: String): GameMoment {
-        this.team = team
+    fun addIndex(): GameMoment {
+        index++
+        return this
+    }
+
+    fun setPlayersOnField(players: ArrayList<Player>): GameMoment {
+        playersOnField = players
+        return this
+    }
+
+    fun setCreateTime(createdAt: String): GameMoment {
+        this.createdAt = createdAt
+        return this
+    }
+
+    fun addPassToStory(player: Player) {
+        passStory.add(player)
+        techFoulPlayer = player.id
+    }
+
+    fun setTeam(teamId: String): GameMoment {
+        this.teamId = teamId
+        techFoulTeam = teamId
         return this
     }
 
     fun setAttackStart(attackStartType: AttackStartType): GameMoment {
-        this.attackStartType = attackStartType
+        this.typeOfPossession = attackStartType.toString()
         return this
     }
 
-    fun setTimeType(timeType: TimeType): GameMoment {
+    fun setTimeType(timeType: Int): GameMoment {
         this.timeType = timeType
         return this
     }
 
+    fun setFoulResult(foulRes: Int): GameMoment {
+        this.foulResult = foulRes
+        return this
+    }
+
     fun setZoneNumber(zoneNumber: Int): GameMoment {
-        this.zoneNumber = zoneNumber
+        this.zone = zoneNumber
         return this
     }
 
-    fun setIsHit(isHit: Boolean): GameMoment {
-        this.isHit = isHit
-        return this
-    }
-
-    private fun setPlayer(player: Player): GameMoment {
-        this.player = player
+    fun setIsHit(isHit: ShotResult): GameMoment {
+        this.shotResult = isHit.toString()
         return this
     }
 
     fun setSecond(second: Int): GameMoment {
-        this.second = second
+        this.time = second
         return this
     }
 
     fun setAttackType(attackType: AttackType): GameMoment {
-        this.attackType = attackType
+        this.attackType = attackType.toString()
         return this
     }
 
     fun setResultType(resultType: ResultType): GameMoment {
-        this.resultType = resultType
+        this.resultType = resultType.toString()
         return this
     }
 
     fun setFoul(foul: Foul): GameMoment {
-        this.foul = foul
+        this.foulType = foul.toString()
         return this
     }
 
     fun setShot(shot: Shot): GameMoment {
-        this.shot = shot
+        this.shot = shot.toString()
         return this
     }
 
     fun setLoss(loss: Loss): GameMoment {
-        this.loss = loss
+        this.loss = loss.toString()
         return this
     }
 
@@ -100,14 +121,6 @@ class GameMoment : Serializable {
         passStory.clear()
     }
 
-}
-
-enum class TimeZone {
-    TIME_1,
-    TIME_2,
-    TIME_3,
-    TIME_4,
-    TIME_OOT
 }
 
 enum class AttackStartType {
@@ -118,9 +131,9 @@ enum class AttackStartType {
     SELECTION_IN_ATTACK
 }
 
-enum class TimeType {
-    TIME_14,
-    TIME_24
+enum class ShotResult {
+    MISS,
+    HIT
 }
 
 enum class AttackType {

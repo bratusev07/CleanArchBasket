@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import ru.bratusev.basketfeature.R
-import ru.bratusev.domain.models.TimeZone
 
 class TimesGridAdapter(private val context: Context, private val numbers: ArrayList<Int>) :
     BaseAdapter() {
 
-    private var timeZone = TimeZone.TIME_1
+    private var timeZone = 1
 
     override fun getCount(): Int {
         return numbers.size
@@ -38,22 +37,22 @@ class TimesGridAdapter(private val context: Context, private val numbers: ArrayL
         convertView?.setOnClickListener {
             when (numbers[position]) {
                 1 -> {
-                    timeZone = TimeZone.TIME_1
+                    timeZone = 1
                     tv?.setBackgroundColor(context.getColor(R.color.orange))
                 }
 
                 2 -> {
-                    timeZone = TimeZone.TIME_2
+                    timeZone = 2
                     tv?.setBackgroundColor(context.getColor(R.color.orange))
                 }
 
                 3 -> {
-                    timeZone = TimeZone.TIME_3
+                    timeZone = 3
                     tv?.setBackgroundColor(context.getColor(R.color.orange))
                 }
 
                 4 -> {
-                    timeZone = TimeZone.TIME_4
+                    timeZone = 4
                     tv?.setBackgroundColor(context.getColor(R.color.orange))
                 }
             }
@@ -61,7 +60,7 @@ class TimesGridAdapter(private val context: Context, private val numbers: ArrayL
         return convertView
     }
 
-    fun getTimeZone(): TimeZone {
+    fun getTimeZone(): Int {
         return timeZone
     }
 }

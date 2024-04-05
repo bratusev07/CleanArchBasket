@@ -9,4 +9,6 @@ interface GameRepository {
     suspend fun removeGame(id: String) : Boolean
 
     suspend fun getGames() : ArrayList<GameModel>
+
+    suspend fun getGameId(gameModel: GameModel): String
 }

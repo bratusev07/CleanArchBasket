@@ -1,6 +1,5 @@
 package ru.bratusev.basketfeature.presentation.attack.dialogs
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatButton
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.attack.GameValues
 
 class ScoredBallsDialog(private val ballCount: Int) : BottomSheetDialogFragment() {
 
@@ -46,6 +45,7 @@ class ScoredBallsDialog(private val ballCount: Int) : BottomSheetDialogFragment(
             }
 
         view.findViewById<AppCompatButton>(R.id.scoredBalls_okBtn).setOnClickListener {
+            GameValues.gameMoment.setFoulResult(pointCount)
             AcceptDialog(requireContext(), R.id.action_attackFoulFragment_to_timeFragment, requireParentFragment()).show()
             dismiss()
         }
