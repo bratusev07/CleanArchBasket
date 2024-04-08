@@ -16,7 +16,7 @@ class ActionRepositoryImpl(private val actionStorage: ActionStorage) : ActionRep
                 gameId = gameMoment.gameId,
                 teamId = gameMoment.teamId,
                 index = gameMoment.index,
-                //createdAt = gameMoment.createdAt,
+                createdAt = gameMoment.createdAt,
                 quater = gameMoment.quater,
                 playersOnField = parsePlayerToModel(gameMoment.playersOnField),
                 typeOfPossession = gameMoment.typeOfPossession,

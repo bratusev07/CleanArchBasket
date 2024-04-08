@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.attack.GameValues
 import ru.bratusev.basketfeature.presentation.games.view.GameViewModel
 import ru.bratusev.domain.models.GameModel
 
@@ -50,6 +51,7 @@ class GamesAdapter(private val items: ArrayList<GameModel>, private val fragment
                     if (deltaX > 50) {
                         vm.removeGame(items[position].id)
                     } else {
+                        GameValues.gameId = items[position].id
                         fragment.findNavController().navigate(R.id.action_gamesFragment_to_statsFragment)
                     }
                     true

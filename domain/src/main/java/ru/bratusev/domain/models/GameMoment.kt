@@ -26,6 +26,7 @@ class GameMoment(id: String) : Serializable {
     var foulResult: Int = 0
     var loss: String = Loss.NONE.toString()
 
+
     fun setTimeZone(quater: Int): GameMoment {
         this.quater = quater
         return this
@@ -67,6 +68,11 @@ class GameMoment(id: String) : Serializable {
         return this
     }
 
+    fun setAttackStart(attackStartType: String): GameMoment {
+        this.typeOfPossession = attackStartType
+        return this
+    }
+
     fun setTimeType(timeType: Int): GameMoment {
         this.timeType = timeType
         return this
@@ -87,6 +93,11 @@ class GameMoment(id: String) : Serializable {
         return this
     }
 
+    fun setIsHit(isHit: String): GameMoment {
+        this.shotResult = isHit
+        return this
+    }
+
     fun setSecond(second: Int): GameMoment {
         this.time = second
         return this
@@ -97,8 +108,18 @@ class GameMoment(id: String) : Serializable {
         return this
     }
 
+    fun setAttackType(attackType: String): GameMoment {
+        this.attackType = attackType
+        return this
+    }
+
     fun setResultType(resultType: ResultType): GameMoment {
         this.resultType = resultType.toString()
+        return this
+    }
+
+    fun setResultType(resultType: String): GameMoment {
+        this.resultType = resultType
         return this
     }
 
@@ -107,8 +128,18 @@ class GameMoment(id: String) : Serializable {
         return this
     }
 
+    fun setFoul(foul: String): GameMoment {
+        this.foulType = foul
+        return this
+    }
+
     fun setShot(shot: Shot): GameMoment {
         this.shot = shot.toString()
+        return this
+    }
+
+    fun setShot(shot: String): GameMoment {
+        this.shot = shot
         return this
     }
 
@@ -117,8 +148,18 @@ class GameMoment(id: String) : Serializable {
         return this
     }
 
+    fun setLoss(loss: String): GameMoment {
+        this.loss = loss
+        return this
+    }
+
     fun clearHistory() {
         passStory.clear()
+    }
+
+    fun setPassStory(passStory: ArrayList<Player>): GameMoment {
+        this.passStory = passStory
+        return this
     }
 
 }

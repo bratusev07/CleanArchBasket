@@ -5,13 +5,14 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.util.Log
 import android.view.View
-import ru.bratusev.basketfeature.presentation.games.view.StatsFragment
+import ru.bratusev.domain.models.HexagonPoint
 import kotlin.math.cos
 import kotlin.math.min
 import kotlin.math.sin
 
-class HexagonView(context: Context, private val messagesArray: ArrayList<String>, private val pointList1: ArrayList<StatsFragment.Point>, private val pointList2: ArrayList<StatsFragment.Point>) : View(context) {
+class HexagonView(context: Context, private val pointList: ArrayList<HexagonPoint>) : View(context) {
 
     private val paintBack = Paint()
     private val paintText = Paint()
@@ -20,6 +21,15 @@ class HexagonView(context: Context, private val messagesArray: ArrayList<String>
     private val paintTeamZone = Paint()
     private val paintEnemyDot = Paint()
     private val paintEnemyZone = Paint()
+
+    private val messageList = ArrayList<String>().also {
+        it.add("BREAKING_PRESSURE")
+        it.add("BREAKING_ZONE")
+        it.add("EARLY_ATTACK")
+        it.add("QUICK_BREAKAWAY")
+        it.add("POSITIONAL_ATTACK")
+        it.add("SECOND_CHANCE_ATTACK")
+    }
 
     init {
         paintBack.color = Color.BLACK
@@ -78,8 +88,8 @@ class HexagonView(context: Context, private val messagesArray: ArrayList<String>
         centerY = height / 2f
         radius = min(width, height) / 3f
         drawBack(canvas)
-        drawZone(canvas, pointList1)
-        drawZone(canvas, pointList2, true)
+        drawZone(canvas, pointList.filter { elem -> !elem.isEnemy } as ArrayList<HexagonPoint>)
+        drawZone(canvas, pointList.filter { elem -> elem.isEnemy } as ArrayList<HexagonPoint>)
     }
 
     private fun drawBack(canvas: Canvas) {
@@ -88,7 +98,7 @@ class HexagonView(context: Context, private val messagesArray: ArrayList<String>
         for (i in 0 until 6) {
             val x = centerX + radius * cos(i * angle).toFloat()
             val y = centerY + radius * sin(i * angle).toFloat()
-            canvas.drawText(messagesArray[i], if(i!=0) x-70f else x, y, paintText)
+            canvas.drawText(messageList[i], if(i!=0) x-70f else x, y, paintText)
             if (i != 0) path.lineTo(x, y)
             path.moveTo(x, y)
             path.lineTo(centerX, centerY)
@@ -99,30 +109,48 @@ class HexagonView(context: Context, private val messagesArray: ArrayList<String>
         canvas.drawPath(path, paintBack)
     }
 
-    private fun drawZone(canvas: Canvas, pointList: ArrayList<StatsFragment.Point>, isEnemy: Boolean = false) {
-        val dot = if(isEnemy) paintEnemyDot else paintTeamDot
-        val zone = if(isEnemy) paintEnemyZone else paintTeamZone
+    private fun drawZone(canvas: Canvas, points: ArrayList<HexagonPoint>) {
+        val dot: Paint
+        val zone: Paint
+
+        try {
+            if(points[0].isEnemy){
+                dot = paintEnemyDot
+                zone = paintEnemyZone
+            }else{
+                dot = paintTeamDot
+                zone = paintTeamZone
+            }
+        }catch (e: Exception){
+            return
+        }
 
         for (i in 0 until 6) {
+            val value = calculateValue(points, messageList[i])
             val angle = 2 * Math.PI / 6
-            pointList[i].x = centerX + radius * pointList[i].value * cos(i * angle).toFloat()
-            pointList[i].y = centerY + radius * pointList[i].value * sin(i * angle).toFloat()
-            canvas.drawCircle(pointList[i].x, pointList[i].y, 15f, dot)
+            try {
+                Log.d("MyActionStatsLog", "$value ${messageList[i]} ${points[i].isEnemy}")
+                points[i].x = centerX + radius * value * cos(i * angle).toFloat()
+                points[i].y = centerY + radius * value * sin(i * angle).toFloat()
+                canvas.drawCircle(points[i].x, points[i].y, 15f, dot)
+            }catch (e: Exception){}
         }
         val path = Path()
         path.reset()
-        path.moveTo(pointList[0].x, pointList[0].y)
-        for (point in pointList) {
+        path.moveTo(points[0].x, points[0].y)
+        for (point in points) {
             path.lineTo(point.x, point.y)
         }
         path.close()
         canvas.drawPath(path, zone)
         canvas.drawPath(path, paintBorder)
     }
-}
 
-class Point(var x: Float = 0f, var y: Float = 0f, val value: Float = 0f){
-    override fun toString(): String {
-        return "$x $y $value"
+    private fun calculateValue(pointList: ArrayList<HexagonPoint>, attackType: String): Float {
+        var count = 0f
+        for (hexagonPoint in pointList) {
+            if(hexagonPoint.attackType == attackType) count++
+        }
+        return (count / pointList.size)
     }
 }

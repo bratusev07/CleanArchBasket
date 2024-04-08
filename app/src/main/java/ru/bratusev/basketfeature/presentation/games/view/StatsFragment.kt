@@ -8,22 +8,15 @@ import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.attack.GameValues
 import ru.bratusev.basketfeature.presentation.games.diagrams.HexagonView
 import ru.bratusev.basketfeature.presentation.games.diagrams.VerticalView
-import kotlin.random.Random
+import ru.bratusev.domain.models.GameMoment
+import ru.bratusev.domain.models.HexagonPoint
 
 class StatsFragment : Fragment() {
 
     private val vm: StatsViewModel by viewModel<StatsViewModel>()
-
-    private val messageList = ArrayList<String>().also {
-        it.add("прессинг")
-        it.add("зона")
-        it.add("раннее")
-        it.add("отрыв")
-        it.add("позиционное")
-        it.add("шанс")
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,35 +24,49 @@ class StatsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_actions, container, false).also {
-
-            val pointList1 = ArrayList<Point>()
-            val pointList2 = ArrayList<Point>()
-            for (i in 0..5) {
-                pointList1.add(Point(value = Random.nextFloat() * 0.8f + 0.1f))
-                pointList2.add(Point(value = Random.nextFloat() * 0.8f + 0.1f))
-            }
-
-            val pointList3 = ArrayList<Int>()
-            val pointList4 = ArrayList<Int>()
-            for (i in 0..200) {
-                pointList3.add(Random.nextInt(1, 25))
-                pointList4.add(Random.nextInt(1, 25))
-            }
-
             val frame1 = it.findViewById<FrameLayout>(R.id.stats_frame1)
             val frame2 = it.findViewById<FrameLayout>(R.id.stats_frame2)
-            val hexagonView = HexagonView(requireContext(), messageList, pointList1, pointList2)
-            val verticalView = VerticalView(requireContext(), pointList3, pointList4)
+            var hexagonView: HexagonView
+            var verticalView: VerticalView
 
-            frame1.addView(hexagonView)
-            frame2.addView(verticalView)
+            vm.actionListLive.observe(viewLifecycleOwner) {
+                hexagonView =
+                    HexagonView(requireContext(), parseToHexagonPoints(vm.actionListLive.value))
+                //verticalView = VerticalView(requireContext(), )
+
+                frame1.addView(hexagonView)
+                //frame2.addView(verticalView)
+            }
+
+            vm.getActions(gameId = GameValues.gameId)
         }
     }
 
-    class Point(var x: Float = 0f, var y: Float = 0f, val value: Float = 0f){
-        override fun toString(): String {
-            return "$x $y $value"
+    private fun parseToHexagonPoints(value: ArrayList<GameMoment>?): ArrayList<HexagonPoint> {
+        val pointListHexagon = ArrayList<HexagonPoint>()
+        val myTeamId = value?.get(0)?.teamId
+
+        value?.forEach { action ->
+            if (action.teamId == myTeamId) {
+                pointListHexagon.add(
+                    HexagonPoint(
+                        attackType = action.attackType,
+                        shotResult = action.shotResult,
+                        isEnemy = false
+                    )
+                )
+            } else {
+                pointListHexagon.add(
+                    HexagonPoint(
+                        attackType = action.attackType,
+                        shotResult = action.shotResult,
+                        isEnemy = true
+                    )
+                )
+            }
         }
+
+        return pointListHexagon
     }
 
 }

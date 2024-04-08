@@ -3,6 +3,7 @@ package ru.bratusev.data.storage.models
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.bratusev.domain.models.GameMoment
+import ru.bratusev.domain.models.Player
 
 @Serializable
 data class ActionDto(
@@ -12,8 +13,8 @@ data class ActionDto(
     @SerialName("team_id")
     val teamId: String,
     val index: Int,
-    //@SerialName("created_at")
-    //val createdAt: String,
+    @SerialName("created_at")
+    val createdAt: String,
     val quater: Int,
     val playersOnField: ArrayList<PlayerModel>,
     val typeOfPossession: String,
@@ -35,5 +36,27 @@ data class ActionDto(
     )
 
 internal fun ActionDto.toResponse(): GameMoment {
-    return GameMoment(id = id)
+    return GameMoment(gameId)
+        .setTeam(teamId)
+        .setCreateTime(createdAt)
+        .setTimeZone(quater)
+        .setPlayersOnField(parseModelToPlayers(playersOnField))
+        .setAttackStart(typeOfPossession)
+        .setPassStory(parseModelToPlayers(possessions))
+        .setTimeType(timeType)
+        .setTimeZone(time)
+        .setAttackType(attackType)
+        .setResultType(result)
+        .setShot(playType)
+        .setZoneNumber(zone)
+        .setIsHit(shotResult)
+        .setFoul(foulType)
+}
+
+private fun parseModelToPlayers(list: ArrayList<PlayerModel>): ArrayList<Player> {
+    val result = ArrayList<Player>()
+    for (playerModel in list) {
+        result.add(playerModel.toResponse())
+    }
+    return result
 }

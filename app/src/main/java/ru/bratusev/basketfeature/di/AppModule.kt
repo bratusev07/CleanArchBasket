@@ -8,6 +8,7 @@ import ru.bratusev.basketfeature.presentation.games.view.GameViewModel
 import ru.bratusev.basketfeature.presentation.games.view.SelectEnemyViewModel
 import ru.bratusev.basketfeature.presentation.games.view.SelectPlayersViewModel
 import ru.bratusev.basketfeature.presentation.games.view.SelectTeamsViewModel
+import ru.bratusev.basketfeature.presentation.games.view.StatsViewModel
 import ru.bratusev.basketfeature.presentation.signIn.view.SignInViewModel
 import ru.bratusev.basketfeature.presentation.signUp.view.SignUpViewModel
 import ru.bratusev.basketfeature.presentation.teams.view.TeamViewModel
@@ -81,5 +82,11 @@ val appModule = module {
 
     viewModel<PlayersSwapViewModel> {
         PlayersSwapViewModel()
+    }
+
+    viewModel<StatsViewModel>{
+        StatsViewModel(
+            getActionsUseCase = get()
+        )
     }
 }
