@@ -44,7 +44,7 @@ internal fun ActionDto.toResponse(): GameMoment {
         .setAttackStart(typeOfPossession)
         .setPassStory(parseModelToPlayers(possessions))
         .setTimeType(timeType)
-        .setTimeZone(time)
+        .setSecond(time)
         .setAttackType(attackType)
         .setResultType(result)
         .setShot(playType)

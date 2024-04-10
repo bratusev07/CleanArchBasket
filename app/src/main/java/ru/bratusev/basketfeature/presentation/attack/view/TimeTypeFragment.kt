@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import android.widget.ViewFlipper
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatButton
@@ -59,7 +60,8 @@ class TimeTypeFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                 GameValues.gameMoment
                     .setTimeType(timeType)
                     .setSecond(second)
-                findNavController().navigate(R.id.action_timeTypeFragment_to_attackTypeFragment)
+                if(GameValues.gameMoment.teamId.length > 5) findNavController().navigate(R.id.action_timeTypeFragment_to_attackTypeFragment)
+                else Toast.makeText(requireContext(), "Укажите игрока", Toast.LENGTH_SHORT).show()
             }
             it.findViewById<AppCompatButton>(R.id.timeType_BackBtn).setOnClickListener {
                 findNavController().navigate(R.id.action_timeTypeFragment_to_attackStartFragment)

@@ -13,6 +13,7 @@ import ru.bratusev.basketfeature.presentation.games.diagrams.HexagonView
 import ru.bratusev.basketfeature.presentation.games.diagrams.VerticalView
 import ru.bratusev.domain.models.GameMoment
 import ru.bratusev.domain.models.HexagonPoint
+import ru.bratusev.domain.models.VerticalPoint
 
 class StatsFragment : Fragment() {
 
@@ -31,42 +32,72 @@ class StatsFragment : Fragment() {
 
             vm.actionListLive.observe(viewLifecycleOwner) {
                 hexagonView =
-                    HexagonView(requireContext(), parseToHexagonPoints(vm.actionListLive.value))
-                //verticalView = VerticalView(requireContext(), )
+                    HexagonView(
+                        requireContext(),
+                        parseToHexagonPoints(vm.actionListLive.value ?: ArrayList())
+                    )
+                verticalView =
+                    VerticalView(
+                        requireContext(),
+                        parseToVerticalPoints(vm.actionListLive.value ?: ArrayList())
+                    )
 
                 frame1.addView(hexagonView)
-                //frame2.addView(verticalView)
+                frame2.addView(verticalView)
             }
 
             vm.getActions(gameId = GameValues.gameId)
         }
     }
 
-    private fun parseToHexagonPoints(value: ArrayList<GameMoment>?): ArrayList<HexagonPoint> {
+    private fun parseToHexagonPoints(value: ArrayList<GameMoment>): ArrayList<HexagonPoint> {
         val pointListHexagon = ArrayList<HexagonPoint>()
-        val myTeamId = value?.get(0)?.teamId
+        val myTeamId = try {
+            value[0].teamId
+        } catch (_: Exception) {
+            return pointListHexagon
+        }
 
-        value?.forEach { action ->
-            if (action.teamId == myTeamId) {
-                pointListHexagon.add(
-                    HexagonPoint(
-                        attackType = action.attackType,
-                        shotResult = action.shotResult,
-                        isEnemy = false
-                    )
+        value.forEach { action ->
+            pointListHexagon.add(
+                HexagonPoint(
+                    attackType = action.attackType,
+                    shotResult = action.shotResult,
+                    isEnemy = action.teamId != myTeamId
                 )
-            } else {
-                pointListHexagon.add(
-                    HexagonPoint(
-                        attackType = action.attackType,
-                        shotResult = action.shotResult,
-                        isEnemy = true
-                    )
-                )
-            }
+            )
         }
 
         return pointListHexagon
     }
 
+    private fun parseToVerticalPoints(value: ArrayList<GameMoment>): ArrayList<VerticalPoint> {
+        val pointListVertical = ArrayList<VerticalPoint>()
+        val myTeamId = try {
+            value[0].teamId
+        } catch (_: Exception){
+            return pointListVertical
+        }
+        val timeType = value[0].timeType
+        val myTeamShot = value.filter { elem -> elem.teamId == myTeamId }
+        val enemyTeamShot = value.filter { elem -> elem.teamId != myTeamId }
+
+        for (i in 1..timeType) {
+            var count = 0
+            myTeamShot.forEach { action ->
+                if (action.time == i) count++
+            }
+            pointListVertical.add(VerticalPoint(i, count, false))
+        }
+
+        for (i in 1..timeType) {
+            var count = 0
+            enemyTeamShot.forEach { action ->
+                if (action.time == i) count++
+            }
+            pointListVertical.add(VerticalPoint(i, count, true))
+        }
+
+        return pointListVertical
+    }
 }

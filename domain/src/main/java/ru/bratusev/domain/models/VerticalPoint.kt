@@ -1,7 +1,7 @@
 package ru.bratusev.domain.models
 
 data class VerticalPoint(
-
-    val value: Int = 0,
+    val key: Int,
+    var value: Int,
     val isEnemy: Boolean = false
 )

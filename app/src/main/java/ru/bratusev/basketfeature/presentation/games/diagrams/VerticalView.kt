@@ -5,8 +5,9 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.view.View
+import ru.bratusev.domain.models.VerticalPoint
 
-class VerticalView(context: Context, private val pointList1: ArrayList<Int>, private val pointList2: ArrayList<Int>) : View(context) {
+class VerticalView(context: Context, private val points: ArrayList<VerticalPoint>) : View(context) {
 
     private val paintBack = Paint()
     private val paintText = Paint()
@@ -47,22 +48,14 @@ class VerticalView(context: Context, private val pointList1: ArrayList<Int>, pri
         fillData(canvas)
     }
 
-    private fun getShotCount(second: Int, pointList: ArrayList<Int>) : Int{
-        var count = 0
-        for (point in pointList) {
-            if(point == second) count++
-        }
-        return count
-    }
-
     private fun fillData(canvas: Canvas){
         var y = 20f
-        for (i in 1..24){
+        for (i in 1..points.size/2){
             canvas.drawLine(width.toFloat()/10, y-verticalStep/2, width - width.toFloat()/10, y-verticalStep/2, paintBack)
-            canvas.drawLine(centerX, y, centerX+getShotCount(i, pointList1)*sectionWidth, y, paintTeam)
-            canvas.drawLine(centerX, y, centerX-getShotCount(i, pointList2)*sectionWidth, y, paintEnemy)
-            canvas.drawText(i.toString(), centerX+getShotCount(i, pointList1)*sectionWidth + 25f, y+paintText.textSize/3, paintText)
-            canvas.drawText(i.toString(), centerX-getShotCount(i, pointList2)*sectionWidth - 25f - sectionWidth, y+paintText.textSize/3, paintText)
+            canvas.drawLine(centerX, y, centerX+ points[i - 1].value *sectionWidth, y, paintTeam)
+            canvas.drawText(i.toString(), centerX+ points[i - 1].value *sectionWidth + 25f, y+paintText.textSize/3, paintText)
+            canvas.drawText(i.toString(), centerX- points[i - 1 + points.size/2].value *sectionWidth - 25f - sectionWidth, y+paintText.textSize/3, paintText)
+            canvas.drawLine(centerX, y, centerX- points[i -1 + points.size/2].value *sectionWidth, y, paintEnemy)
             y+=verticalStep
         }
         canvas.drawLine(width.toFloat()/10, y-verticalStep/2, width - width.toFloat()/10, y-verticalStep/2, paintBack)
