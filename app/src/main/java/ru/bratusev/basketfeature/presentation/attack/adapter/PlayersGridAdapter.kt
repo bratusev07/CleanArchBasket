@@ -36,9 +36,15 @@ class PlayersGridAdapter(private val context: Context, private val fragment: Tim
         }
 
         GameValues.gameMoment.setPlayersOnField(players)
-        convertView?.findViewById<TextView>(R.id.textView)?.text = players[position].number.toString()
+        val tv = convertView?.findViewById<TextView>(R.id.textView)
+        tv?.text = players[position].number.toString()
         convertView?.setOnClickListener {
+            for (i in 0 until parent?.childCount!!) {
+                val childView = parent.getChildAt(i)
+                childView.findViewById<TextView>(R.id.textView).background = context.getDrawable(R.drawable.border_stroke_square)
+            }
             GameValues.gameMoment.addPassToStory(players[position])
+            tv?.setBackgroundColor(context.getColor(R.color.orange))
         }
         convertView?.setOnLongClickListener(this)
         return convertView

@@ -39,7 +39,8 @@ class SelectEnemyFragment : Fragment() {
             it.findViewById<ImageView>(R.id.selectEnemy_back).setOnClickListener {
                 findNavController().navigate(R.id.action_selectEnemyFragment_to_selectPlayersFragment)
             }
-            it.findViewById<AppCompatButton>(R.id.selectEnemy_startGameBtn).setOnClickListener {
+            val nextBtn = it.findViewById<AppCompatButton>(R.id.selectEnemy_startGameBtn)
+            nextBtn.setOnClickListener {
                 enemyPlayers = vm.players.value as ArrayList<Player>
                 vm.createGame(GameModel("",date, myTeam.id, enemyTeam.id, "${myTeam.name} – ${enemyTeam.name}"))
                 findNavController().navigate(R.id.action_selectEnemyFragment_to_timeFragment)
@@ -57,6 +58,13 @@ class SelectEnemyFragment : Fragment() {
                 val fromGame = vm.players.value!!.filter { elem -> elem.isInGame } as ArrayList<Player>
                 playersGrid.adapter = EnemyGridAdapter(requireContext(), vm, toGame, true)
                 playersInGameGrid.adapter = EnemyGridAdapter(requireContext(), vm, fromGame, false)
+                if(fromGame.size < 5){
+                    nextBtn.background = requireContext().getDrawable(R.drawable.button_style_stroke_grey)
+                    nextBtn.isClickable = false
+                }else{
+                    nextBtn.background = requireContext().getDrawable(R.drawable.button_style)
+                    nextBtn.isClickable = true
+                }
             }
             vm.getPlayers()
         }

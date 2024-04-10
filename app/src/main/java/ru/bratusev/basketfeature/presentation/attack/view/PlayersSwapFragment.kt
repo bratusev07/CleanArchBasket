@@ -29,7 +29,8 @@ class PlayersSwapFragment: Fragment() {
             it.findViewById<TextView>(R.id.swapPlayer_teamName).text = if(GameValues.isEnemy) GameValues.myTeam.name else GameValues.enemyTeam.name
             val playersGrid = it.findViewById<GridView>(R.id.swapPlayer_playersList)
             val playersInGameGrid = it.findViewById<GridView>(R.id.swapPlayer_playersListInGame)
-            it.findViewById<AppCompatButton>(R.id.swapPlayer_swapButton).setOnClickListener {
+            val nextBtn = it.findViewById<AppCompatButton>(R.id.swapPlayer_swapButton)
+            nextBtn.setOnClickListener {
                 findNavController().navigate(R.id.action_playersSwapFragment_to_timeTypeFragment)
             }
 
@@ -38,6 +39,15 @@ class PlayersSwapFragment: Fragment() {
                 val fromGame = vm.players.value!!.filter { elem -> elem.isInGame } as ArrayList<Player>
                 playersGrid.adapter = SwapGridAdapter(requireContext(), vm, toGame, true)
                 playersInGameGrid.adapter = SwapGridAdapter(requireContext(), vm, fromGame, false)
+                if(fromGame.size < 5){
+                    nextBtn.background = requireContext().getDrawable(R.drawable.button_style_stroke_grey)
+                    nextBtn.setTextColor(requireContext().getColor(R.color.dark_grey))
+                    nextBtn.isClickable = false
+                }else{
+                    nextBtn.background = requireContext().getDrawable(R.drawable.button_style_stroke)
+                    nextBtn.setTextColor(requireContext().getColor(R.color.orange))
+                    nextBtn.isClickable = true
+                }
             }
         }
     }

@@ -18,6 +18,8 @@ class EnemyGridAdapter(
     private val isToGame: Boolean
 ) : BaseAdapter() {
 
+    private var enemyInGameCount = 0
+
     override fun getCount(): Int {
         return players.size
     }
@@ -42,9 +44,13 @@ class EnemyGridAdapter(
         convertView?.setOnClickListener {
             val player = players[position]
             try {
-                if (isToGame) {
+                if (isToGame && enemyInGameCount < 5) {
                     vm.addToGame(player)
-                } else vm.removeFromGame(player)
+                    enemyInGameCount++
+                } else{
+                    vm.removeFromGame(player)
+                    enemyInGameCount--
+                }
             }catch (e: Exception){
                 Toast.makeText(context, "Добавьте ещё игроков в команду: ${5 - (vm.players.value?.size ?: 0)}", Toast.LENGTH_SHORT).show()
             }

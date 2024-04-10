@@ -16,8 +16,10 @@ class SwapGridAdapter(
     private val vm: PlayersSwapViewModel,
     private val players: ArrayList<Player>,
     private val isToGame: Boolean
-) :
-    BaseAdapter() {
+) : BaseAdapter() {
+
+    private var playerInGameCount = 0
+
     override fun getCount(): Int {
         return players.size
     }
@@ -42,9 +44,13 @@ class SwapGridAdapter(
         convertView?.setOnClickListener {
             val player = players[position]
             try {
-                if (isToGame) {
+                if (isToGame && playerInGameCount < 5) {
                     vm.addToGame(player)
-                } else vm.removeFromGame(player)
+                    playerInGameCount++
+                } else{
+                    vm.removeFromGame(player)
+                    playerInGameCount--
+                }
             } catch (e: Exception) {
                 Toast.makeText(
                     context,

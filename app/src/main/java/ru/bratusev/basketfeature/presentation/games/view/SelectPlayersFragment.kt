@@ -32,7 +32,8 @@ class SelectPlayersFragment : Fragment() {
             val playersInGameGrid = it.findViewById<GridView>(R.id.selectedPlayer_gridView)
             vm.setTeamId(myTeam.id)
             it.findViewById<TextView>(R.id.selectPlayers_teamName).text = myTeam.name
-            it.findViewById<AppCompatButton>(R.id.selectPlayers_nextBtn).setOnClickListener {
+            val nextBtn = it.findViewById<AppCompatButton>(R.id.selectPlayers_nextBtn)
+            nextBtn.setOnClickListener {
                 GameValues.myPlayers = vm.players.value as ArrayList<Player>
                 findNavController().navigate(R.id.action_selectPlayersFragment_to_selectEnemyFragment)
             }
@@ -52,6 +53,14 @@ class SelectPlayersFragment : Fragment() {
                 val fromGame = vm.players.value!!.filter { elem -> elem.isInGame } as ArrayList<Player>
                 playersGrid.adapter = PlayersGridAdapter(requireContext(), vm, toGame, true)
                 playersInGameGrid.adapter = PlayersGridAdapter(requireContext(), vm, fromGame, false)
+                if(fromGame.size < 5){
+                    nextBtn.background = requireContext().getDrawable(R.drawable.button_style_stroke_grey)
+                    nextBtn.isClickable = false
+                }else{
+                    nextBtn.background = requireContext().getDrawable(R.drawable.button_style_stroke)
+                    nextBtn.isClickable = true
+                    nextBtn.setTextColor(requireContext().getColor(R.color.orange))
+                }
             }
             vm.getPlayers()
         }

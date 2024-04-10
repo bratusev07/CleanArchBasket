@@ -35,27 +35,12 @@ class TimesGridAdapter(private val context: Context, private val numbers: ArrayL
         tv?.text = "0${numbers[position]}"
 
         convertView?.setOnClickListener {
-            when (numbers[position]) {
-                1 -> {
-                    timeZone = 1
-                    tv?.setBackgroundColor(context.getColor(R.color.orange))
-                }
-
-                2 -> {
-                    timeZone = 2
-                    tv?.setBackgroundColor(context.getColor(R.color.orange))
-                }
-
-                3 -> {
-                    timeZone = 3
-                    tv?.setBackgroundColor(context.getColor(R.color.orange))
-                }
-
-                4 -> {
-                    timeZone = 4
-                    tv?.setBackgroundColor(context.getColor(R.color.orange))
-                }
+            for (i in 0 until parent?.childCount!!) {
+                val childView = parent.getChildAt(i)
+                childView.findViewById<TextView>(R.id.textView).background = context.getDrawable(R.drawable.border_stroke_square)
             }
+            timeZone = numbers[position]
+            tv?.setBackgroundColor(context.getColor(R.color.orange))
         }
         return convertView
     }
