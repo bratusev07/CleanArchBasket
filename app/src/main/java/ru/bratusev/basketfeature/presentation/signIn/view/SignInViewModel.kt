@@ -28,21 +28,26 @@ class SignInViewModel(
     private var hintPassLiveMutable = MutableLiveData<Boolean>()
     var hintPassLive: LiveData<Boolean> = hintPassLiveMutable
 
+    private val isLoadingMutable = MutableLiveData<Boolean>()
+    var isLoading: LiveData<Boolean> = isLoadingMutable
+
     private val emailPattern = Regex("^[A-Z0-9._%+-]+@[A-Z0-9-]+\\.[A-Z]{2,4}$", RegexOption.IGNORE_CASE)
-    private val passPattern = Regex("^.*(?=.{8,24})(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!#\$%&? \"]).*\$")
+    private val passPattern = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,24}\$")
 
     private fun authorize(userData: UserData){
-        userData.password = "qweqwe123"
         authorizeUseCase.invoke(userData).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     Log.d("MyNewLog", "Resource.Success ${(result.data as AuthorizeResponse).uuid}")
                     resultLiveMutable.value = true
+                    isLoadingMutable.value = false
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
                 is Resource.Loading -> {
+                    isLoadingMutable.value = true
                     Log.d("MyNewLog", "Resource.Loading")
                 }
             }

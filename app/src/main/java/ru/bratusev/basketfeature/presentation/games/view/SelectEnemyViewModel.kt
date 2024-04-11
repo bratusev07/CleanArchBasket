@@ -24,6 +24,9 @@ class SelectEnemyViewModel(
     private val playersMutable = MutableLiveData<ArrayList<Player>>()
     internal val players : LiveData<ArrayList<Player>> = playersMutable
 
+    private val isLoadingMutable = MutableLiveData<Boolean>()
+    var isLoading: LiveData<Boolean> = isLoadingMutable
+
     private var teamId: String = ""
 
     internal fun setTeamId(id: String){
@@ -48,12 +51,16 @@ class SelectEnemyViewModel(
         getPlayersListUseCase.invoke(teamId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    isLoadingMutable.value = false
                     playersMutable.value = result.data as ArrayList<Player>
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    isLoadingMutable.value = true
+                }
             }
         }.launchIn(viewModelScope)
     }
@@ -62,12 +69,16 @@ class SelectEnemyViewModel(
         createGameUseCase.invoke(gameModel).onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    isLoadingMutable.value = false
                     getGameId(gameModel)
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    isLoadingMutable.value = true
+                }
             }
         }.launchIn(viewModelScope)
     }
@@ -76,14 +87,18 @@ class SelectEnemyViewModel(
         getGameIdUseCase.invoke(gameModel).onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    isLoadingMutable.value = false
                     GameValues.gameId = result.data.toString()
                     GameValues.gameMoment.setGameId(GameValues.gameId)
                     Log.d("MyGameId", GameValues.gameId)
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    isLoadingMutable.value = true
+                }
             }
         }.launchIn(viewModelScope)
     }

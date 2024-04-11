@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridView
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatButton
@@ -30,6 +31,7 @@ class SelectPlayersFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_select_players, container, false).also {
             val playersGrid = it.findViewById<GridView>(R.id.selectPlayer_gridView)
             val playersInGameGrid = it.findViewById<GridView>(R.id.selectedPlayer_gridView)
+            val progressBar = it.findViewById<ProgressBar>(R.id.selectPlayers_progressBar)
             vm.setTeamId(myTeam.id)
             it.findViewById<TextView>(R.id.selectPlayers_teamName).text = myTeam.name
             val nextBtn = it.findViewById<AppCompatButton>(R.id.selectPlayers_nextBtn)
@@ -60,6 +62,14 @@ class SelectPlayersFragment : Fragment() {
                     nextBtn.background = requireContext().getDrawable(R.drawable.button_style_stroke)
                     nextBtn.isClickable = true
                     nextBtn.setTextColor(requireContext().getColor(R.color.orange))
+                }
+            }
+
+            vm.isLoading.observe(viewLifecycleOwner){
+                if (vm.isLoading.value == true) {
+                    progressBar.visibility = View.VISIBLE
+                } else {
+                    progressBar.visibility = View.GONE
                 }
             }
             vm.getPlayers()

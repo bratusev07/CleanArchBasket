@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.DatePicker
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.Spinner
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatButton
@@ -33,6 +34,7 @@ class SelectTeamsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_select_teams, container, false).also {
             val myTeam = it.findViewById<Spinner>(R.id.myTeam_spinner)
             val enemyTeam = it.findViewById<Spinner>(R.id.enemyTeam_spinner)
+            val progressBar = it.findViewById<ProgressBar>(R.id.selectTeams_progressBar)
             val calendar: Calendar = Calendar.getInstance()
             it.findViewById<DatePicker>(R.id.selectTeam_DataPicker).maxDate = calendar.timeInMillis
             it.findViewById<AppCompatButton>(R.id.selectTeams_nextBtn).setOnClickListener {
@@ -56,6 +58,14 @@ class SelectTeamsFragment : Fragment() {
             vm.teams.observe(viewLifecycleOwner){
                 myTeam.adapter = CustomDropDownAdapter(requireContext(), vm.teams.value!!)
                 enemyTeam.adapter = CustomDropDownAdapter(requireContext(), vm.teams.value!!)
+            }
+
+            vm.isLoading.observe(viewLifecycleOwner){
+                if (vm.isLoading.value == true) {
+                    progressBar.visibility = View.VISIBLE
+                } else {
+                    progressBar.visibility = View.GONE
+                }
             }
         }
     }

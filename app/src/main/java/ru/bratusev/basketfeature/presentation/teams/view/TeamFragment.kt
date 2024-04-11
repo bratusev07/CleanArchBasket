@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -26,6 +28,8 @@ class TeamFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_team, container, false).also {
             val teamList = it.findViewById<RecyclerView>(R.id.teamPlayerList)
+            it.findViewById<TextView>(R.id.team_teamName).text = "Поменяй название"
+            val progressBar = it.findViewById<ProgressBar>(R.id.team_progressBar)
             it.findViewById<ImageView>(R.id.team_plus).setOnClickListener {
                 CreatePlayerDialog(vm).show(childFragmentManager, "CreatePlayerDialog")
             }
@@ -49,6 +53,14 @@ class TeamFragment : Fragment() {
 
             vm.playerList.observe(viewLifecycleOwner){
                 teamList.adapter = TeamPlayerAdapter(vm.playerList.value!!, this, vm)
+            }
+
+            vm.isLoading.observe(viewLifecycleOwner){
+                if (vm.isLoading.value == true) {
+                    progressBar.visibility = View.VISIBLE
+                } else {
+                    progressBar.visibility = View.GONE
+                }
             }
         }
     }

@@ -16,16 +16,22 @@ class SelectTeamsViewModel(private val getTeamsListUseCase: GetTeamsListUseCase)
     private val teamsMutable = MutableLiveData<ArrayList<TeamListResponse>>()
     internal val teams : LiveData<ArrayList<TeamListResponse>> = teamsMutable
 
+    private val isLoadingMutable = MutableLiveData<Boolean>()
+    var isLoading: LiveData<Boolean> = isLoadingMutable
     internal fun getTeamsList(){
         getTeamsListUseCase.invoke().onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    isLoadingMutable.value = false
                     teamsMutable.value = result.data as ArrayList<TeamListResponse>
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    isLoadingMutable.value = true
+                }
             }
         }.launchIn(viewModelScope)
     }

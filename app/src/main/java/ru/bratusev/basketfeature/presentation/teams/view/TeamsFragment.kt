@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ class TeamsFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_teams, container, false).also {
             val teamsList = it.findViewById<RecyclerView>(R.id.teamsList)
+            val progressBar = it.findViewById<ProgressBar>(R.id.teams_progressBar)
             it.findViewById<ImageView>(R.id.teams_plus).setOnClickListener {
                 CreateTeamDialog(vm).show(childFragmentManager, "CreateTeam")
             }
@@ -44,6 +46,14 @@ class TeamsFragment : Fragment() {
 
             vm.teamsLive.observe(viewLifecycleOwner){
                 teamsList.adapter = TeamsAdapter(vm.teamsLive.value, this, vm)
+            }
+
+            vm.isLoading.observe(viewLifecycleOwner){
+                if (vm.isLoading.value == true) {
+                    progressBar.visibility = View.VISIBLE
+                } else {
+                    progressBar.visibility = View.GONE
+                }
             }
         }
     }

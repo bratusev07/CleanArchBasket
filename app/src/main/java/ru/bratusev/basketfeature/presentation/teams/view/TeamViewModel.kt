@@ -29,6 +29,9 @@ class TeamViewModel(
     private val playerListMutable = MutableLiveData<ArrayList<Player>>()
     internal val playerList: LiveData<ArrayList<Player>> = playerListMutable
 
+    private val isLoadingMutable = MutableLiveData<Boolean>()
+    var isLoading: LiveData<Boolean> = isLoadingMutable
+
     private var teamId = ""
 
     internal fun createPlayer(player: Player) {
@@ -37,12 +40,15 @@ class TeamViewModel(
             when (result) {
                 is Resource.Success -> {
                     Log.d("MyNewLog", "Resource.Success")
+                    isLoadingMutable.value = false
                     getPlayersList(teamId)
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
                 is Resource.Loading -> {
+                    isLoadingMutable.value = true
                     Log.d("MyNewLog", "Resource.Loading")
                 }
             }
@@ -53,13 +59,16 @@ class TeamViewModel(
         removePlayerUseCase.invoke(id).onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Success")
                     getPlayersList(teamId)
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
                 is Resource.Loading -> {
+                    isLoadingMutable.value = true
                     Log.d("MyNewLog", "Resource.Loading")
                 }
             }
@@ -70,13 +79,16 @@ class TeamViewModel(
         if(validateData(player)) updatePlayerUseCase.invoke(player).onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Success")
                     getPlayersList(teamId)
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
                 is Resource.Loading -> {
+                    isLoadingMutable.value = true
                     Log.d("MyNewLog", "Resource.Loading")
                 }
             }
@@ -88,13 +100,16 @@ class TeamViewModel(
         getPlayersListUseCase.invoke(teamId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Success")
                     playerListMutable.value = result.data as ArrayList<Player>
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
                 is Resource.Loading -> {
+                    isLoadingMutable.value = true
                     Log.d("MyNewLog", "Resource.Loading")
                 }
             }

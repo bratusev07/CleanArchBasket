@@ -60,7 +60,7 @@ class TimeTypeFragment : Fragment(), SeekBar.OnSeekBarChangeListener {
                 GameValues.gameMoment
                     .setTimeType(timeType)
                     .setSecond(second)
-                if(GameValues.gameMoment.teamId.length > 5) findNavController().navigate(R.id.action_timeTypeFragment_to_attackTypeFragment)
+                if(GameValues.gameMoment.passStory.size > 0) findNavController().navigate(R.id.action_timeTypeFragment_to_attackTypeFragment)
                 else Toast.makeText(requireContext(), "Укажите игрока", Toast.LENGTH_SHORT).show()
             }
             it.findViewById<AppCompatButton>(R.id.timeType_BackBtn).setOnClickListener {

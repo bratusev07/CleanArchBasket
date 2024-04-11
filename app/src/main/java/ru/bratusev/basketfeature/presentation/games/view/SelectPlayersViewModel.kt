@@ -18,6 +18,9 @@ class SelectPlayersViewModel(
     private val playersMutable = MutableLiveData<ArrayList<Player>>()
     internal val players: LiveData<ArrayList<Player>> = playersMutable
 
+    private val isLoadingMutable = MutableLiveData<Boolean>()
+    var isLoading: LiveData<Boolean> = isLoadingMutable
+
     private var teamId: String = ""
 
     internal fun setTeamId(id: String) {
@@ -42,12 +45,16 @@ class SelectPlayersViewModel(
         getPlayersListUseCase.invoke(teamId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    isLoadingMutable.value = false
                     playersMutable.value = result.data as ArrayList<Player>
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    isLoadingMutable.value = true
+                }
             }
         }.launchIn(viewModelScope)
     }

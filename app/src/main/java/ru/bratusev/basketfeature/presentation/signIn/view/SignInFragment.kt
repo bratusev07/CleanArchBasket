@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
@@ -28,6 +29,7 @@ class SignInFragment : Fragment() {
             val mailEt = it.findViewById<TextInputEditText>(R.id.signIn_mailEt)
             val passHint = it.findViewById<TextView>(R.id.signIn_passHint)
             val mailHint = it.findViewById<TextView>(R.id.signIn_mailHint)
+            val progressBar = it.findViewById<ProgressBar>(R.id.signIn_progressBar)
 
             it.findViewById<TextView>(R.id.signIn_forgotPass).setOnClickListener {
                 RecoverPasswordDialog(vm).show(childFragmentManager, "RecoverPassword")
@@ -52,6 +54,14 @@ class SignInFragment : Fragment() {
             vm.hintMailLive.observe(viewLifecycleOwner){
                 if(vm.hintMailLive.value == false) mailHint.visibility = View.VISIBLE
                 else mailHint.visibility = View.INVISIBLE
+            }
+
+            vm.isLoading.observe(viewLifecycleOwner){
+                if (vm.isLoading.value == true) {
+                    progressBar.visibility = View.VISIBLE
+                } else {
+                    progressBar.visibility = View.GONE
+                }
             }
         }
     }

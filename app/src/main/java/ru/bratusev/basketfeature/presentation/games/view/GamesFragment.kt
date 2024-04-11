@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ class GamesFragment : Fragment() {
             val gameTeams = it.findViewById<ImageView>(R.id.game_teams)
             val gamePlus = it.findViewById<ImageView>(R.id.game_plus)
             val gameList = it.findViewById<RecyclerView>(R.id.recyclerGamesView)
+            val progressBar = it.findViewById<ProgressBar>(R.id.game_progressBar)
             gameTeams.setOnClickListener {
                 findNavController().navigate(R.id.action_gamesFragment_to_teamsFragment)
             }
@@ -44,6 +46,14 @@ class GamesFragment : Fragment() {
 
             vm.gameList.observe(viewLifecycleOwner) {
                 gameList.adapter = GamesAdapter(vm.gameList.value!!, this, vm)
+            }
+
+            vm.isLoading.observe(viewLifecycleOwner){
+                if (vm.isLoading.value == true) {
+                    progressBar.visibility = View.VISIBLE
+                } else {
+                    progressBar.visibility = View.GONE
+                }
             }
         }
     }

@@ -4,6 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ProgressBar
+        android:id="@+id/signIn_progressBar"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="70dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/orange"
+        android:visibility="gone"
+        android:elevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
@@ -44,8 +57,8 @@
             android:id="@+id/signIn_mailEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHighlight="@color/orange"
-            android:hint="Электронная почта" />
+            android:hint="Электронная почта"
+            android:textColorHighlight="@color/orange" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -83,9 +96,9 @@
             android:id="@+id/signIn_passwordEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHighlight="@color/orange"
             android:hint="Пароль"
-            android:inputType="textPassword" />
+            android:inputType="textPassword"
+            android:textColorHighlight="@color/orange" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

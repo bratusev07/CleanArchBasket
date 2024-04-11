@@ -22,16 +22,23 @@ class GameViewModel(
     private val gameListMutable = MutableLiveData<ArrayList<GameModel>>()
     internal val gameList: LiveData<ArrayList<GameModel>> = gameListMutable
 
+    private val isLoadingMutable = MutableLiveData<Boolean>()
+    var isLoading: LiveData<Boolean> = isLoadingMutable
+
     internal fun getGames() {
         getGameListUseCase.invoke().onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    isLoadingMutable.value = false
                     gameListMutable.value = result.data as ArrayList<GameModel>
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    isLoadingMutable.value = true
+                }
             }
         }.launchIn(viewModelScope)
     }
@@ -40,12 +47,16 @@ class GameViewModel(
         removeGameUseCase.invoke(id).onEach { result ->
             when (result) {
                 is Resource.Success -> {
+                    isLoadingMutable.value = false
                     getGames()
                 }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    isLoadingMutable.value = true
+                }
             }
         }.launchIn(viewModelScope)
     }
@@ -53,11 +64,16 @@ class GameViewModel(
     internal fun getTeamById(id: String) {
         getTeamByIdUseCase.invoke(id).onEach { result ->
             when (result) {
-                is Resource.Success -> {}
+                is Resource.Success -> {
+                    isLoadingMutable.value = false
+                }
                 is Resource.Error -> {
+                    isLoadingMutable.value = false
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
-                is Resource.Loading -> {}
+                is Resource.Loading -> {
+                    isLoadingMutable.value = true
+                }
             }
         }.launchIn(viewModelScope)
     }
