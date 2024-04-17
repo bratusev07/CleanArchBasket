@@ -98,7 +98,7 @@ class HexagonView(context: Context, private val pointList: ArrayList<HexagonPoin
         for (i in 0 until 6) {
             val x = centerX + radius * cos(i * angle).toFloat()
             val y = centerY + radius * sin(i * angle).toFloat()
-            canvas.drawText(messageList[i], if(i!=0) x-70f else x, y, paintText)
+            canvas.drawText(messageList[i].toLowerCase(), if(i!=0) x-70f else x, y, paintText)
             if (i != 0) path.lineTo(x, y)
             path.moveTo(x, y)
             path.lineTo(centerX, centerY)
@@ -129,7 +129,6 @@ class HexagonView(context: Context, private val pointList: ArrayList<HexagonPoin
             val value = calculateValue(points, messageList[i])
             val angle = 2 * Math.PI / 6
             try {
-                Log.d("MyActionStatsLog", "$value ${messageList[i]} ${points[i].isEnemy}")
                 points[i].x = centerX + radius * value * cos(i * angle).toFloat()
                 points[i].y = centerY + radius * value * sin(i * angle).toFloat()
                 canvas.drawCircle(points[i].x, points[i].y, 15f, dot)

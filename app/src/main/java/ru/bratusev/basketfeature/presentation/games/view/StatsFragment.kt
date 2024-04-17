@@ -14,6 +14,7 @@ import ru.bratusev.basketfeature.presentation.games.diagrams.ShotPercent
 import ru.bratusev.basketfeature.presentation.games.diagrams.VerticalView
 import ru.bratusev.domain.models.GameMoment
 import ru.bratusev.domain.models.HexagonPoint
+import ru.bratusev.domain.models.ShotModel
 import ru.bratusev.domain.models.VerticalPoint
 
 class StatsFragment : Fragment() {
@@ -29,9 +30,11 @@ class StatsFragment : Fragment() {
             val frame1 = it.findViewById<FrameLayout>(R.id.stats_frame1)
             val frame2 = it.findViewById<FrameLayout>(R.id.stats_frame2)
             val frame3 = it.findViewById<FrameLayout>(R.id.stats_frame3)
+            val frame4 = it.findViewById<FrameLayout>(R.id.stats_frame4)
             var hexagonView: HexagonView
             var verticalView: VerticalView
-            var shotPercent: ShotPercent
+            var myTeamShotPercent: ShotPercent
+            var enemyTeamShotPercent: ShotPercent
 
             vm.actionListLive.observe(viewLifecycleOwner) {
                 hexagonView = HexagonView(
@@ -42,17 +45,44 @@ class StatsFragment : Fragment() {
                     requireContext(),
                     parseToVerticalPoints(vm.actionListLive.value ?: ArrayList())
                 )
-                shotPercent = ShotPercent(
+                val shotLists = parseToShotPoints(vm.actionListLive.value ?: ArrayList())
+                myTeamShotPercent = ShotPercent(
                     requireContext(),
-                    parseToHexagonPoints(vm.actionListLive.value ?: ArrayList())
+                    shotLists.filter {elem -> !elem.isEnemy } as ArrayList<ShotModel>
+                )
+                enemyTeamShotPercent = ShotPercent(
+                    requireContext(),
+                    shotLists.filter {elem -> elem.isEnemy } as ArrayList<ShotModel>
                 )
                 frame1.addView(hexagonView)
                 frame2.addView(verticalView)
-                frame3.addView(shotPercent)
+                frame3.addView(myTeamShotPercent)
+                frame4.addView(enemyTeamShotPercent)
             }
 
             vm.getActions(gameId = GameValues.gameId)
         }
+    }
+
+    private fun parseToShotPoints(gameMoments: ArrayList<GameMoment>): ArrayList<ShotModel> {
+       val pointShotList = ArrayList<ShotModel>()
+        val myTeamId = try {
+            gameMoments[0].teamId
+        } catch (_: Exception) {
+            return pointShotList
+        }
+
+        gameMoments.forEach { action ->
+            pointShotList.add(
+                ShotModel(
+                    action.zone,
+                    action.shotResult,
+                    myTeamId != action.teamId
+                )
+            )
+        }
+
+        return pointShotList
     }
 
     private fun parseToHexagonPoints(value: ArrayList<GameMoment>): ArrayList<HexagonPoint> {

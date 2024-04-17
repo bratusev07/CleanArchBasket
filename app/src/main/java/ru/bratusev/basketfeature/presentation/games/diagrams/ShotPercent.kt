@@ -8,8 +8,9 @@ import android.graphics.drawable.Drawable
 import android.view.View
 import ru.bratusev.basketfeature.R
 import ru.bratusev.domain.models.HexagonPoint
+import ru.bratusev.domain.models.ShotModel
 
-class ShotPercent(context: Context, private val pointList: ArrayList<HexagonPoint>): View(context) {
+class ShotPercent(context: Context, private val pointList: ArrayList<ShotModel>): View(context) {
 
     private val paintText = Paint()
     private val paintTextSecond = Paint()
@@ -36,7 +37,7 @@ class ShotPercent(context: Context, private val pointList: ArrayList<HexagonPoin
         val imgWidth = 374f
         val imgHeight = 210f
 
-        val boundX = (width*0.97).toInt()
+        val boundX = (width*1.0).toInt()
         val boundY = (height*imgHeight/imgWidth).toInt()
         image?.let {
             it.setBounds(0, 0, width, boundY)
@@ -44,59 +45,86 @@ class ShotPercent(context: Context, private val pointList: ArrayList<HexagonPoin
         }
 
         // 1
-        canvas.drawText("31/63", 0.025f*boundX, 0.18f*boundY, paintText)
-        canvas.drawText("49%", 0.025f*boundX+10, 0.18f*boundY+30, paintTextSecond)
+        var result = calculatePointValue(1).split(":")
+        canvas.drawText(result[0], 0.025f*boundX, 0.18f*boundY, paintText)
+        canvas.drawText(result[1], 0.025f*boundX+10, 0.18f*boundY+30, paintTextSecond)
 
         // 2
-        canvas.drawText("31/63", 0.14f*boundX, 0.73f*boundY, paintText)
-        canvas.drawText("49%", 0.14f*boundX+10, 0.73f*boundY+30, paintTextSecond)
+        result = calculatePointValue(2).split(":")
+        canvas.drawText(result[0], 0.14f*boundX, 0.73f*boundY, paintText)
+        canvas.drawText(result[1], 0.14f*boundX+10, 0.73f*boundY+30, paintTextSecond)
 
         // 3
-        canvas.drawText("31/63", 0.47f*boundX, 0.9f*boundY, paintText)
-        canvas.drawText("49%", 0.47f*boundX+10, 0.9f*boundY+30, paintTextSecond)
+        result = calculatePointValue(3).split(":")
+        canvas.drawText(result[0], 0.47f*boundX, 0.9f*boundY, paintText)
+        canvas.drawText(result[1], 0.47f*boundX+10, 0.9f*boundY+30, paintTextSecond)
 
         // 4
-        canvas.drawText("31/63", 0.8f*boundX, 0.73f*boundY, paintText)
-        canvas.drawText("49%", 0.8f*boundX+10, 0.73f*boundY+30, paintTextSecond)
+        result = calculatePointValue(4).split(":")
+        canvas.drawText(result[0], 0.8f*boundX, 0.73f*boundY, paintText)
+        canvas.drawText(result[1], 0.8f*boundX+10, 0.73f*boundY+30, paintTextSecond)
 
         // 5
-        canvas.drawText("31/63", 0.9f*boundX, 0.18f*boundY, paintText)
-        canvas.drawText("49%", 0.9f*boundX+10, 0.18f*boundY+30, paintTextSecond)
+        result = calculatePointValue(5).split(":")
+        canvas.drawText(result[0], 0.9f*boundX, 0.18f*boundY, paintText)
+        canvas.drawText(result[1], 0.9f*boundX+10, 0.18f*boundY+30, paintTextSecond)
 
         // 6
-        canvas.drawText("31/63", 0.17f*boundX, 0.24f*boundY, paintText)
-        canvas.drawText("49%", 0.17f*boundX+10, 0.24f*boundY+30, paintTextSecond)
+        result = calculatePointValue(6).split(":")
+        canvas.drawText(result[0], 0.17f*boundX, 0.24f*boundY, paintText)
+        canvas.drawText(result[1], 0.17f*boundX+10, 0.24f*boundY+30, paintTextSecond)
 
         // 7
-        canvas.drawText("31/63", 0.3f*boundX, 0.53f*boundY, paintText)
-        canvas.drawText("49%", 0.3f*boundX+10, 0.53f*boundY+30, paintTextSecond)
+        result = calculatePointValue(7).split(":")
+        canvas.drawText(result[0], 0.3f*boundX, 0.53f*boundY, paintText)
+        canvas.drawText(result[1], 0.3f*boundX+10, 0.53f*boundY+30, paintTextSecond)
 
         // 8
-        canvas.drawText("31/63", 0.47f*boundX, 0.66f*boundY, paintText)
-        canvas.drawText("49%", 0.47f*boundX+10, 0.66f*boundY+30, paintTextSecond)
+        result = calculatePointValue(8).split(":")
+        canvas.drawText(result[0], 0.47f*boundX, 0.66f*boundY, paintText)
+        canvas.drawText(result[1], 0.47f*boundX+10, 0.66f*boundY+30, paintTextSecond)
 
         // 9
-        canvas.drawText("31/63", 0.62f*boundX, 0.53f*boundY, paintText)
-        canvas.drawText("49%", 0.62f*boundX+10, 0.53f*boundY+30, paintTextSecond)
+        result = calculatePointValue(9).split(":")
+        canvas.drawText(result[0], 0.62f*boundX, 0.53f*boundY, paintText)
+        canvas.drawText(result[1], 0.62f*boundX+10, 0.53f*boundY+30, paintTextSecond)
 
         // 10
-        canvas.drawText("31/63", 0.765f*boundX, 0.24f*boundY, paintText)
-        canvas.drawText("49%", 0.765f*boundX+10, 0.24f*boundY+30, paintTextSecond)
+        result = calculatePointValue(10).split(":")
+        canvas.drawText(result[0], 0.765f*boundX, 0.24f*boundY, paintText)
+        canvas.drawText(result[1], 0.765f*boundX+10, 0.24f*boundY+30, paintTextSecond)
 
         // 11
-        canvas.drawText("31/63", 0.3f*boundX, 0.16f*boundY, paintText)
-        canvas.drawText("49%", 0.3f*boundX+10, 0.16f*boundY+30, paintTextSecond)
+        result = calculatePointValue(11).split(":")
+        canvas.drawText(result[0], 0.3f*boundX, 0.16f*boundY, paintText)
+        canvas.drawText(result[1], 0.3f*boundX+10, 0.16f*boundY+30, paintTextSecond)
 
         // 12
-        canvas.drawText("31/63", 0.47f*boundX, 0.37f*boundY, paintText)
-        canvas.drawText("49%", 0.47f*boundX+10, 0.37f*boundY+30, paintTextSecond)
+        result = calculatePointValue(12).split(":")
+        canvas.drawText(result[0], 0.47f*boundX, 0.37f*boundY, paintText)
+        canvas.drawText(result[1], 0.47f*boundX+10, 0.37f*boundY+30, paintTextSecond)
 
         // 13
-        canvas.drawText("31/63", 0.63f*boundX, 0.16f*boundY, paintText)
-        canvas.drawText("49%", 0.63f*boundX+10, 0.16f*boundY+30, paintTextSecond)
+        result = calculatePointValue(13).split(":")
+        canvas.drawText(result[0], 0.63f*boundX, 0.16f*boundY, paintText)
+        canvas.drawText(result[1], 0.63f*boundX+10, 0.16f*boundY+30, paintTextSecond)
 
         // 14
-        canvas.drawText("31/63", 0.47f*boundX, 0.09f*boundY, paintText)
-        canvas.drawText("49%", 0.47f*boundX+10, 0.09f*boundY+30, paintTextSecond)
+        result = calculatePointValue(14).split(":")
+        canvas.drawText(result[0], 0.47f*boundX, 0.09f*boundY, paintText)
+        canvas.drawText(result[1], 0.47f*boundX+10, 0.09f*boundY+30, paintTextSecond)
+    }
+
+    private fun calculatePointValue(zoneNumber: Int): String{
+        var countHit = 0
+        var countShot = 0
+        for (shotModel in pointList) {
+            countShot++
+            if(shotModel.zone == zoneNumber){
+                countHit++
+            }
+        }
+        return if(countShot == 0) "0/0:0%"
+        else "$countHit/$countShot:${((countHit.toDouble()/countShot)*100).toInt()}%"
     }
 }
