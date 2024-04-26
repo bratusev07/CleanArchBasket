@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.attack.GameValues
 import ru.bratusev.basketfeature.presentation.teams.adapter.TeamPlayerAdapter
 import ru.bratusev.basketfeature.presentation.teams.dialogs.CreatePlayerDialog
 
@@ -28,7 +29,7 @@ class TeamFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_team, container, false).also {
             val teamList = it.findViewById<RecyclerView>(R.id.teamPlayerList)
-            it.findViewById<TextView>(R.id.team_teamName).text = "Поменяй название"
+            it.findViewById<TextView>(R.id.team_teamName).text = GameValues.teamName.name
             val progressBar = it.findViewById<ProgressBar>(R.id.team_progressBar)
             it.findViewById<ImageView>(R.id.team_plus).setOnClickListener {
                 CreatePlayerDialog(vm).show(childFragmentManager, "CreatePlayerDialog")
@@ -49,7 +50,7 @@ class TeamFragment : Fragment() {
                 })
 
             teamList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            vm.getPlayersList(teamId = arguments?.getString("teamId").toString())
+            vm.getPlayersList(teamId = GameValues.teamName.id)
 
             vm.playerList.observe(viewLifecycleOwner){
                 teamList.adapter = TeamPlayerAdapter(vm.playerList.value!!, this, vm)

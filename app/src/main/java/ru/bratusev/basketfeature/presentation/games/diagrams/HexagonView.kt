@@ -138,7 +138,7 @@ class HexagonView(context: Context, private val pointList: ArrayList<HexagonPoin
         path.reset()
         path.moveTo(points[0].x, points[0].y)
         for (point in points) {
-            path.lineTo(point.x, point.y)
+            if((point.x + point.y) > 1) path.lineTo(point.x, point.y)
         }
         path.close()
         canvas.drawPath(path, zone)

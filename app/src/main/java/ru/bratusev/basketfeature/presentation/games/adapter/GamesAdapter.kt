@@ -50,6 +50,8 @@ class GamesAdapter(private val items: ArrayList<GameModel>, private val fragment
                     val deltaX = endX - startX
                     if (deltaX > 50) {
                         vm.removeGame(items[position].id)
+                    } else if(deltaX < -50){
+                        vm.shareData()
                     } else {
                         GameValues.gameId = items[position].id
                         fragment.findNavController().navigate(R.id.action_gamesFragment_to_statsFragment)

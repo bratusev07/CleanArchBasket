@@ -14,4 +14,5 @@ object GameValues {
     internal var gameId: String = ""
     internal var gameMoment = GameMoment(gameId)
     internal var isEnemy: Boolean = false
+    internal lateinit var teamName: TeamListResponse
 }

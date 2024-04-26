@@ -119,9 +119,9 @@ class ShotPercent(context: Context, private val pointList: ArrayList<ShotModel>)
         var countHit = 0
         var countShot = 0
         for (shotModel in pointList) {
-            countShot++
             if(shotModel.zone == zoneNumber){
-                countHit++
+                countShot++
+                if(shotModel.result == "HIT") countHit++
             }
         }
         return if(countShot == 0) "0/0:0%"

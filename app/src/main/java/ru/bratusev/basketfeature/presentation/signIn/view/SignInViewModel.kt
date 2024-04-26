@@ -1,6 +1,7 @@
 package ru.bratusev.basketfeature.presentation.signIn.view
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,6 +32,9 @@ class SignInViewModel(
     private val isLoadingMutable = MutableLiveData<Boolean>()
     var isLoading: LiveData<Boolean> = isLoadingMutable
 
+    private val isErrorMutable = MutableLiveData<Boolean>()
+    var isError: LiveData<Boolean> = isErrorMutable
+
     private val emailPattern = Regex("^[A-Z0-9._%+-]+@[A-Z0-9-]+\\.[A-Z]{2,4}$", RegexOption.IGNORE_CASE)
     private val passPattern = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,24}\$")
 
@@ -40,14 +44,17 @@ class SignInViewModel(
                 is Resource.Success -> {
                     Log.d("MyNewLog", "Resource.Success ${(result.data as AuthorizeResponse).uuid}")
                     resultLiveMutable.value = true
+                    isErrorMutable.value = false
                     isLoadingMutable.value = false
                 }
                 is Resource.Error -> {
                     isLoadingMutable.value = false
+                    isErrorMutable.value = true
                     Log.d("MyNewLog", "Resource.Error ${result.message.toString()}")
                 }
                 is Resource.Loading -> {
                     isLoadingMutable.value = true
+                    isErrorMutable.value = false
                     Log.d("MyNewLog", "Resource.Loading")
                 }
             }

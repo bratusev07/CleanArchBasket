@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.attack.GameValues
 import ru.bratusev.basketfeature.presentation.teams.dialogs.UpdateTeamDialog
 import ru.bratusev.basketfeature.presentation.teams.view.TeamsFragment
 import ru.bratusev.basketfeature.presentation.teams.view.TeamsViewModel
@@ -59,10 +60,9 @@ class TeamsAdapter(
                     } else if (deltaX < -50) {
                         UpdateTeamDialog(fragment.requireContext()).show(items?.get(position)?.id ?: "", vm)
                     } else {
-                        val bundle = Bundle()
-                        bundle.putString("teamId", items?.get(position)?.id)
+                        GameValues.teamName = items?.get(position)!!
                         fragment.findNavController()
-                            .navigate(R.id.action_teamsFragment_to_teamFragment, bundle)
+                            .navigate(R.id.action_teamsFragment_to_teamFragment)
                     }
                     true
                 }
