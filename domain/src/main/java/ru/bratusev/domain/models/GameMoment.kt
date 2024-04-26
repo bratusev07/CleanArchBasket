@@ -42,6 +42,11 @@ class GameMoment(id: String) : Serializable {
         return this
     }
 
+    fun setIndex(index: Int): GameMoment{
+        this.index = index
+        return this
+    }
+
     fun setPlayersOnField(players: ArrayList<Player>): GameMoment {
         playersOnField = players
         return this

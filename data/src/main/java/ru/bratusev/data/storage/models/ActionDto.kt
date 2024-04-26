@@ -38,6 +38,7 @@ data class ActionDto(
 internal fun ActionDto.toResponse(): GameMoment {
     return GameMoment(gameId)
         .setTeam(teamId)
+        .setIndex(index)
         .setCreateTime(createdAt)
         .setTimeZone(quater)
         .setPlayersOnField(parseModelToPlayers(playersOnField))

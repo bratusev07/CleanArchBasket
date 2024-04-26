@@ -11,6 +11,7 @@ import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.attack.GameValues
 import ru.bratusev.basketfeature.presentation.games.diagrams.HexagonView
 import ru.bratusev.basketfeature.presentation.games.diagrams.ShotPercent
+import ru.bratusev.basketfeature.presentation.games.diagrams.TableView
 import ru.bratusev.basketfeature.presentation.games.diagrams.VerticalView
 import ru.bratusev.domain.models.GameMoment
 import ru.bratusev.domain.models.HexagonPoint
@@ -31,12 +32,19 @@ class StatsFragment : Fragment() {
             val frame2 = it.findViewById<FrameLayout>(R.id.stats_frame2)
             val frame3 = it.findViewById<FrameLayout>(R.id.stats_frame3)
             val frame4 = it.findViewById<FrameLayout>(R.id.stats_frame4)
+            val tableTeam = it.findViewById<TableView>(R.id.table_teamStats)
+            val tableEnemy = it.findViewById<TableView>(R.id.table_enemyStats)
+
             var hexagonView: HexagonView
             var verticalView: VerticalView
             var myTeamShotPercent: ShotPercent
             var enemyTeamShotPercent: ShotPercent
 
             vm.actionListLive.observe(viewLifecycleOwner) {
+                val teamId = vm.actionListLive.value?.get(0)?.teamId
+                tableTeam.setData(vm.actionListLive.value?.filter { elem -> elem.teamId == teamId } as ArrayList<GameMoment>)
+                tableEnemy.setData(vm.actionListLive.value?.filter { elem -> elem.teamId != teamId } as ArrayList<GameMoment>)
+
                 hexagonView = HexagonView(
                     requireContext(),
                     parseToHexagonPoints(vm.actionListLive.value ?: ArrayList())
