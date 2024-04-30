@@ -28,7 +28,6 @@ class TimeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_time, container, false).also {
-            Log.d("MyActionLog", gameMoment.toString() + " GameId: ${GameValues.gameId}")
             if(gameMoment.index != 0)vm.createActionEntry(gameMoment)
             gameMoment.clearHistory()
             val grid = (it.findViewById<GridView>(R.id.custom_view))

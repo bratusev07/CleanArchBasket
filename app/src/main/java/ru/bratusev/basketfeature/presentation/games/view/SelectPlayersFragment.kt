@@ -57,6 +57,7 @@ class SelectPlayersFragment : Fragment() {
                 playersInGameGrid.adapter = PlayersGridAdapter(requireContext(), vm, fromGame, false)
                 if(fromGame.size < 5){
                     nextBtn.background = requireContext().getDrawable(R.drawable.button_style_stroke_grey)
+                    nextBtn.setTextColor(requireContext().getColor(R.color.dark_grey))
                     nextBtn.isClickable = false
                 }else{
                     nextBtn.background = requireContext().getDrawable(R.drawable.button_style_stroke)

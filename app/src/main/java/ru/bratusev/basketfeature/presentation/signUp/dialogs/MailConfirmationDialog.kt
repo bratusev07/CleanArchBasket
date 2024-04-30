@@ -1,6 +1,7 @@
 package ru.bratusev.basketfeature.presentation.signUp.dialogs
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +14,7 @@ import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.signUp.view.SignUpViewModel
 import ru.bratusev.domain.models.UserData
 
-class MailConfirmationDialog(private val vm: SignUpViewModel, private val userData: UserData) : BottomSheetDialogFragment() {
+class MailConfirmationDialog : BottomSheetDialogFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,6 +31,10 @@ class MailConfirmationDialog(private val vm: SignUpViewModel, private val userDa
         view.findViewById<AppCompatButton>(R.id.confMail_btnRecover).setOnClickListener {
             findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
             Toast.makeText(requireContext(), "Вам на почту высланна ссылка подтверждения", Toast.LENGTH_SHORT).show()
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_APP_EMAIL)
+            startActivity(intent)
+            findNavController().navigate(R.id.action_signUpFragment_to_teamsFragment)
         }
     }
 }

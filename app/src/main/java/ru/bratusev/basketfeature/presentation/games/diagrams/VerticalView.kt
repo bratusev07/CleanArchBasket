@@ -54,8 +54,9 @@ class VerticalView(context: Context, private val points: ArrayList<VerticalPoint
         for (i in 1..points.size/2){
             canvas.drawLine(width.toFloat()/10, y-verticalStep/2, width - width.toFloat()/10, y-verticalStep/2, paintBack)
             canvas.drawLine(centerX, y, centerX+ points[i - 1].value *sectionWidth, y, paintTeam)
-            canvas.drawText(i.toString(), centerX+ points[i - 1].value *sectionWidth + 25f, y+paintText.textSize/3, paintText)
-            canvas.drawText(i.toString(), centerX- points[i - 1 + points.size/2].value *sectionWidth - 25f - sectionWidth, y+paintText.textSize/3, paintText)
+            canvas.drawText("${points[i - 1].value}", centerX+ points[i - 1].value *sectionWidth + 25f, y+paintText.textSize/3, paintText)
+            canvas.drawText("${points[i - 1 + points.size/2].value}", centerX- points[i - 1 + points.size/2].value *sectionWidth - 25f - sectionWidth, y+paintText.textSize/3, paintText)
+            canvas.drawText(i.toString(), 25f - sectionWidth, y+paintText.textSize/3, paintText)
             canvas.drawLine(centerX, y, centerX- points[i -1 + points.size/2].value *sectionWidth, y, paintEnemy)
             y+=verticalStep
         }

@@ -29,8 +29,7 @@ class SignUpViewModel(
     var hintPassLive: LiveData<Boolean> = hintPassLiveMutable
 
     private val emailPattern = Regex("^[A-Z0-9._%+-]+@[A-Z0-9-]+\\.[A-Z]{2,4}$", RegexOption.IGNORE_CASE)
-    private val passPattern = Regex("^.*(?=.{8,24})(?=.*[a-zA-Z])(?=.*\\d)(?=.*[!#\$%&? \"]).*\$")
-
+    private val passPattern = Regex("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,24}\$")
 
     private fun registration(userData: UserData) {
         registrationUseCase.invoke(userData).onEach { result ->

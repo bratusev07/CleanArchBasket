@@ -104,6 +104,7 @@
         android:text="Начать игру"
         android:textAllCaps="false"
         android:textSize="30sp"
+        android:textColor="@color/dark_grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

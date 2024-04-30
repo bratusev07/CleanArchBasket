@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
+import ru.bratusev.basketfeature.presentation.signUp.dialogs.MailConfirmationDialog
 import ru.bratusev.domain.models.UserData
 
 class SignUpFragment : Fragment() {
@@ -38,7 +39,7 @@ class SignUpFragment : Fragment() {
             }
 
             vm.resultLive.observe(viewLifecycleOwner){
-                findNavController().navigate(R.id.action_signUpFragment_to_teamsFragment)
+                MailConfirmationDialog().show(childFragmentManager, "MailConfirmation")
             }
 
             vm.hintPassLive.observe(viewLifecycleOwner){

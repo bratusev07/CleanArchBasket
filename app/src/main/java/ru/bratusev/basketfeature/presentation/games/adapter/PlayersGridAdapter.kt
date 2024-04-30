@@ -1,6 +1,7 @@
 package ru.bratusev.basketfeature.presentation.games.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +18,6 @@ class PlayersGridAdapter(
     private val players: ArrayList<Player>,
     private val isToGame: Boolean
 ) : BaseAdapter() {
-
-    private var playerInGameCount = 0
 
     override fun getCount(): Int {
         return players.size
@@ -43,21 +42,13 @@ class PlayersGridAdapter(
             players[position].number.toString()
         convertView?.setOnClickListener {
             val player = players[position]
+            val playerInGameCount = (vm.players.value?.filter { elem -> elem.isInGame })?.size ?: 0
             try {
-                if (isToGame && playerInGameCount < 5) {
-                    vm.addToGame(player)
-                    playerInGameCount++
-                } else{
-                    vm.removeFromGame(player)
-                    playerInGameCount--
-                }
+                if (isToGame && playerInGameCount < 5) vm.addToGame(player)
+                else vm.removeFromGame(player)
             }
             catch (e: Exception) {
-                Toast.makeText(
-                    context,
-                    "Добавьте ещё игроков в команду: ${5 - (vm.players.value?.size ?: 0)}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(context, "Добавьте ещё игроков в команду: ${5 - (vm.players.value?.size ?: 0)}", Toast.LENGTH_SHORT).show()
             }
         }
 

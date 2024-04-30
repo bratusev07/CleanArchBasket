@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.util.Log
 import android.view.View
+import org.koin.core.KoinApplication.Companion.init
 import ru.bratusev.domain.models.HexagonPoint
 import kotlin.math.cos
 import kotlin.math.min
@@ -22,14 +23,16 @@ class HexagonView(context: Context, private val pointList: ArrayList<HexagonPoin
     private val paintEnemyDot = Paint()
     private val paintEnemyZone = Paint()
 
-    private val messageList = ArrayList<String>().also {
-        it.add("BREAKING_PRESSURE")
-        it.add("BREAKING_ZONE")
-        it.add("EARLY_ATTACK")
-        it.add("QUICK_BREAKAWAY")
-        it.add("POSITIONAL_ATTACK")
-        it.add("SECOND_CHANCE_ATTACK")
-    }
+    private val messageMap = mapOf(
+        "BREAKING_PRESSURE" to "Прессинг",
+        "BREAKING_ZONE" to "Зона",
+        "EARLY_ATTACK" to "Раннее",
+        "QUICK_BREAKAWAY" to "Отрыв",
+        "POSITIONAL_ATTACK" to "Позиционное",
+        "SECOND_CHANCE_ATTACK" to "Второй шанс",
+    )
+
+    private val messageList = messageMap.keys.toList()
 
     init {
         paintBack.color = Color.BLACK
@@ -98,7 +101,7 @@ class HexagonView(context: Context, private val pointList: ArrayList<HexagonPoin
         for (i in 0 until 6) {
             val x = centerX + radius * cos(i * angle).toFloat()
             val y = centerY + radius * sin(i * angle).toFloat()
-            canvas.drawText(messageList[i].toLowerCase(), if(i!=0) x-70f else x, y, paintText)
+            canvas.drawText(messageMap[messageList[i]] ?: "", if(i!=0) x-70f else x, y, paintText)
             if (i != 0) path.lineTo(x, y)
             path.moveTo(x, y)
             path.lineTo(centerX, centerY)
