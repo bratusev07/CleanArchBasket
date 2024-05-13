@@ -1,11 +1,15 @@
 package ru.bratusev.basketfeature.presentation.games.view
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import org.koin.android.BuildConfig
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.attack.GameValues
@@ -17,6 +21,11 @@ import ru.bratusev.domain.models.GameMoment
 import ru.bratusev.domain.models.HexagonPoint
 import ru.bratusev.domain.models.ShotModel
 import ru.bratusev.domain.models.VerticalPoint
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStreamWriter
+import java.util.Date
+import java.util.Objects
 
 class StatsFragment : Fragment() {
 
@@ -41,6 +50,7 @@ class StatsFragment : Fragment() {
             var enemyTeamShotPercent: ShotPercent
 
             vm.actionListLive.observe(viewLifecycleOwner) {
+                shareData(vm.actionListLive.value ?: ArrayList())
                 val teamId = vm.actionListLive.value?.get(0)?.teamId
                 tableTeam.setData(vm.actionListLive.value?.filter { elem -> elem.teamId == teamId } as ArrayList<GameMoment>)
                 tableEnemy.setData(vm.actionListLive.value?.filter { elem -> elem.teamId != teamId } as ArrayList<GameMoment>)
@@ -142,5 +152,37 @@ class StatsFragment : Fragment() {
         }
 
         return pointListVertical
+    }
+
+    private fun shareData(listOfData: List<GameMoment>) {
+        if(listOfData.isEmpty()) return
+        val file = writeCsv(listOfData)
+        if (file.exists()) {
+            val uri = FileProvider.getUriForFile(
+                Objects.requireNonNull(requireContext()), "ru.bratusev.basketfeature.provider", file);
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            intent.setType("*/*")
+            intent.putExtra(Intent.EXTRA_STREAM, uri)
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
+    }
+
+    private fun writeCsv(listOfData: List<GameMoment>): File {
+        val fileName = "data_${Date().time}.csv"
+        val file = File(requireContext().filesDir, fileName)
+        val writer = OutputStreamWriter(FileOutputStream(file))
+
+        writer.write(""""Index", "Time", "ShotResult"""")
+        writer.write(System.lineSeparator())
+        listOfData.forEach {
+            writer.write("${it.index}, ${it.time}, \"${it.shotResult}\"")
+            writer.write(System.lineSeparator())
+        }
+        writer.flush()
+        writer.close()
+
+        return file
     }
 }
