@@ -1,6 +1,5 @@
 package ru.bratusev.basketfeature.presentation.games.view
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import org.koin.android.BuildConfig
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.attack.GameValues
@@ -19,6 +17,7 @@ import ru.bratusev.basketfeature.presentation.games.diagrams.TableView
 import ru.bratusev.basketfeature.presentation.games.diagrams.VerticalView
 import ru.bratusev.domain.models.GameMoment
 import ru.bratusev.domain.models.HexagonPoint
+import ru.bratusev.domain.models.Player
 import ru.bratusev.domain.models.ShotModel
 import ru.bratusev.domain.models.VerticalPoint
 import java.io.File
@@ -156,7 +155,7 @@ class StatsFragment : Fragment() {
 
     private fun shareData(listOfData: List<GameMoment>) {
         if(listOfData.isEmpty()) return
-        val file = writeCsv(listOfData)
+        val file = writeCsv(listOfData.sortedBy { elem -> elem.index })
         if (file.exists()) {
             val uri = FileProvider.getUriForFile(
                 Objects.requireNonNull(requireContext()), "ru.bratusev.basketfeature.provider", file);
@@ -174,10 +173,25 @@ class StatsFragment : Fragment() {
         val file = File(requireContext().filesDir, fileName)
         val writer = OutputStreamWriter(FileOutputStream(file))
 
-        writer.write(""""Index", "Time", "ShotResult"""")
+        writer.write("""Номер, Четверть, На площадке, Тип владения, Передачи, Тип времени, Секунда, Начало атаки, Результат атаки, Тип атаки, Зона, Попадание/Промах, Тип фола, Результат фола, Способ потери""")
         writer.write(System.lineSeparator())
         listOfData.forEach {
-            writer.write("${it.index}, ${it.time}, \"${it.shotResult}\"")
+            writer.write("${it.index}, " +
+                    "${it.quater}, " +
+                    "${playersToLine(it.playersOnField)}, " +
+                    "${it.typeOfPossession}, " +
+                    "${passToLine(it.passStory)}, " +
+                    "${it.timeType}, " +
+                    "${it.time}, " +
+                    "${it.attackType}, " +
+                    "${it.resultType}, " +
+                    "${it.shot}, " +
+                    "${it.zone}, " +
+                    "${it.shotResult}, " +
+                    "${it.foulType}, " +
+                    "${it.foulResult}, " +
+                    it.loss
+            )
             writer.write(System.lineSeparator())
         }
         writer.flush()
@@ -185,4 +199,21 @@ class StatsFragment : Fragment() {
 
         return file
     }
+
+    private fun playersToLine(playersOnField: java.util.ArrayList<Player>): String {
+        var result = ""
+        for (player in playersOnField) {
+            result+= "${player.number} "
+        }
+        return result
+    }
+
+    private fun passToLine(passStory: ArrayList<Player>): String{
+        var result = ""
+        for (player in passStory) {
+            result+= "${player.number} "
+        }
+        return result
+    }
+
 }
