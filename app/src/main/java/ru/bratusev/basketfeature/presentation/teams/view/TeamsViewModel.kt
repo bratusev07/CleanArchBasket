@@ -114,4 +114,11 @@ class TeamsViewModel(
     private fun validateData(team: Team): Boolean {
         return team.name.matches(namePattern)
     }
+
+    fun isFree(name: String): Boolean {
+        teamsLive.value?.forEach { elem ->
+            if (elem.name == name) return false
+        }
+        return true
+    }
 }

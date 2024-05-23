@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.SeekBar
 import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.teams.view.TeamsViewModel
@@ -26,7 +27,7 @@ class CreateTeamDialog(private val vm: TeamsViewModel) : BottomSheetDialogFragme
     ): View? {
         return inflater.inflate(R.layout.create_team_dialog, container, false)
     }
-
+    private val namePattern = Regex("^.*(?=.{2,18})(?=.*[а-яА-я\\s]).*\$")
     private lateinit var textInputContainer: LinearLayout
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,8 +46,15 @@ class CreateTeamDialog(private val vm: TeamsViewModel) : BottomSheetDialogFragme
             for ((index, text) in enteredTexts.withIndex()) {
                 players.add(Player(number = text.toInt()))
             }
-            vm.createTeam(Team(name = nameInput.text.toString()))
-            dismiss()
+            if(!nameInput.text.isNullOrEmpty()) {
+                if(!nameInput.text!!.matches(namePattern)) Snackbar.make(requireView(), "Неверный формат данных", Snackbar.LENGTH_SHORT).show()
+                else if (!vm.isFree(nameInput.text.toString())){
+                    Snackbar.make(requireView(), "Данное имя уже используется", Snackbar.LENGTH_SHORT).show()
+                }else {
+                    vm.createTeam(Team(name = nameInput.text.toString()))
+                    dismiss()
+                }
+            } else Snackbar.make(requireView(), "Введите данные", Snackbar.LENGTH_SHORT).show()
         }
         playerCounter.setOnSeekBarChangeListener(this)
     }

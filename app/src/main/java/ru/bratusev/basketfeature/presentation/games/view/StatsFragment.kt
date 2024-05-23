@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.attack.GameValues
@@ -49,6 +50,10 @@ class StatsFragment : Fragment() {
             var enemyTeamShotPercent: ShotPercent
 
             vm.actionListLive.observe(viewLifecycleOwner) {
+                if (vm.actionListLive.value?.size == 0){
+                    Snackbar.make(requireView(), "Нет данных для экспорта", Snackbar.LENGTH_SHORT).show()
+                    return@observe
+                }
                 shareData(vm.actionListLive.value ?: ArrayList())
                 val teamId = vm.actionListLive.value?.get(0)?.teamId
                 tableTeam.setData(vm.actionListLive.value?.filter { elem -> elem.teamId == teamId } as ArrayList<GameMoment>)
