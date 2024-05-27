@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import ru.bratusev.basketfeature.R
 import ru.bratusev.basketfeature.presentation.teams.view.TeamViewModel
@@ -30,16 +31,23 @@ class CreatePlayerDialog(private val vm: TeamViewModel) : BottomSheetDialogFragm
             view.findViewById<TextInputEditText>(R.id.createTeamDialog_lastnameInput)
         val numberInput = view.findViewById<TextInputEditText>(R.id.createTeamDialog_numberInput)
         view.findViewById<AppCompatButton>(R.id.createTeamDialog_okBtn).setOnClickListener {
-            vm.createPlayer(
-                Player(
-                    name = nameInput.text.toString(),
-                    number = numberInput.text.toString().toInt(),
-                    surname = surnameInput.text.toString(),
-                    lastName = lastnameInput.text.toString()
+            if(numberInput.text.toString().toInt() !in 1 .. 99) showMessage("Номер должен принадлежать промежутку от 1 до 99")
+            else {
+                vm.createPlayer(
+                    Player(
+                        name = nameInput.text.toString(),
+                        number = numberInput.text.toString().toInt(),
+                        surname = surnameInput.text.toString(),
+                        lastName = lastnameInput.text.toString()
+                    )
                 )
-            )
-            dismiss()
+                dismiss()
+            }
         }
+    }
+
+    private fun showMessage(message: String){
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
 
 }

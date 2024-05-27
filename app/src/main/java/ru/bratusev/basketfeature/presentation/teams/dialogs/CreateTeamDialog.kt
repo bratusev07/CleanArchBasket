@@ -9,6 +9,7 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.SeekBar
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
@@ -46,17 +47,29 @@ class CreateTeamDialog(private val vm: TeamsViewModel) : BottomSheetDialogFragme
             for ((index, text) in enteredTexts.withIndex()) {
                 players.add(Player(number = text.toInt()))
             }
-            if(!nameInput.text.isNullOrEmpty()) {
-                if(!nameInput.text!!.matches(namePattern)) Snackbar.make(requireView(), "Неверный формат данных", Snackbar.LENGTH_SHORT).show()
-                else if (!vm.isFree(nameInput.text.toString())){
-                    Snackbar.make(requireView(), "Данное имя уже используется", Snackbar.LENGTH_SHORT).show()
-                }else {
-                    vm.createTeam(Team(name = nameInput.text.toString()))
+            val name = nameInput.text.toString()
+            if(name.isNotEmpty()) {
+                if(containSpecialSymbols(name)) showMessage("Название команды не может содержать специальных символов")
+                else if (!vm.isFree(name)) showMessage("Данное имя уже используется")
+                else if (name.length !in 2..20) showMessage("Название должно иметь от 2 до 20 символов")
+                else {
+                    vm.createTeam(Team(name = name))
                     dismiss()
                 }
-            } else Snackbar.make(requireView(), "Введите данные", Snackbar.LENGTH_SHORT).show()
+            } else showMessage("Название команды не может быть пустым")
         }
         playerCounter.setOnSeekBarChangeListener(this)
+    }
+
+    private fun showMessage(message: String){
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
+    }
+
+    private fun containSpecialSymbols(name: String): Boolean{
+        for (symbol in arrayOf("!", "#", "$", "%", "&", "~", "=", "‘", "_")) {
+            if (name.contains(symbol)) return true
+        }
+        return false
     }
 
     override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {

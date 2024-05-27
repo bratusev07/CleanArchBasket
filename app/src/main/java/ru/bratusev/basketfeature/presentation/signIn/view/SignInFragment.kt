@@ -1,6 +1,7 @@
 package ru.bratusev.basketfeature.presentation.signIn.view
 
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Email
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,7 +55,10 @@ class SignInFragment : Fragment() {
             }
 
             vm.hintMailLive.observe(viewLifecycleOwner){
-                if(vm.hintMailLive.value == false) mailHint.visibility = View.VISIBLE
+                if(vm.hintMailLive.value == false) {
+                    checkEmail(mailEt.text.toString())
+                    mailHint.visibility = View.VISIBLE
+                }
                 else mailHint.visibility = View.INVISIBLE
             }
 
@@ -72,5 +76,34 @@ class SignInFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun checkEmail(email: String) {
+        if (containSpecialSymbols(email)){
+            showMessage("Почтовый адрес не может содержать специальных сомволов")
+            return
+        } else if(email.isEmpty()){
+            showMessage("Почтовый адрес не может быть пустым")
+            return
+        } else if(!email.contains("@")){
+            showMessage("Почтовый адрес должен содержать @")
+            return
+        } else if(!email.split("@")[1].contains(".")){
+            showMessage("Почтовый адрес должен содержать точку в имени сервера")
+            return
+        } else if(email.split("@")[0].isEmpty()){
+            showMessage("Почтовый адрес должен содержать имя")
+            return
+        }
+    }
+
+    private fun containSpecialSymbols(email: String): Boolean{
+        for (symbol in arrayOf("!", "#", "$", "%", "&", "~", "=", "‘")) {
+            if (email.contains(symbol)) return true
+        }
+        return false
+    }
+    private fun showMessage(message: String){
+        Snackbar.make(requireView(), message, Snackbar.LENGTH_SHORT).show()
     }
 }
